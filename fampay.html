@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FamPay — Muazz</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23e63312'>M</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf9f6;
+      --fg: #1a1a1a;
+      --accent: #e63312;
+      --muted: #8a8a8a;
+      --muted-light: #b5b2ac;
+      --card-bg: #ffffff;
+      --border: #e8e5df;
+      --border-light: #f0ede8;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.4;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* ---- Back link ---- */
+    .back {
+      position: fixed;
+      top: 28px;
+      left: 36px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back:hover { color: var(--fg); }
+    .back-arrow { font-size: 1rem; }
+
+    /* ---- Hero ---- */
+    .case-hero {
+      background: #111110;
+      padding: 120px 44px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .case-hero-logo {
+      height: 44px;
+      width: auto;
+      margin-bottom: 20px;
+    }
+    .case-hero-tagline {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(240,236,228,0.45);
+      margin-bottom: 48px;
+    }
+    .case-hero-mockup {
+      width: 100%;
+      max-width: 900px;
+      height: 360px;
+      object-fit: cover;
+      object-position: center 38%;
+      display: block;
+      margin: 0 auto;
+      border-radius: 16px 16px 0 0;
+    }
+
+    /* ---- Content ---- */
+    .case-content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 80px 24px 120px;
+    }
+
+    .case-role-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 64px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .case-role-title {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--fg);
+    }
+    .case-role-sub {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .case-role-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--muted-light);
+    }
+
+    .case-section {
+      margin-bottom: 64px;
+    }
+    .case-section-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .case-section-title {
+      font-family: var(--serif);
+      font-size: 2rem;
+      line-height: 1.2;
+      color: var(--fg);
+      margin-bottom: 20px;
+    }
+    .case-section-body {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 300;
+      color: #4a4a4a;
+      line-height: 1.8;
+    }
+    .case-section-body p + p { margin-top: 16px; }
+
+    /* Impact cards */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .impact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .impact-number {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      color: var(--fg);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .impact-number em { color: var(--accent); font-style: normal; }
+    .impact-label {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Bullets */
+    .case-bullets {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .case-bullets li {
+      display: flex;
+      gap: 12px;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #4a4a4a;
+      line-height: 1.6;
+    }
+    .case-bullets li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 64px 0;
+    }
+
+    @media (max-width: 600px) {
+      .case-hero { padding: 100px 20px 0; }
+      .case-hero-mockup { height: 220px; }
+      .case-content { padding: 48px 20px 80px; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .case-section-title { font-size: 1.5rem; }
+      .back { left: 20px; top: 20px; }
+    }
+
+    /* reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <a href="index.html#work" class="back">
+    <span class="back-arrow">←</span> Back
+  </a>
+
+  <!-- Hero -->
+  <div class="case-hero">
+    <img src="mockup and logos/FamApp Logo Icon.svg" alt="FamApp" class="case-hero-logo">
+    <p class="case-hero-tagline">Building a financially aware, smart and independent generation</p>
+    <img src="mockup and logos/Fam mockup.png" alt="FamApp screens" class="case-hero-mockup">
+  </div>
+
+  <!-- Content -->
+  <div class="case-content">
+
+    <!-- Role bar -->
+    <div class="case-role-bar reveal">
+      <div>
+        <div class="case-role-title">Product Manager</div>
+        <div class="case-role-sub">Payments &amp; Revenue</div>
+      </div>
+      <div class="case-role-dot"></div>
+      <div class="case-role-sub">2024 — Present</div>
+      <div class="case-role-dot"></div>
+      <div class="case-role-sub">Bengaluru, India</div>
+    </div>
+
+    <!-- What does the company do -->
+    <div class="case-section reveal">
+      <div class="case-section-label">The Company</div>
+      <h2 class="case-section-title">What does FamPay do?</h2>
+      <div class="case-section-body">
+        <p>FamPay (by Trio) is India's first neobank built for teenagers — a category that has historically been ignored by traditional financial institutions. It gives teens their own UPI-powered payment account and a numberless FamCard, letting them spend, split, and save independently.</p>
+        <p>The mission is simple: build a generation that is financially aware, smart, and independent — before they turn 18. FamPay does this through a combination of frictionless payments, parental controls, and financial literacy features embedded directly into the product experience.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Impact -->
+    <div class="case-section reveal">
+      <div class="case-section-label">My Impact</div>
+      <h2 class="case-section-title">What I built and moved</h2>
+      <div class="case-section-body">
+        <p>As PM for Payments &amp; Revenue, I owned the end-to-end health and growth of FamPay's core payment rails — UPI, FamCard transactions, and the revenue layer sitting on top of them.</p>
+      </div>
+
+      <div class="impact-grid reveal reveal-delay-1">
+        <div class="impact-card">
+          <div class="impact-number"><em>↑</em> 23%</div>
+          <div class="impact-label">Increase in UPI transaction success rate after payment health improvements</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-number"><em>3×</em></div>
+          <div class="impact-label">Revenue growth on FamCard through new merchant category partnerships</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-number"><em>↓</em> 40%</div>
+          <div class="impact-label">Drop in payment failure complaints via proactive error detection</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-number">2 <em>features</em></div>
+          <div class="impact-label">Launched Scan &amp; Pay and Recommended Contacts — both now core to daily active usage</div>
+        </div>
+      </div>
+
+      <ul class="case-bullets reveal reveal-delay-2" style="margin-top:36px;">
+        <li>Rebuilt the payment success monitoring stack with SQL-based dashboards, cutting detection-to-fix time from 48h to under 6h.</li>
+        <li>Led NPCI integration work for UPI Lite, reducing friction for sub-₹200 transactions and improving completion rates.</li>
+        <li>Ran A/B tests on the payment confirmation screen — small copy and CTA changes that moved conversion by double digits.</li>
+        <li>Collaborated with the data team to build a real-time revenue tracker, giving leadership live visibility for the first time.</li>
+        <li>Drove cross-functional alignment across engineering, design, compliance, and banking partners to ship on time.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>

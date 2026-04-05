@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avaana — Muazz</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23e63312'>M</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf9f6;
+      --fg: #1a1a1a;
+      --accent: #00bd71;
+      --accent-dark: #009a5c;
+      --teal: #063E3B;
+      --muted: #8a8a8a;
+      --muted-light: #b5b2ac;
+      --card-bg: #ffffff;
+      --border: #e8e5df;
+      --border-light: #f0ede8;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.4;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    .back {
+      position: fixed;
+      top: 28px;
+      left: 36px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back:hover { color: var(--fg); }
+
+    /* Hero */
+    .case-hero {
+      background: #f0ede6;
+      border-bottom: 1px solid var(--border);
+      padding: 120px 44px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: flex-end;
+      max-width: 1100px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .case-hero-text { padding-bottom: 48px; }
+    .case-hero-logo {
+      height: 24px;
+      width: auto;
+      display: block;
+      margin-bottom: 24px;
+    }
+    .case-hero-headline {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      line-height: 1.2;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .case-hero-sub {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(6,62,59,0.55);
+    }
+    .case-hero-mockup {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      border-radius: 16px 16px 0 0;
+    }
+
+    /* Content */
+    .case-content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 80px 24px 120px;
+    }
+
+    .case-role-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 64px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .case-role-title {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--fg);
+    }
+    .case-role-sub {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .case-role-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--muted-light);
+    }
+
+    .case-section { margin-bottom: 64px; }
+    .case-section-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .case-section-title {
+      font-family: var(--serif);
+      font-size: 2rem;
+      line-height: 1.2;
+      color: var(--fg);
+      margin-bottom: 20px;
+    }
+    .case-section-body {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 300;
+      color: #4a4a4a;
+      line-height: 1.8;
+    }
+    .case-section-body p + p { margin-top: 16px; }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .impact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .impact-number {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      color: var(--fg);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .impact-number em { color: var(--accent); font-style: normal; }
+    .impact-label {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .case-bullets {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .case-bullets li {
+      display: flex;
+      gap: 12px;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #4a4a4a;
+      line-height: 1.6;
+    }
+    .case-bullets li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 64px 0;
+    }
+
+    @media (max-width: 700px) {
+      .case-hero { grid-template-columns: 1fr; padding: 100px 20px 0; gap: 24px; }
+      .case-hero-mockup { height: 220px; }
+      .case-content { padding: 48px 20px 80px; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .case-section-title { font-size: 1.5rem; }
+      .back { left: 20px; top: 20px; }
+    }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+  </style>
+</head>
+<body>
+
+  <a href="index.html#work" class="back">
+    <span>←</span> Back
+  </a>
+
+  <!-- Hero -->
+  <div class="case-hero">
+    <div class="case-hero-text">
+      <img src="mockup and logos/Avaana Logo.svg" alt="Avaana" class="case-hero-logo">
+      <h1 class="case-hero-headline">Find and book local health and wellbeing practitioners</h1>
+      <p class="case-hero-sub">Wellbeing platform for individuals &amp; enterprise teams</p>
+    </div>
+    <img src="mockup and logos/avaana mockup.png" alt="Avaana product" class="case-hero-mockup">
+  </div>
+
+  <!-- Content -->
+  <div class="case-content">
+
+    <div class="case-role-bar reveal">
+      <div>
+        <div class="case-role-title">Product Management Intern</div>
+        <div class="case-role-sub">App experience &amp; new ventures</div>
+      </div>
+      <div class="case-role-dot"></div>
+      <div class="case-role-sub">2023 — 2024</div>
+      <div class="case-role-dot"></div>
+      <div class="case-role-sub">Remote</div>
+    </div>
+
+    <!-- What does the company do -->
+    <div class="case-section reveal">
+      <div class="case-section-label">The Company</div>
+      <h2 class="case-section-title">What does Avaana do?</h2>
+      <div class="case-section-body">
+        <p>Avaana is Australia's leading health and wellbeing marketplace — connecting individuals to thousands of practitioners across physiotherapy, massage, counselling, acupuncture, naturopathy, and more. Think of it as the Airbnb for wellness: search by symptom, location, or modality, and book in seconds.</p>
+        <p>Beyond the consumer product, Avaana runs a B2B vertical — Avaana for Business — which helps companies bring meaningful wellbeing benefits to their teams. This was the frontier I worked on: taking the marketplace model and extending it into the enterprise.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Impact -->
+    <div class="case-section reveal">
+      <div class="case-section-label">My Impact</div>
+      <h2 class="case-section-title">What I built and moved</h2>
+      <div class="case-section-body">
+        <p>As a PM Intern, I worked across two tracks — improving the existing app experience and scoping new venture opportunities for the platform. I was embedded with the product and growth teams, owning research, spec writing, and stakeholder alignment end-to-end.</p>
+      </div>
+
+      <div class="impact-grid reveal reveal-delay-1">
+        <div class="impact-card">
+          <div class="impact-number"><em>↑</em> 18%</div>
+          <div class="impact-label">Improvement in onboarding completion rate after flow redesign</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-number"><em>2</em> ventures</div>
+          <div class="impact-label">New B2B product concepts scoped and presented to leadership</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-number"><em>↓</em> 30%</div>
+          <div class="impact-label">Drop in drop-off at the practitioner search step after UX improvements</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-number"><em>6</em> sprints</div>
+          <div class="impact-label">Shipped features across search, booking, and the B2B dashboard in 6 months</div>
+        </div>
+      </div>
+
+      <ul class="case-bullets reveal reveal-delay-2" style="margin-top:36px;">
+        <li>Redesigned the new user onboarding flow — simplified step count, added progressive disclosure — lifting completion by 18%.</li>
+        <li>Ran qualitative user interviews with 20+ practitioners and consumers to identify friction in the booking experience.</li>
+        <li>Scoped and wrote PRDs for two new B2B venture ideas targeting corporate wellness budgets — both progressed to exec review.</li>
+        <li>Collaborated with engineering on the search ranking algorithm, improving relevance by surfacing availability and ratings earlier.</li>
+        <li>Built the analytics framework for tracking practitioner-side engagement, giving the team its first structured retention view.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>

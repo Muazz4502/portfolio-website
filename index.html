@@ -128,31 +128,52 @@
       color: #fff;
     }
 
-    /* Mobile pill */
+    /* Mobile nav */
     .nav-hamburger { display: none; }
     .mobile-menu {
-      position: fixed; inset: 0;
-      background: var(--bg);
+      position: fixed;
+      top: 0; left: 0; right: 0;
       z-index: 7999;
+      background: rgba(250,249,246,0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 28px 28px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 28px;
-      opacity: 0;
+      gap: 4px;
+      transform: translateY(-110%);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.1);
     }
-    .mobile-menu.active { opacity: 1; pointer-events: auto; }
+    .mobile-menu.active { transform: translateY(0); pointer-events: auto; }
     .mobile-menu a {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 2.2rem;
-      color: var(--fg);
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
       text-decoration: none;
+      padding: 13px 4px;
+      border-bottom: 1px solid var(--border-light);
       transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .mobile-menu a:hover { color: var(--accent); }
+    .mobile-menu a:last-child { border-bottom: none; margin-top: 8px; }
+    .mobile-menu a:hover { color: var(--fg); }
+    .mobile-menu a.mobile-cta {
+      font-weight: 600;
+      color: var(--fg);
+      background: var(--fg);
+      color: #fff;
+      border-radius: 99px;
+      padding: 13px 20px;
+      border-bottom: none;
+      justify-content: center;
+    }
+    .mobile-menu a.mobile-cta:hover { background: var(--accent); }
 
     /* ========== HERO ========== */
     .hero {
@@ -369,31 +390,23 @@
     }
 
     /* ========== MARQUEE ========== */
-    .marquee-section {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-      padding: 16px 0;
-      background: var(--card-bg);
-    }
-    .marquee-track {
+    .section-divider {
       display: flex;
-      width: max-content;
-      animation: marqueeScroll 40s linear infinite;
+      align-items: center;
+      gap: 16px;
+      padding: 0 var(--section-px, 60px);
+      margin: 8px 0;
     }
-    .marquee-content { display: flex; align-items: center; flex-shrink: 0; }
-    .marquee-item {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--muted-light);
-      white-space: nowrap;
-      padding: 0 16px;
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
-    .marquee-sep { color: var(--accent); font-size: 0.5rem; padding: 0 4px; opacity: 0.6; }
-    @keyframes marqueeScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    .section-divider-mark {
+      color: var(--accent);
+      font-size: 0.45rem;
+      opacity: 0.5;
+      flex-shrink: 0;
     }
 
     /* ========== SECTIONS ========== */
@@ -436,45 +449,464 @@
     .reveal-delay-6 { transition-delay: 0.48s; }
 
     /* ========== EXPERIENCE ========== */
-    .exp-table {
+    /* ========== EXPERIENCE CARDS ========== */
+    .exp-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .exp-card {
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+    }
+    .exp-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.13);
+    }
+    /* Per-card reveal — more dramatic than default */
+    .exp-card.reveal {
+      opacity: 0;
+      transform: translateY(48px) scale(0.975);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .exp-card.reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .exp-card-dark { background: #111110; }
+    .exp-card-light {
+      background: #f0ede6;
+      border: 1px solid var(--border);
+    }
+
+    /* FamApp body */
+    .exp-fam-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 44px 0;
+      padding-bottom: 0;
+    }
+    .exp-fam-logo {
+      height: 38px;
+      width: auto;
+      margin-bottom: 14px;
+    }
+    .exp-fam-tagline {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      color: rgba(240,236,228,0.45);
+      margin-bottom: 32px;
+      max-width: 400px;
+    }
+    .exp-fam-mockup-wrap {
       width: 100%;
-      border-collapse: collapse;
+      max-width: 720px;
+      margin: 0 auto;
+      height: 380px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      display: block;
     }
-    .exp-table tbody tr {
-      border-bottom: 1px solid var(--border-light);
-      transition: background 0.2s ease;
-      cursor: default;
+    .exp-fam-mockup {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 38%;
+      display: block;
     }
-    .exp-table tbody tr:first-child { border-top: 1px solid var(--border-light); }
-    .exp-table tbody tr:hover { background: var(--card-bg); }
-    .exp-table td {
-      padding: 22px 16px;
-      vertical-align: middle;
+
+    /* Avaana body */
+    .exp-avaana-body {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 32px;
+      align-items: center;
+      padding: 40px 44px 72px;
     }
-    .exp-table td:first-child { padding-left: 0; }
-    .exp-table td:last-child { padding-right: 0; }
-    .exp-td-date {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--muted-light);
-      white-space: nowrap;
-      width: 130px;
+    .exp-avaana-logo {
+      height: 22px;
+      width: auto;
+      margin-bottom: 20px;
+      display: block;
     }
-    .exp-td-company {
+    .exp-avaana-headline {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      line-height: 1.2;
+      color: #063E3B;
+      margin-bottom: 10px;
+    }
+    .exp-avaana-byline {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: rgba(6,62,59,0.5);
+    }
+    .exp-avaana-mockup {
+      width: 100%;
+      max-height: 380px;
+      object-fit: contain;
+      object-position: center right;
+      display: block;
+    }
+
+    /* Footer bars — purely floating, never push content */
+    .exp-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+    }
+    /* Both preview containers are position:relative so absolute bars anchor to them */
+    .exp-card-preview { position: relative; overflow: hidden; border-radius: 20px; }
+    .exp-card-footer-float {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .exp-card-footer-teal {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(26,58,42,0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .exp-card-footer-role {
       font-family: var(--sans);
       font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--fg);
-      white-space: nowrap;
-      width: 160px;
+      font-size: 1.15rem;
     }
-    .exp-td-role {
+    .exp-card-dark .exp-card-footer-role { color: #f0ece4; }
+    .exp-card-footer-teal .exp-card-footer-role { color: #f0ece4; }
+    .exp-card-footer-sub {
       font-family: var(--sans);
-      font-weight: 300;
-      font-size: 0.88rem;
-      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 2px;
     }
-    .exp-td-tags { text-align: right; white-space: nowrap; }
+    .exp-card-dark .exp-card-footer-sub { color: rgba(240,236,228,0.4); }
+    .exp-card-footer-teal .exp-card-footer-sub { color: rgba(240,236,228,0.45); }
+
+    /* Know More buttons */
+    .exp-know-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+      padding: 0;
+    }
+    .exp-know-more:hover { opacity: 1; }
+    .exp-know-more:hover .exp-know-more-arrow { transform: translate(2px, -2px); border-color: rgba(240,236,228,0.6); }
+    .exp-know-more-text { color: rgba(240,236,228,0.8); }
+    .exp-know-more-arrow {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(240,236,228,0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      position: relative;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), border-color 0.3s;
+    }
+    /* Pulse ring on hover */
+    .exp-know-more-arrow::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid rgba(240,236,228,0.15);
+      transform: scale(0.7);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
+    }
+    .exp-know-more:hover .exp-know-more-arrow::after {
+      transform: scale(1);
+      opacity: 1;
+    }
+    /* Pill button (Avaana) */
+    .exp-know-more-btn {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 99px;
+      font-size: 0.82rem;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.25s, transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s;
+    }
+    .exp-know-more-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(230,51,18,0.35);
+    }
+    .exp-know-more-btn:active { transform: translateY(0); }
+    .exp-card.expanded .exp-know-more-btn { background: #1a4440; box-shadow: none; }
+
+    /* ---- Curtain overlay — slides up over the card, card size never changes ---- */
+    .exp-card { position: relative; }
+    .exp-expand-wrap {
+      position: absolute;
+      inset: 0;
+      transform: translateY(100%);
+      transition: transform 0.9s cubic-bezier(0.16,1,0.3,1);
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-radius: 20px;
+      /* hide scrollbar but keep scrolling */
+      scrollbar-width: none;
+    }
+    .exp-expand-wrap::-webkit-scrollbar { display: none; }
+    .exp-card.expanded .exp-expand-wrap { transform: translateY(0); }
+
+    /* Expanded content — two-column layout, fits within card bounds */
+    .exp-expand-dark {
+      height: 100%;
+      padding: 44px 40px 36px;
+      background: #111110;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    .exp-expand-light {
+      height: 100%;
+      padding: 44px 40px 36px;
+      background: #e8e4dc;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    /* Two-col body */
+    .exp-expand-cols {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .exp-expand-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .exp-expand-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .exp-expand-dark .exp-expand-label { color: var(--accent); }
+    .exp-expand-light .exp-expand-label { color: #00a060; }
+
+    .exp-expand-title {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .exp-expand-dark .exp-expand-title { color: #f0ece4; }
+    .exp-expand-light .exp-expand-title { color: #063E3B; }
+
+    .exp-expand-body {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 300;
+      line-height: 1.65;
+    }
+    .exp-expand-dark .exp-expand-body { color: rgba(240,236,228,0.5); }
+    .exp-expand-light .exp-expand-body { color: rgba(6,62,59,0.6); }
+
+    .exp-col-divider {
+      border: none;
+      width: 1px;
+      margin: 0;
+      align-self: stretch;
+    }
+    .exp-expand-dark .exp-col-divider { background: rgba(255,255,255,0.08); }
+    .exp-expand-light .exp-col-divider { background: rgba(6,62,59,0.12); }
+    @media (max-width: 768px) {
+      .exp-col-divider { width: 100%; height: 1px; align-self: auto; }
+    }
+
+    /* Impact stat grid — 2×2 inside the right column */
+    .exp-impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .exp-impact-card {
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .exp-expand-dark .exp-impact-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .exp-expand-light .exp-impact-card {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(6,62,59,0.1);
+    }
+    .exp-impact-num {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+    .exp-expand-dark .exp-impact-num { color: #f0ece4; }
+    .exp-expand-light .exp-impact-num { color: #063E3B; }
+    .exp-impact-num em { color: var(--accent); font-style: normal; }
+    .exp-expand-light .exp-impact-num em { color: #00bd71; }
+    .exp-impact-lbl {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      line-height: 1.35;
+      font-weight: 300;
+    }
+    .exp-expand-dark .exp-impact-lbl { color: rgba(240,236,228,0.4); }
+    .exp-expand-light .exp-impact-lbl { color: rgba(6,62,59,0.5); }
+
+    /* Overlay bullet pointers */
+    .exp-overlay-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .exp-overlay-bullets li {
+      display: flex;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    .exp-overlay-bullets li::before { content: '→'; flex-shrink: 0; }
+    .exp-expand-dark .exp-overlay-bullets li { color: rgba(240,236,228,0.45); }
+    .exp-expand-dark .exp-overlay-bullets li::before { color: var(--accent); }
+    .exp-expand-light .exp-overlay-bullets li { color: rgba(6,62,59,0.55); }
+    .exp-expand-light .exp-overlay-bullets li::before { color: #00bd71; }
+
+    /* Overlay header — one unified row: meta left, close right */
+    .exp-overlay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .exp-overlay-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .exp-overlay-logo {
+      height: 22px;
+      width: auto;
+      flex-shrink: 0;
+    }
+    .exp-overlay-logo-light { filter: none; }
+    .exp-overlay-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .exp-overlay-role {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .exp-overlay-date {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+    }
+    .exp-overlay-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .exp-expand-dark .exp-overlay-role { color: #f0ece4; }
+    .exp-expand-dark .exp-overlay-date { color: rgba(240,236,228,0.35); }
+    .exp-expand-dark .exp-overlay-dot { background: rgba(240,236,228,0.25); }
+    .exp-expand-light .exp-overlay-role { color: #063E3B; }
+    .exp-expand-light .exp-overlay-date { color: rgba(6,62,59,0.4); }
+    .exp-expand-light .exp-overlay-dot { background: rgba(6,62,59,0.2); }
+
+    /* Close button — sits on the right of the header row */
+    .exp-close-btn {
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid transparent;
+      border-radius: 99px;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.08);
+      transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+      opacity: 0.7;
+    }
+    .exp-close-btn:hover { opacity: 1; background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.15); }
+    .exp-close-dark { color: #f0ece4; }
+    .exp-close-light {
+      color: #063E3B;
+      background: rgba(6,62,59,0.08);
+    }
+    .exp-close-light:hover { background: rgba(6,62,59,0.15); border-color: rgba(6,62,59,0.2); }
+    .exp-close-x { font-size: 0.85rem; }
+
+    /* Bullet list */
+    .exp-bullets {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .exp-bullets li {
+      display: flex;
+      gap: 10px;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .exp-bullets li::before { content: '→'; flex-shrink: 0; margin-top: 1px; }
+    .exp-expand-dark .exp-bullets li { color: rgba(240,236,228,0.55); }
+    .exp-expand-dark .exp-bullets li::before { color: var(--accent); }
+    .exp-expand-light .exp-bullets li { color: rgba(6,62,59,0.65); }
+    .exp-expand-light .exp-bullets li::before { color: #00bd71; }
+
     .tag {
       display: inline-block;
       font-family: var(--mono);
@@ -488,54 +920,82 @@
       margin-left: 5px;
       transition: border-color 0.2s, color 0.2s;
     }
-    .exp-table tbody tr:hover .tag {
-      border-color: rgba(230,51,18,0.2);
-      color: var(--fg);
-    }
 
     /* ========== ACHIEVEMENTS ========== */
-    .achievements-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+    .wins-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    .achievement-card {
+    .win-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px 20px 18px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.28s cubic-bezier(0.16,1,0.3,1), box-shadow 0.28s ease, border-color 0.28s ease;
+      border-radius: 99px;
+      padding: 14px 22px;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
-    .achievement-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--border);
-      transition: background 0.28s ease;
+    .win-row:hover {
+      border-color: rgba(230,51,18,0.2);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.06);
     }
-    .achievement-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.07);
-      border-color: rgba(230,51,18,0.12);
-    }
-    .achievement-card:hover::before { background: var(--accent); }
-    .achievement-icon { font-size: 1.4rem; margin-bottom: 12px; display: block; }
-    .achievement-card h3 {
-      font-family: var(--sans);
-      font-weight: 600;
-      font-size: 0.88rem;
-      color: var(--fg);
-      line-height: 1.35;
-      margin-bottom: 6px;
-    }
-    .achievement-source {
+    .win-result {
       font-family: var(--mono);
-      font-size: 0.58rem;
-      color: var(--muted-light);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-width: 94px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      text-align: center;
+      background: var(--accent);
+      color: #fff;
+    }
+    .win-result.silver {
+      background: #e8e5df;
+      color: #6a6a6a;
+    }
+    .win-result.dark {
+      background: var(--fg);
+      color: #fff;
+    }
+    .win-divider {
+      width: 1px;
+      height: 14px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .win-name {
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--fg);
+      flex-shrink: 0;
+    }
+    .win-dots {
+      flex: 1;
+      border-bottom: 1px dotted var(--muted-light);
+      min-width: 16px;
+      align-self: center;
+      margin: 0 4px;
+    }
+    .win-org {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--muted);
       letter-spacing: 0.04em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    @media (max-width: 640px) {
+      .win-row { border-radius: 16px; padding: 14px 18px; flex-wrap: wrap; gap: 4px 10px; }
+      .win-dots { display: none; }
+      .win-org { width: 100%; padding-left: calc(88px + 17px + 16px); font-size: 0.58rem; }
     }
 
     /* ========== PROJECTS ========== */
@@ -565,42 +1025,30 @@
       overflow: hidden;
     }
     /* Unique warm editorial gradients per project */
-    .pv-xr {
-      background: linear-gradient(145deg, #e8e2f8 0%, #c8d8f0 50%, #d8e8f8 100%);
-    }
-    .pv-gig {
-      background: linear-gradient(145deg, #e8f4e8 0%, #d4ecdc 50%, #e0f0e8 100%);
-    }
-    .pv-yt {
-      background: linear-gradient(145deg, #fae8d8 0%, #f4d8c8 50%, #f8e8d8 100%);
-    }
+    .pv-krishi  { background: linear-gradient(145deg, #e8f4e4 0%, #d4edcc 50%, #e0f2dc 100%); }
+    .pv-startup { background: linear-gradient(145deg, #fff4e0 0%, #fde8c0 50%, #fdf0d4 100%); }
+    .pv-samarth { background: linear-gradient(145deg, #e4eef8 0%, #cce0f4 50%, #daeaf8 100%); }
+    .pv-rebazz  { background: linear-gradient(145deg, #f0e8fc 0%, #e0d0f8 50%, #ece4f8 100%); }
+    .pv-port    { background: linear-gradient(145deg, #faf0e8 0%, #f4e0d0 50%, #f8ece0 100%); }
 
-    .project-visual::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle at 1.5px 1.5px, rgba(0,0,0,0.05) 1px, transparent 0);
-      background-size: 20px 20px;
-    }
-    .geo {
-      position: absolute;
-      z-index: 1;
-      animation: floatGeo 7s ease-in-out infinite;
-    }
-    @keyframes floatGeo {
-      0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
-      50% { transform: translateY(-8px) rotate(var(--r, 0deg)); }
-    }
-    .pv-label {
-      position: absolute;
-      bottom: 14px; left: 18px;
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-family: var(--mono);
-      font-size: 0.58rem;
-      color: rgba(0,0,0,0.2);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      z-index: 2;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 5px 12px;
+      margin-right: 6px;
+      margin-top: 4px;
+      transition: color 0.2s, border-color 0.2s;
     }
+    .project-link:hover { color: var(--fg); border-color: var(--fg); }
+
     .project-body { padding: 24px; }
     .project-type {
       font-family: var(--mono);
@@ -687,36 +1135,111 @@
     .photo-item img, .photo-item video { height: 100%; width: auto; display: block; object-fit: cover; }
 
     /* ========== PODCASTS ========== */
-    .podcast-scroll {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      padding-bottom: 4px;
-      /* Fade edges on desktop */
-      -webkit-mask: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
-      mask: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
+    .podcast-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
     }
-    .podcast-scroll::-webkit-scrollbar { display: none; }
-    .podcast-row { display: flex; gap: 14px; width: max-content; padding: 4px 40px; }
-    .podcast-card {
-      width: 186px;
-      flex-shrink: 0;
+    .yt-card {
+      border-radius: 16px;
+      overflow: hidden;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      transition: transform 0.28s cubic-bezier(0.16,1,0.3,1), box-shadow 0.28s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease;
+      cursor: pointer;
     }
-    .podcast-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
-    .podcast-art { width: 100%; aspect-ratio: 1; }
-    .p-art-1 { background: linear-gradient(135deg, #f0d8c0, #d8c0a0); }
-    .p-art-2 { background: linear-gradient(135deg, #c8d8f0, #a8b8d8); }
-    .p-art-3 { background: linear-gradient(135deg, #d8f0d8, #b0d4b8); }
-    .p-art-4 { background: linear-gradient(135deg, #f0d8e8, #d8b8d0); }
-    .p-art-5 { background: linear-gradient(135deg, #f0e8c8, #d8d0a0); }
-    .podcast-body { padding: 12px 14px 14px; }
-    .podcast-body h4 { font-family: var(--sans); font-weight: 600; font-size: 0.8rem; color: var(--fg); margin-bottom: 3px; line-height: 1.3; }
-    .podcast-body p { font-family: var(--sans); font-weight: 300; font-size: 0.72rem; color: var(--muted); }
+    .yt-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.14); }
+    .yt-card.yt-hidden { display: none; }
+    .yt-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: #111;
+    }
+    .yt-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), filter 0.4s ease;
+      filter: brightness(0.88);
+    }
+    .yt-card:hover .yt-thumb img {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+    .yt-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .yt-play-btn {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    .yt-card:hover .yt-play-btn {
+      transform: scale(1.12);
+      background: #fff;
+    }
+    .yt-play-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: #e63312;
+      margin-left: 3px;
+    }
+    .yt-info {
+      padding: 16px 18px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .yt-title {
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--fg);
+      line-height: 1.35;
+    }
+    .yt-desc {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .podcast-more-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 36px;
+    }
+    .podcast-more-btn {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .podcast-more-btn:hover { color: var(--fg); border-color: var(--fg); }
 
     /* ========== ABOUT ========== */
     .about-grid {
@@ -838,69 +1361,182 @@
       color: rgba(240,236,228,0.2);
       letter-spacing: 0.08em;
     }
-    /* Reversed marquee in footer */
-    .footer-marquee {
-      overflow: hidden;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 14px 0;
-      margin-top: 60px;
-    }
-    .footer-marquee .marquee-track { animation-direction: reverse; animation-duration: 22s; }
-    .footer-marquee .marquee-item { color: rgba(240,236,228,0.15); }
-    .footer-marquee .marquee-sep { color: rgba(230,51,18,0.4); }
-
     /* ========== RESPONSIVE ========== */
     @media (max-width: 1100px) {
-      .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 120px; padding-bottom: 60px; }
-      .hero-right { order: -1; max-width: 340px; margin: 0 auto; width: 100%; }
-      .hero-photo-frame::before { display: none; }
-      .hero-left { text-align: center; }
-      .hero-sub { margin-left: auto; margin-right: auto; }
-      .hero-ctas { justify-content: center; }
-      .hero-headline { font-size: clamp(2.8rem, 7vw, 5rem); }
-
+      .hero {
+        grid-template-columns: 1fr 260px;
+        padding: 100px 36px 60px;
+        gap: 36px;
+      }
+      .hero-headline { font-size: clamp(2.8rem, 6vw, 5rem); }
       .projects-grid { grid-template-columns: 1fr; }
       .project-card.featured { grid-template-columns: 1fr; }
       .project-card.featured .project-visual { height: 200px; min-height: unset; }
-      .achievements-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 768px) {
+      /* Nav */
       .nav { display: none; }
-      .nav-hamburger { display: flex; position: fixed; top: 16px; right: 16px; z-index: 8000; background: rgba(250,249,246,0.88); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 99px; padding: 10px 14px; gap: 5px; cursor: pointer; flex-direction: column; box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
-      .nav-hamburger span { display: block; width: 20px; height: 1.5px; background: var(--fg); transition: transform 0.3s ease, opacity 0.3s ease; }
-      .nav-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
-      .nav-hamburger.active span:nth-child(2) { opacity: 0; }
-      .nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
-      .hero { padding: 100px 20px 60px; }
+      .nav-hamburger {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: fixed;
+        top: 16px; right: 16px;
+        z-index: 8000;
+        background: rgba(250,249,246,0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--border);
+        border-radius: 99px;
+        padding: 9px 16px 9px 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        transition: background 0.2s;
+      }
+      .nav-hamburger:hover { background: rgba(250,249,246,1); }
+      .nav-hamburger-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+      .nav-hamburger-icon span {
+        display: block;
+        width: 16px;
+        height: 1.5px;
+        background: var(--fg);
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease, width 0.3s ease;
+        transform-origin: center;
+      }
+      .nav-hamburger-label {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+        color: var(--fg);
+        line-height: 1;
+      }
+      .nav-hamburger.active .nav-hamburger-icon span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+      .nav-hamburger.active .nav-hamburger-icon span:nth-child(2) { opacity: 0; width: 0; }
+      .nav-hamburger.active .nav-hamburger-icon span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+      /* Layout */
       .section { padding: 64px 20px; }
+      .section-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+
+      /* ---- Hero ---- */
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: unset;
+        padding: 100px 24px 60px;
+        gap: 40px;
+      }
+      .hero-right {
+        order: 1;
+        max-width: 220px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .hero-photo-frame::before { display: none; }
+      .hero-left { text-align: center; }
+      .hero-greeting { justify-content: center; }
+      .hero-sub { margin-left: auto; margin-right: auto; max-width: 420px; }
+      .hero-ctas { justify-content: center; }
+      .hero-stats { justify-content: center; flex-wrap: wrap; gap: 24px 32px; }
+      .hero-headline { font-size: clamp(2.6rem, 7vw, 4.5rem); }
+
+      /* About */
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
       .about-photo-wrap::before { display: none; }
       .about-photo { max-width: 280px; }
-      .achievements-grid { grid-template-columns: 1fr; }
-      .exp-td-role { display: none; }
-      .exp-td-tags { white-space: normal; text-align: left; }
-      .exp-td-tags .tag { margin-left: 0; margin-right: 5px; margin-top: 4px; }
-      .section-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+
+      /* Achievements */
+
+      /* ---- Experience cards ---- */
+      .exp-fam-body { padding: 28px 20px 0; }
+      .exp-fam-logo { height: 30px; }
+      .exp-fam-tagline { font-size: 0.75rem; margin-bottom: 20px; }
+      .exp-fam-mockup-wrap { height: 240px; }
+      .exp-avaana-body { grid-template-columns: 1fr; gap: 16px; padding: 28px 20px 76px; }
+      .exp-avaana-mockup { max-height: 200px; }
+      .exp-avaana-headline { font-size: 1.2rem; }
+      .exp-avaana-logo { height: 18px; }
+      .exp-card-footer { padding: 16px 20px; }
+      .exp-card-footer-role { font-size: 0.95rem; }
+      .exp-card-footer-sub { font-size: 0.75rem; }
+      .exp-know-more-arrow { width: 28px; height: 28px; }
+
+      /* ---- Expand overlay — slide animation kept, card grows to fit ---- */
+      .exp-expand-wrap {
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        bottom: auto;
+        min-height: 100%;
+        overflow-y: visible;
+        transition: transform 0.9s cubic-bezier(0.16,1,0.3,1);
+      }
+      .exp-card {
+        transition: min-height 0.9s cubic-bezier(0.16,1,0.3,1);
+      }
+      .exp-expand-dark, .exp-expand-light { padding: 32px 20px 28px; height: auto; min-height: unset; }
+      .exp-expand-cols { grid-template-columns: 1fr; gap: 20px; }
+      .exp-col-divider { width: 100%; height: 1px; align-self: auto; }
+      .exp-expand-dark .exp-col-divider { background: rgba(255,255,255,0.08); }
+      .exp-expand-light .exp-col-divider { background: rgba(6,62,59,0.12); }
+      .exp-impact-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .exp-impact-num { font-size: 1.4rem; }
+      .exp-impact-lbl { font-size: 0.62rem; }
+      .exp-overlay-header { margin-bottom: 20px; }
+      .exp-overlay-role { font-size: 0.9rem; }
+      .exp-overlay-date { font-size: 0.62rem; }
+      .exp-close-btn { font-size: 0.7rem; padding: 5px 10px; }
+      .exp-expand-title { font-size: 0.92rem; }
+      .exp-expand-body { font-size: 0.75rem; }
+      .exp-overlay-bullets li { font-size: 0.68rem; }
+
+      /* Podcast */
+      .podcast-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .podcast-grid .yt-card:nth-child(4) { display: flex !important; }
+
+      /* Footer */
       .footer-inner { padding: 80px 20px 0; }
       .footer-bottom { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
     }
+
     @media (max-width: 480px) {
-      .hero { padding: 90px 16px 48px; }
-      .hero-right { max-width: 260px; }
-      .hero-headline { font-size: clamp(2.2rem, 9vw, 3rem); }
-      .hero-ctas { flex-direction: column; align-items: center; }
-      .hero-ctas a { width: 100%; text-align: center; }
-      .exp-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      .exp-td-date { width: auto; }
-      .exp-td-company { width: auto; }
-      .lately-header { padding: 0 20px; }
-      .podcast-row { padding: 4px 16px; }
+      /* ---- Hero ---- */
+      .hero { padding: 88px 16px 48px; gap: 28px; }
+      .hero-right { max-width: 180px; }
+      .hero-greeting-label, .hero-name { font-size: clamp(1.4rem, 5vw, 2rem); }
+      .hero-headline { font-size: clamp(2rem, 8.5vw, 3rem); }
+      .hero-ctas { flex-direction: column; align-items: stretch; gap: 10px; }
+      .hero-ctas a { text-align: center; }
+      .hero-stats { gap: 16px 24px; }
+      .hero-stat-num { font-size: 1.5rem; }
+
       .section { padding: 48px 16px; }
+
+      /* ---- Experience cards ---- */
+      .exp-fam-body { padding: 20px 16px 0; }
+      .exp-fam-logo { height: 26px; }
+      .exp-fam-mockup-wrap { height: 190px; }
+      .exp-avaana-body { padding: 20px 16px 68px; }
+      .exp-card-footer { padding: 13px 16px; }
+      .exp-card-footer-role { font-size: 0.85rem; }
+      .exp-expand-dark, .exp-expand-light { padding: 28px 16px 20px; }
+      .exp-impact-grid { gap: 6px; }
+      .exp-impact-num { font-size: 1.2rem; }
+      .exp-impact-card { padding: 10px; }
+
+      /* Other */
+      .lately-header { padding: 0 16px; }
+      .podcast-grid { grid-template-columns: 1fr; gap: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-      .marquee-track { animation: none !important; }
       #cursorGlow { display: none; }
       .reveal, .hero-greeting, .hero-headline, .hero-sub, .hero-ctas, .hero-stats, .hero-right { opacity: 1; transform: none; }
       .scroll-track-left, .scroll-track-right { animation: none !important; }
@@ -918,20 +1554,23 @@
     <a href="#projects">Projects</a>
     <a href="#lately">Lately</a>
     <a href="#about">About</a>
-    <a href="#">Resume</a>
+    <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
     <a href="mailto:hello@muazz.com" class="nav-cta">Let's Talk</a>
   </nav>
   <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
+    <div class="nav-hamburger-icon">
+      <span></span><span></span><span></span>
+    </div>
+    <span class="nav-hamburger-label">Menu</span>
   </button>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#work" onclick="closeMobileMenu()">Work</a>
-    <a href="#projects" onclick="closeMobileMenu()">Projects</a>
-    <a href="#lately" onclick="closeMobileMenu()">Lately</a>
-    <a href="#about" onclick="closeMobileMenu()">About</a>
-    <a href="#" onclick="closeMobileMenu()">Resume</a>
-    <a href="mailto:hello@muazz.com" onclick="closeMobileMenu()">Let's Talk</a>
+    <a href="#work" onclick="closeMobileMenu()">Work <span>→</span></a>
+    <a href="#projects" onclick="closeMobileMenu()">Projects <span>→</span></a>
+    <a href="#lately" onclick="closeMobileMenu()">Lately <span>→</span></a>
+    <a href="#about" onclick="closeMobileMenu()">About <span>→</span></a>
+    <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()">Resume <span>↗</span></a>
+    <a href="mailto:hello@muazz.com" onclick="closeMobileMenu()" class="mobile-cta">Let's Talk</a>
   </div>
 
   <main>
@@ -950,7 +1589,7 @@
           <span>Product Manager @ FamPay · Payments and Fintech · Bangalore</span>
         </div>
         <div class="hero-ctas">
-          <a href="#" class="btn-primary">View Resume</a><!-- Replace # with actual PDF URL -->
+          <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-primary">View Resume</a><!-- Replace # with actual PDF URL -->
           <a href="https://www.linkedin.com/in/muazz/" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn &rarr;</a>
         </div>
       </div>
@@ -963,33 +1602,6 @@
       </div>
     </section>
 
-    <!-- MARQUEE -->
-    <div class="marquee-section">
-      <div class="marquee-track">
-        <div class="marquee-content">
-          <span class="marquee-item">Product Strategy</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">Payments Infrastructure</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">UX Optimization</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">SQL &amp; Analytics</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">Stakeholder Management</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">A/B Testing</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">Growth Loops</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">0&rarr;1 Builds</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">Cross-Functional Pods</span><span class="marquee-sep">&#9670;</span>
-        </div>
-        <div class="marquee-content" aria-hidden="true">
-          <span class="marquee-item">Product Strategy</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">Payments Infrastructure</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">UX Optimization</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">SQL &amp; Analytics</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">Stakeholder Management</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">A/B Testing</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">Growth Loops</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">0&rarr;1 Builds</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">Cross-Functional Pods</span><span class="marquee-sep">&#9670;</span>
-        </div>
-      </div>
-    </div>
 
     <!-- EXPERIENCE -->
     <section class="section" id="work">
@@ -998,31 +1610,168 @@
         <h2 class="section-title">Experience that <em>ships</em></h2>
       </div>
 
-      <table class="exp-table reveal reveal-delay-1">
-        <tbody>
-          <tr>
-            <td class="exp-td-date">2024 — Present</td>
-            <td class="exp-td-company">FamPay</td>
-            <td class="exp-td-role">Product Manager — Payments Health &amp; Growth</td>
-            <td class="exp-td-tags">
-              <span class="tag">Payments</span>
-              <span class="tag">Analytics</span>
-              <span class="tag">SQL</span>
-              <span class="tag">NPCI</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="exp-td-date">2023 — 2024</td>
-            <td class="exp-td-company">Avaana Capital</td>
-            <td class="exp-td-role">Product Manager Intern</td>
-            <td class="exp-td-tags">
-              <span class="tag">A/B Testing</span>
-              <span class="tag">Onboarding</span>
-              <span class="tag">Growth</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="exp-cards">
+
+        <!-- FamApp Card -->
+        <div class="exp-card exp-card-dark reveal">
+          <!-- Preview -->
+          <div class="exp-card-preview">
+            <div class="exp-fam-body">
+              <img src="mockup and logos/FamApp Logo Icon.svg" alt="FamApp" class="exp-fam-logo">
+              <p class="exp-fam-tagline">Building a financially aware, smart and independent generation</p>
+              <div class="exp-fam-mockup-wrap">
+                <img src="mockup and logos/Fam mockup.png" alt="FamApp product screens" class="exp-fam-mockup">
+              </div>
+            </div>
+            <div class="exp-card-footer exp-card-footer-float">
+              <div>
+                <div class="exp-card-footer-role">Product Manager</div>
+                <div class="exp-card-footer-sub">Payments and Revenue</div>
+              </div>
+              <button class="exp-know-more exp-know-more-text" data-target="exp-fampay-expand">
+                <span class="exp-km-label">Know More</span>
+                <span class="exp-know-more-arrow">↗</span>
+              </button>
+            </div>
+          </div>
+          <!-- Curtain overlay — slides up over the card -->
+          <div class="exp-expand-wrap" id="exp-fampay-expand">
+            <div class="exp-expand-dark">
+              <div class="exp-overlay-header">
+                <div class="exp-overlay-meta">
+                  <div class="exp-overlay-title-row">
+                    <span class="exp-overlay-role">Product Manager — Payments &amp; Revenue</span>
+                    <span class="exp-overlay-dot"></span>
+                    <span class="exp-overlay-date">2024 — Present</span>
+                  </div>
+                </div>
+                <button class="exp-close-btn exp-close-dark" data-target="exp-fampay-expand">
+                  Close <span class="exp-close-x">↓</span>
+                </button>
+              </div>
+              <div class="exp-expand-cols">
+                <!-- Left: Company -->
+                <div class="exp-expand-col">
+                  <div class="exp-expand-label">The Company</div>
+                  <h3 class="exp-expand-title">What does FamPay do?</h3>
+                  <p class="exp-expand-body">India's first neobank for teenagers — giving teens a UPI-powered account and numberless FamCard to spend, split, and save independently before they turn 18.</p>
+                </div>
+                <!-- Divider -->
+                <hr class="exp-col-divider">
+                <!-- Right: Impact -->
+                <div class="exp-expand-col">
+                  <div class="exp-expand-label">My Impact</div>
+                  <div class="exp-impact-grid">
+                    <div class="exp-impact-card">
+                      <div class="exp-impact-num"><em>↑</em> 23%</div>
+                      <div class="exp-impact-lbl">UPI success rate</div>
+                    </div>
+                    <div class="exp-impact-card">
+                      <div class="exp-impact-num"><em>3×</em></div>
+                      <div class="exp-impact-lbl">FamCard revenue growth</div>
+                    </div>
+                    <div class="exp-impact-card">
+                      <div class="exp-impact-num"><em>↓</em> 40%</div>
+                      <div class="exp-impact-lbl">Payment failure complaints</div>
+                    </div>
+                    <div class="exp-impact-card">
+                      <div class="exp-impact-num"><em>2</em></div>
+                      <div class="exp-impact-lbl">Core features launched</div>
+                    </div>
+                  </div>
+                  <ul class="exp-overlay-bullets">
+                    <li>Rebuilt payment monitoring — cut detection-to-fix from 48h to 6h</li>
+                    <li>Led NPCI integration for UPI Lite on sub-₹200 transactions</li>
+                    <li>A/B tested payment confirmation screen — moved conversion double digits</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Avaana Card -->
+        <div class="exp-card exp-card-light reveal reveal-delay-2">
+          <!-- Preview -->
+          <div class="exp-card-preview">
+            <div class="exp-avaana-body">
+              <div class="exp-avaana-text">
+                <img src="mockup and logos/Avaana Logo.svg" alt="Avaana" class="exp-avaana-logo">
+                <h3 class="exp-avaana-headline">Find and book local health and wellbeing practitioners</h3>
+                <p class="exp-avaana-byline">Wellbeing platform for individuals &amp; teams</p>
+              </div>
+              <div class="exp-avaana-visual">
+                <img src="mockup and logos/avaana mockup.png" alt="Avaana product" class="exp-avaana-mockup">
+              </div>
+            </div>
+            <div class="exp-card-footer exp-card-footer-teal">
+              <div>
+                <div class="exp-card-footer-role">Product Management Intern</div>
+                <div class="exp-card-footer-sub">App experience and new ventures</div>
+              </div>
+              <button class="exp-know-more exp-know-more-text" data-target="exp-avaana-expand">
+                <span class="exp-km-label">Know More</span>
+                <span class="exp-know-more-arrow">↗</span>
+              </button>
+            </div>
+          </div>
+          <!-- Curtain overlay — slides up over the card -->
+          <div class="exp-expand-wrap" id="exp-avaana-expand">
+            <div class="exp-expand-light">
+              <div class="exp-overlay-header">
+                <div class="exp-overlay-meta">
+                  <div class="exp-overlay-title-row">
+                    <span class="exp-overlay-role">Product Management Intern</span>
+                    <span class="exp-overlay-dot"></span>
+                    <span class="exp-overlay-date">2023 — 2024</span>
+                  </div>
+                </div>
+                <button class="exp-close-btn exp-close-light" data-target="exp-avaana-expand">
+                  Close <span class="exp-close-x">↓</span>
+                </button>
+              </div>
+              <div class="exp-expand-cols">
+                <!-- Left: Company -->
+                <div class="exp-expand-col">
+                  <div class="exp-expand-label">The Company</div>
+                  <h3 class="exp-expand-title">What does Avaana do?</h3>
+                  <p class="exp-expand-body">Australia's leading health and wellbeing marketplace — connecting people to practitioners across physio, massage, counselling, and more. I worked on their B2B vertical: bringing wellbeing to enterprise teams.</p>
+                </div>
+                <!-- Divider -->
+                <hr class="exp-col-divider">
+                <!-- Right: Impact -->
+                <div class="exp-expand-col">
+                  <div class="exp-expand-label">My Impact</div>
+                  <div class="exp-impact-grid">
+                    <div class="exp-impact-card">
+                      <div class="exp-impact-num"><em>↑</em> 18%</div>
+                      <div class="exp-impact-lbl">Onboarding completion</div>
+                    </div>
+                    <div class="exp-impact-card">
+                      <div class="exp-impact-num"><em>2</em></div>
+                      <div class="exp-impact-lbl">B2B concepts to exec review</div>
+                    </div>
+                    <div class="exp-impact-card">
+                      <div class="exp-impact-num"><em>↓</em> 30%</div>
+                      <div class="exp-impact-lbl">Search drop-off rate</div>
+                    </div>
+                    <div class="exp-impact-card">
+                      <div class="exp-impact-num"><em>6</em></div>
+                      <div class="exp-impact-lbl">Sprints shipped</div>
+                    </div>
+                  </div>
+                  <ul class="exp-overlay-bullets">
+                    <li>Redesigned onboarding — simplified steps, progressive disclosure</li>
+                    <li>Scoped two B2B venture PRDs targeting corporate wellness budgets</li>
+                    <li>Built practitioner-side retention analytics from scratch</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
     <!-- ACHIEVEMENTS -->
@@ -1031,36 +1780,55 @@
         <span class="section-label">Wins</span>
         <h2 class="section-title">Proof I <em>ship</em></h2>
       </div>
-      <div class="achievements-grid">
-        <div class="achievement-card reveal reveal-delay-1">
-          <span class="achievement-icon">&#x1F3C6;</span>
-          <h3>Smart India Hackathon — Winner</h3>
-          <span class="achievement-source">Govt of India &middot; 200K+ participants</span>
+      <div class="wins-list reveal">
+        <div class="win-row">
+          <span class="win-result dark">Recognition</span>
+          <div class="win-divider"></div>
+          <span class="win-name">FamStar of the Quarter</span>
+          <span class="win-dots"></span>
+          <span class="win-org">FamPay</span>
         </div>
-        <div class="achievement-card reveal reveal-delay-2">
-          <span class="achievement-icon">&#x1F948;</span>
-          <h3>Execute 2.0 — Runners Up</h3>
-          <span class="achievement-source">DTU E-Cell</span>
+        <div class="win-row">
+          <span class="win-result">Winner</span>
+          <div class="win-divider"></div>
+          <span class="win-name">Smart India Hackathon 2022</span>
+          <span class="win-dots"></span>
+          <span class="win-org">Govt of India &middot; 200K+ participants</span>
         </div>
-        <div class="achievement-card reveal reveal-delay-3">
-          <span class="achievement-icon">&#x1F3C6;</span>
-          <h3>OSD Hack'21 — Winner</h3>
-          <span class="achievement-source">36-hour hackathon &middot; 120+ teams</span>
+        <div class="win-row">
+          <span class="win-result silver">Finalist</span>
+          <div class="win-divider"></div>
+          <span class="win-name">PMx — India's Biggest PM Competition</span>
+          <span class="win-dots"></span>
+          <span class="win-org">Product Folks &amp; IIT Guwahati &middot; Jan 2023</span>
         </div>
-        <div class="achievement-card reveal reveal-delay-1">
-          <span class="achievement-icon">&#x1F3C6;</span>
-          <h3>PsycOnSale — Winner</h3>
-          <span class="achievement-source">Jai Hind College, Mumbai</span>
+        <div class="win-row">
+          <span class="win-result silver">Runners Up</span>
+          <div class="win-divider"></div>
+          <span class="win-name">Execute 2.0</span>
+          <span class="win-dots"></span>
+          <span class="win-org">E Cell DTU &middot; May 2022</span>
         </div>
-        <div class="achievement-card reveal reveal-delay-2">
-          <span class="achievement-icon">&#x1F51D;</span>
-          <h3>Top 5 — First Hackathon</h3>
-          <span class="achievement-source">Microsoft Learn &middot; Thapar</span>
+        <div class="win-row">
+          <span class="win-result">Winner</span>
+          <div class="win-divider"></div>
+          <span class="win-name">OSD Hack'22</span>
+          <span class="win-dots"></span>
+          <span class="win-org">JIIT Noida &middot; 120+ teams</span>
         </div>
-        <div class="achievement-card reveal reveal-delay-3">
-          <span class="achievement-icon">&#x265F;&#xFE0F;</span>
-          <h3>Chess Engine Builder</h3>
-          <span class="achievement-source">Personal project &middot; v2 shipped</span>
+        <div class="win-row">
+          <span class="win-result">Winner</span>
+          <div class="win-divider"></div>
+          <span class="win-name">Psyc Insight</span>
+          <span class="win-dots"></span>
+          <span class="win-org">Jai Hind College, Mumbai</span>
+        </div>
+        <div class="win-row">
+          <span class="win-result">Winner</span>
+          <div class="win-divider"></div>
+          <span class="win-name">Shark's Capital</span>
+          <span class="win-dots"></span>
+          <span class="win-org">Microsoft Learn Student Ambassador Chapter</span>
         </div>
       </div>
     </section>
@@ -1068,58 +1836,71 @@
     <!-- PROJECTS -->
     <section class="section" id="projects">
       <div class="section-header reveal">
-        <span class="section-label">What I'm building</span>
+        <span class="section-label">What I've built</span>
         <h2 class="section-title">The builder never <em>stops</em></h2>
       </div>
       <div class="projects-grid">
+
         <article class="project-card featured reveal">
-          <div class="project-visual pv-xr">
-            <svg class="geo" style="width:70px;top:20%;left:12%;--r:45deg;" viewBox="0 0 70 70" fill="none"><rect x="2" y="2" width="66" height="66" rx="8" stroke="rgba(100,80,200,0.18)" stroke-width="1.5"/></svg>
-            <svg class="geo" style="width:44px;top:15%;right:20%;--r:0deg;animation-delay:-2s;" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="rgba(80,120,200,0.18)" stroke-width="1.5"/></svg>
-            <svg class="geo" style="width:88px;bottom:10%;right:10%;--r:15deg;animation-delay:-4s;" viewBox="0 0 88 88" fill="none"><rect x="2" y="2" width="84" height="84" rx="12" stroke="rgba(100,140,200,0.14)" stroke-width="1.5"/></svg>
-            <span class="pv-label">XR &middot; Spatial Computing &middot; SDK</span>
-          </div>
+          <div class="project-visual pv-startup"></div>
           <div class="project-body">
-            <div class="project-type">Pre-Seed Startup</div>
-            <h3>Shopify for XR — Enabling the Spatial Internet</h3>
-            <p>The runtime layer that lets existing mobile apps transition into XR without rebuilding from scratch.</p>
+            <div class="project-type">Web &middot; 2.5K+ views in 2 months</div>
+            <h3>Startup Hub — Resources for Builders</h3>
+            <p>A centralised platform with entrepreneurial blogs, podcasts, and resources for the startup community. Built with a team of 6 — handled frontend, ideation, design, and marketing.</p>
             <div class="project-tags">
-              <span class="tag">XR/AR/VR</span><span class="tag">WebXR</span><span class="tag">B2B SaaS</span><span class="tag">Enterprise SDK</span>
+              <span class="tag">Frontend</span><span class="tag">Community</span><span class="tag">Startups</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://startuphub.ecellvit.com" target="_blank" rel="noopener">Live Site ↗</a>
             </div>
           </div>
         </article>
 
         <article class="project-card reveal reveal-delay-1">
-          <div class="project-visual pv-gig">
-            <svg class="geo" style="width:54px;top:25%;left:18%;--r:30deg;" viewBox="0 0 54 54" fill="none"><rect x="2" y="2" width="50" height="50" rx="6" stroke="rgba(60,140,80,0.2)" stroke-width="1.5"/></svg>
-            <svg class="geo" style="width:36px;top:18%;right:22%;--r:0deg;animation-delay:-2.5s;" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="rgba(60,140,80,0.16)" stroke-width="1.5"/></svg>
-            <span class="pv-label">Marketplace &middot; Gig Economy</span>
-          </div>
+          <div class="project-visual pv-krishi"></div>
           <div class="project-body">
-            <div class="project-type">Concept</div>
-            <h3>One App for Every Gig</h3>
-            <p>A unified platform aggregating opportunities across Swiggy, Zomato, Uber, and Ola for India's gig workforce.</p>
+            <div class="project-type">Hack Project &middot; AgriTech</div>
+            <h3>Krishi Bimb</h3>
+            <p>An agricultural marketplace connecting farmers directly with buyers — removing intermediaries and ensuring quality assurance.</p>
             <div class="project-tags">
-              <span class="tag">Marketplace</span><span class="tag">Gig Economy</span><span class="tag">FinTech</span>
+              <span class="tag">AgriTech</span><span class="tag">Marketplace</span><span class="tag">Design</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://www.canva.com/design/DAEdND5Fj94/K2bz-GIaD5j_piVrMd7pNA/view" target="_blank" rel="noopener">View Design ↗</a>
             </div>
           </div>
         </article>
 
         <article class="project-card reveal reveal-delay-2">
-          <div class="project-visual pv-yt">
-            <svg class="geo" style="width:60px;top:20%;left:15%;--r:60deg;" viewBox="0 0 60 60" fill="none"><rect x="2" y="2" width="56" height="56" rx="8" stroke="rgba(200,100,60,0.18)" stroke-width="1.5"/></svg>
-            <svg class="geo" style="width:80px;bottom:12%;right:12%;--r:25deg;animation-delay:-3.5s;" viewBox="0 0 80 80" fill="none"><rect x="2" y="2" width="76" height="76" rx="10" stroke="rgba(200,120,60,0.12)" stroke-width="1.5"/></svg>
-            <span class="pv-label">Content &middot; Storytelling</span>
-          </div>
+          <div class="project-visual pv-samarth"></div>
           <div class="project-body">
-            <div class="project-type">Content</div>
-            <h3>30-Day Short Video Challenge</h3>
-            <p>Daily short-form videos inspired by Yes Theory. Exploring storytelling and consistency.</p>
+            <div class="project-type">Hack Project &middot; Social Impact</div>
+            <h3>Samarth</h3>
+            <p>Employment platform connecting people with disabilities to meaningful opportunities — built with a team of 4 focused on ideation, UI, and pitching.</p>
             <div class="project-tags">
-              <span class="tag">YouTube</span><span class="tag">Storytelling</span>
+              <span class="tag">Social Impact</span><span class="tag">UI Design</span><span class="tag">InclusiveTech</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://app.pitch.com/app/presentation/2dc8c52c-8c6f-4fff-b741-277a9d564b0c/9cf274e8-bbee-4842-8d87-4970618b4ad0" target="_blank" rel="noopener">View Pitch ↗</a>
             </div>
           </div>
         </article>
+
+        <article class="project-card reveal reveal-delay-1">
+          <div class="project-visual pv-rebazz"></div>
+          <div class="project-body">
+            <div class="project-type">Hack Project &middot; Web3</div>
+            <h3>₹eBazz</h3>
+            <p>Blockchain-powered local marketplace letting customers find nearby retailers by product and category — bridging online discovery with offline retail.</p>
+            <div class="project-tags">
+              <span class="tag">Blockchain</span><span class="tag">Marketplace</span><span class="tag">Web Dev</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://pitch.com/public/ecb82c98-0748-46f6-b91b-6f8891164dd3" target="_blank" rel="noopener">View Pitch Deck ↗</a>
+            </div>
+          </div>
+        </article>
+
       </div>
     </section>
 
@@ -1238,14 +2019,82 @@
         <span class="section-label">On Repeat</span>
         <h2 class="section-title">Podcasts I <em>swear by</em></h2>
       </div>
-      <div class="podcast-scroll reveal">
-        <div class="podcast-row">
-          <div class="podcast-card"><div class="podcast-art p-art-1"></div><div class="podcast-body"><h4>Lenny's Podcast</h4><p>Best PM thinking, period.</p></div></div>
-          <div class="podcast-card"><div class="podcast-art p-art-2"></div><div class="podcast-body"><h4>Acquired</h4><p>How the greatest companies were built.</p></div></div>
-          <div class="podcast-card"><div class="podcast-art p-art-3"></div><div class="podcast-body"><h4>My First Million</h4><p>Startup ideas on tap.</p></div></div>
-          <div class="podcast-card"><div class="podcast-art p-art-4"></div><div class="podcast-body"><h4>The Knowledge Project</h4><p>Mental models for builders.</p></div></div>
-          <div class="podcast-card"><div class="podcast-art p-art-5"></div><div class="podcast-body"><h4>CRED Curious</h4><p>Indian startup brain food.</p></div></div>
-        </div>
+      <div class="podcast-grid reveal">
+        <!-- Row 1 -->
+        <a class="yt-card" href="https://youtu.be/v1nkN0sM2wc" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/v1nkN0sM2wc/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">How Google Was Built</div>
+            <div class="yt-desc">The unlikely story of how two PhD dropouts built the most important company of the internet age — and the decisions that got them there.</div>
+          </div>
+        </a>
+        <a class="yt-card" href="https://youtu.be/oX7OduG1YmI" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/oX7OduG1YmI/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Imagine in the Future</div>
+            <div class="yt-desc">A wide-ranging conversation on compounding ambition, building conviction in uncertain markets, and why the best founders think in decades.</div>
+          </div>
+        </a>
+        <a class="yt-card" href="https://youtu.be/ZSM2uFnJ5bs" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/ZSM2uFnJ5bs/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Tobi Lütke on Building Shopify</div>
+            <div class="yt-desc">Shopify's CEO on staying obsessively founder-mode, making high-stakes bets, and designing a company that compounds over time.</div>
+          </div>
+        </a>
+        <!-- Row 2 — hidden until "View More" -->
+        <a class="yt-card yt-hidden" href="https://youtu.be/6OJRn44JlC4" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/6OJRn44JlC4/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Paul Graham's Essays</div>
+            <div class="yt-desc">The canonical reading list for anyone building something — Make things people want, Do things that don't scale, and why startups are the only way to get rich.</div>
+          </div>
+        </a>
+        <a class="yt-card yt-hidden" href="https://youtu.be/FFnTWSYQnyY" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/FFnTWSYQnyY/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Product Thinking &amp; Growth</div>
+            <div class="yt-desc">A masterclass in building products people actually want — covering discovery, iteration, and the art of shipping before you feel ready.</div>
+          </div>
+        </a>
+        <a class="yt-card yt-hidden" href="https://youtu.be/vZGfSlnUq-8" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/vZGfSlnUq-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Unfiltered by Samdish</div>
+            <div class="yt-desc">Sajad Lone sits down for an unfiltered conversation — refreshingly direct, covering ground most public figures wouldn't dare touch.</div>
+          </div>
+        </a>
+        <a class="yt-card yt-hidden" href="https://youtu.be/YP_QghPLG-8" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/YP_QghPLG-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Title — update me</div>
+            <div class="yt-desc">Description — let me know what this one's about and I'll write it properly.</div>
+          </div>
+        </a>
+      </div>
+      <div class="podcast-more-wrap">
+        <button class="podcast-more-btn" id="podcastMoreBtn" onclick="togglePodcasts(this)">View More ↓</button>
       </div>
     </section>
 
@@ -1272,7 +2121,7 @@
             <p>I believe a startup doesn't need a perfect product at launch &mdash; it needs an insanely great experience, starting with how attentive you are to every early user.</p>
           </div>
           <div class="about-ctas">
-            <a href="#" class="btn-primary">View Resume</a><!-- Replace # with PDF URL -->
+            <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-primary">View Resume</a><!-- Replace # with PDF URL -->
             <a href="https://www.linkedin.com/in/muazz/" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn &rarr;</a>
           </div>
         </div>
@@ -1287,40 +2136,12 @@
       <h2 class="footer-headline">Let's build something<br><em>together.</em></h2>
       <a href="mailto:hello@muazz.com" class="footer-email">hello@muazz.com</a>
       <div class="footer-pills">
-        <a href="#" class="footer-pill">Resume</a><!-- Replace # with PDF URL -->
+        <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="footer-pill">Resume</a>
         <a href="https://www.linkedin.com/in/muazz/" target="_blank" rel="noopener noreferrer" class="footer-pill">LinkedIn</a>
         <a href="#" target="_blank" rel="noopener noreferrer" class="footer-pill">GitHub</a><!-- Replace # -->
         <a href="#" target="_blank" rel="noopener noreferrer" class="footer-pill">Twitter/X</a><!-- Replace # -->
       </div>
       <p class="footer-note">If you've scrolled this far, we should probably talk.</p>
-    </div>
-    <div class="footer-marquee">
-      <div class="marquee-track">
-        <div class="marquee-content">
-          <span class="marquee-item">MUAZZ</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">PRODUCT BUILDER</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">BENGALURU</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">FAMPAY</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">XR STARTUP</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">MUAZZ</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">PRODUCT BUILDER</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">BENGALURU</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">FAMPAY</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">XR STARTUP</span><span class="marquee-sep">&#9670;</span>
-        </div>
-        <div class="marquee-content" aria-hidden="true">
-          <span class="marquee-item">MUAZZ</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">PRODUCT BUILDER</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">BENGALURU</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">FAMPAY</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">XR STARTUP</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">MUAZZ</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">PRODUCT BUILDER</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">BENGALURU</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">FAMPAY</span><span class="marquee-sep">&#9670;</span>
-          <span class="marquee-item">XR STARTUP</span><span class="marquee-sep">&#9670;</span>
-        </div>
-      </div>
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">&copy; 2026 Muazz</span>
@@ -1344,16 +2165,114 @@
     const nav=document.getElementById('mainNav');
     new IntersectionObserver(e=>e.forEach(x=>nav.classList.toggle('visible',!x.isIntersecting)),{threshold:0.15}).observe(document.getElementById('hero'));
 
+    /* Podcast view more */
+    function podcastThreshold() { return window.innerWidth <= 768 ? 4 : 3; }
+
+    function togglePodcasts(btn) {
+      const allCards = Array.from(document.querySelectorAll('.yt-card'));
+      const threshold = podcastThreshold();
+      const extraCards = allCards.slice(threshold);
+      const isHidden = extraCards[0] && extraCards[0].classList.contains('yt-hidden');
+
+      if (isHidden) {
+        // Show with staggered fade-up
+        extraCards.forEach((el, i) => {
+          el.classList.remove('yt-hidden');
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(22px)';
+          el.style.transition = 'none';
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              el.style.transition = `opacity 0.5s ease ${i * 0.09}s, transform 0.55s cubic-bezier(0.16,1,0.3,1) ${i * 0.09}s`;
+              el.style.opacity = '1';
+              el.style.transform = 'translateY(0)';
+            });
+          });
+        });
+        btn.textContent = 'Show Less ↑';
+      } else {
+        // Fade-out in reverse stagger then hide
+        extraCards.forEach((el, i) => {
+          const delay = (extraCards.length - 1 - i) * 0.06;
+          el.style.transition = `opacity 0.3s ease ${delay}s, transform 0.35s cubic-bezier(0.4,0,1,1) ${delay}s`;
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(14px)';
+        });
+        const totalDuration = 300 + (extraCards.length - 1) * 60 + 50;
+        setTimeout(() => {
+          extraCards.forEach(el => {
+            el.classList.add('yt-hidden');
+            el.style.opacity = '';
+            el.style.transform = '';
+            el.style.transition = '';
+          });
+        }, totalDuration);
+        btn.textContent = 'View More ↓';
+        document.getElementById('podcasts').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
     /* Reveal */
     new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:0.07,rootMargin:'0px 0px -32px 0px'})
       .observe.bind(new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:0.07,rootMargin:'0px 0px -32px 0px'}));
     const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:0.07,rootMargin:'0px 0px -32px 0px'});
     document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
 
+    /* Experience card expand */
+    function isMobile() { return window.innerWidth <= 768; }
+
+    function expandExpCard(card) {
+      card.classList.add('expanded');
+      if (isMobile()) {
+        const wrap = card.querySelector('.exp-expand-wrap');
+        const inner = wrap.querySelector('.exp-expand-dark, .exp-expand-light');
+        // After slide animation starts, grow the card to fit the overlay content
+        requestAnimationFrame(() => {
+          const contentH = inner.scrollHeight;
+          card.style.minHeight = contentH + 'px';
+        });
+      }
+    }
+
+    function collapseExpCard(card) {
+      if (isMobile()) {
+        const preview = card.querySelector('.exp-card-preview');
+        // Measure natural height BEFORE any class or style changes
+        const expandedH = card.offsetHeight;
+        const naturalH  = preview ? preview.offsetHeight : expandedH;
+        // 1. Freeze card so it doesn't jump
+        card.style.transition = 'none';
+        card.style.minHeight = expandedH + 'px';
+        // 2. Start overlay slide-out
+        card.classList.remove('expanded');
+        // 3. Once overlay has fully left (after 0.9s), smoothly shrink card
+        setTimeout(() => {
+          card.style.transition = 'min-height 0.7s cubic-bezier(0.16,1,0.3,1)';
+          card.style.minHeight = naturalH + 'px';
+          // 4. Clean up after shrink completes
+          setTimeout(() => {
+            card.style.transition = '';
+            card.style.minHeight = '';
+          }, 720);
+        }, 880);
+      } else {
+        card.classList.remove('expanded');
+      }
+      const wrap = card.querySelector('.exp-expand-wrap');
+      if (wrap) wrap.scrollTop = 0;
+    }
+
+    document.querySelectorAll('.exp-know-more[data-target]').forEach(btn => {
+      btn.addEventListener('click', () => expandExpCard(btn.closest('.exp-card')));
+    });
+    document.querySelectorAll('.exp-close-btn[data-target]').forEach(btn => {
+      btn.addEventListener('click', () => collapseExpCard(btn.closest('.exp-card')));
+    });
+
     /* Mobile menu */
     const hb=document.getElementById('navHamburger'),mm=document.getElementById('mobileMenu');
-    hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active');document.body.style.overflow=mm.classList.contains('active')?'hidden':'';});
-    function closeMobileMenu(){hb.classList.remove('active');mm.classList.remove('active');document.body.style.overflow='';}
+    hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active');});
+    function closeMobileMenu(){hb.classList.remove('active');mm.classList.remove('active');}
 
     /* Smooth scroll */
     document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const id=this.getAttribute('href');if(id==='#')return;e.preventDefault();document.querySelector(id)?.scrollIntoView({behavior:'smooth',block:'start'});});});
