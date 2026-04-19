@@ -60,6 +60,55 @@
       background-size: 256px 256px;
     }
 
+    /* ---- Page loader ---- */
+    #page-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #page-loader.done { opacity: 0; visibility: hidden; }
+    .tetris-loader {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      animation: tetrisFloat 1.2s ease-in-out 0.7s infinite alternate;
+    }
+    @keyframes tetrisFloat {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-5px); }
+    }
+    .t-col { display: flex; flex-direction: column-reverse; gap: 4px; }
+    .t-block {
+      width: 14px; height: 14px;
+      border-radius: 2px;
+      opacity: 0;
+      animation: tDrop 0.38s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    .t-block.c-dk { background: var(--fg); }
+    .t-block.c-ac { background: var(--accent); }
+    @keyframes tDrop {
+      from { opacity: 0; transform: translateY(-36px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- Image skeleton shimmer ---- */
+    .project-visual.img-loading {
+      background: linear-gradient(90deg, #ede9e3 25%, #f5f2ee 50%, #ede9e3 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s ease infinite;
+    }
+    .project-visual.img-loading img { opacity: 0; }
+    .project-visual img { transition: opacity 0.4s ease; }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
     /* Cursor glow */
     #cursorGlow {
       position: fixed;
@@ -1760,6 +1809,30 @@
   <div id="scrollProgress"></div>
 
   <!-- NAV -->
+  <div id="page-loader">
+    <div class="tetris-loader">
+      <div class="t-col">
+        <div class="t-block c-dk" style="animation-delay:0.05s"></div>
+        <div class="t-block c-dk" style="animation-delay:0.18s"></div>
+        <div class="t-block c-ac" style="animation-delay:0.31s"></div>
+      </div>
+      <div class="t-col">
+        <div class="t-block c-dk" style="animation-delay:0.12s"></div>
+        <div class="t-block c-ac" style="animation-delay:0.25s"></div>
+        <div class="t-block c-dk" style="animation-delay:0.38s"></div>
+        <div class="t-block c-ac" style="animation-delay:0.51s"></div>
+      </div>
+      <div class="t-col">
+        <div class="t-block c-ac" style="animation-delay:0.20s"></div>
+        <div class="t-block c-dk" style="animation-delay:0.33s"></div>
+      </div>
+      <div class="t-col">
+        <div class="t-block c-dk" style="animation-delay:0.28s"></div>
+        <div class="t-block c-dk" style="animation-delay:0.41s"></div>
+        <div class="t-block c-ac" style="animation-delay:0.54s"></div>
+      </div>
+    </div>
+  </div>
   <div id="card-cursor">Open ↗</div>
   <nav class="nav" id="mainNav">
     <a href="#work">Work</a>
@@ -2556,6 +2629,23 @@
   </footer>
 
   <script>
+    /* Page loader */
+    const loader = document.getElementById('page-loader');
+    window.addEventListener('load', () => {
+      setTimeout(() => loader.classList.add('done'), 200);
+    });
+
+    /* Image skeleton — project cards */
+    document.querySelectorAll('.project-visual').forEach(visual => {
+      const img = visual.querySelector('img');
+      if (!img) return;
+      if (!img.complete) {
+        visual.classList.add('img-loading');
+        img.addEventListener('load', () => visual.classList.remove('img-loading'));
+        img.addEventListener('error', () => visual.classList.remove('img-loading'));
+      }
+    });
+
     /* Cursor glow */
     const glow = document.getElementById('cursorGlow');
     let gTX=0,gTY=0,gCX=0,gCY=0;
