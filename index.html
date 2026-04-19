@@ -552,19 +552,24 @@
       padding-bottom: 0;
     }
     .exp-fam-logo {
-      height: 38px;
+      height: 50px;
       width: auto;
       margin-bottom: 14px;
     }
     .exp-fam-tagline {
-      font-family: var(--sans);
-      font-size: 0.82rem;
-      font-weight: 300;
-      letter-spacing: 0.01em;
-      color: rgba(240,236,228,0.45);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      font-style: normal;
+      letter-spacing: 0em;
+      color: rgba(240,236,228,0.6);
       margin-bottom: 32px;
       max-width: 400px;
     }
+    .exp-fam-mockup {
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+    }
+    .exp-card-preview:hover .exp-fam-mockup { transform: scale(1.04) translateY(-4px); }
     .exp-fam-mockup-wrap {
       width: 100%;
       max-width: 720px;
@@ -593,23 +598,26 @@
       padding: 40px 44px 100px;
     }
     .exp-avaana-logo {
-      height: 22px;
+      height: 34px;
       width: auto;
       margin-bottom: 20px;
       display: block;
+      transition: opacity 0.2s ease;
     }
+    .exp-avaana-logo:hover { opacity: 0.75; }
     .exp-avaana-headline {
-      font-family: var(--serif);
-      font-size: 1.75rem;
-      line-height: 1.2;
-      color: #063E3B;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      font-style: normal;
+      line-height: 1.4;
+      color: rgba(6,62,59,0.7);
       margin-bottom: 10px;
     }
-    .exp-avaana-byline {
-      font-family: var(--sans);
-      font-size: 0.82rem;
-      color: rgba(6,62,59,0.5);
+    .exp-avaana-mockup {
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
     }
+    .exp-card-preview:hover .exp-avaana-mockup { transform: scale(1.04) translateY(-4px); }
     .exp-avaana-mockup {
       width: 100%;
       max-height: 380px;
@@ -629,7 +637,7 @@
     .exp-card-preview { position: relative; overflow: hidden; border-radius: 20px; }
     .exp-card-footer-float {
       position: absolute;
-      bottom: 16px; left: 16px; right: 16px;
+      bottom: 20px; left: 20px; right: 20px;
       background: rgba(30,30,30,0.92);
       border-radius: 14px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.32);
@@ -1060,6 +1068,7 @@
       transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
     }
     .project-card[data-href]:not([data-href=""]) .project-visual { cursor: none; }
+    .yt-card .yt-thumb { cursor: none; }
     #card-cursor {
       position: fixed;
       top: 0; left: 0;
@@ -1161,10 +1170,10 @@
     .projects-grid > .project-card:last-child { grid-column: 2; }
 
     /* ========== SIDE QUESTS ========== */
-    .sq-feed { display: flex; flex-direction: column; gap: 2px; }
+    .sq-feed { display: flex; flex-direction: column; gap: 28px; padding-bottom: 8px; }
     .sq-card {
       display: flex;
-      min-height: 320px;
+      height: 353px;
       border-bottom: 1px solid var(--border);
       overflow: hidden;
       transition: background 0.3s ease;
@@ -1254,11 +1263,12 @@
     .sq-ph-4 { background: linear-gradient(160deg, #1e1008, #3c2818); }
 
     .sq-body {
-      padding: 40px 48px;
+      padding: 32px 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       border-left: 1px solid var(--border);
+      overflow: hidden;
     }
     .sq-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
     .sq-badge {
@@ -1286,8 +1296,8 @@
       font-weight: 300;
       color: var(--muted);
       line-height: 1.65;
-      margin-bottom: 24px;
-      max-width: 480px;
+      margin-bottom: 20px;
+      max-width: 640px;
     }
     .sq-learnings-lbl {
       font-family: var(--mono);
@@ -1297,7 +1307,7 @@
       color: var(--muted-light);
       margin-bottom: 10px;
     }
-    .sq-learnings ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+    .sq-learnings ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
     .sq-learnings ul li {
       font-family: var(--sans);
       font-size: 0.83rem;
@@ -1693,13 +1703,13 @@
 
       /* ---- Experience cards ---- */
       .exp-fam-body { padding: 28px 20px 0; }
-      .exp-fam-logo { height: 30px; }
+      .exp-fam-logo { height: 40px; }
       .exp-fam-tagline { font-size: 0.75rem; margin-bottom: 20px; }
       .exp-fam-mockup-wrap { height: 240px; }
       .exp-avaana-body { grid-template-columns: 1fr; gap: 16px; padding: 28px 20px 76px; }
       .exp-avaana-mockup { max-height: 200px; }
       .exp-avaana-headline { font-size: 1.2rem; }
-      .exp-avaana-logo { height: 18px; }
+      .exp-avaana-logo { height: 26px; }
       .exp-card-footer { padding: 16px 20px; }
       .exp-card-footer-role { font-size: 0.95rem; }
       .exp-card-footer-sub { font-size: 0.75rem; }
@@ -1892,7 +1902,7 @@
     <section class="section" id="work">
       <div class="section-header reveal">
         <span class="section-label">Where I've built</span>
-        <h2 class="section-title">Experience that <em>ships</em></h2>
+        <h2 class="section-title">The <em>work</em> so far</h2>
       </div>
 
       <div class="exp-cards">
@@ -1902,7 +1912,7 @@
           <!-- Preview -->
           <div class="exp-card-preview">
             <div class="exp-fam-body">
-              <img src="mockup and logos/FamApp Logo Icon.svg" alt="FamApp" class="exp-fam-logo">
+              <a href="https://www.famapp.in/" target="_blank" rel="noopener"><img src="mockup and logos/FamApp Logo Icon.svg" alt="FamApp" class="exp-fam-logo"></a>
               <p class="exp-fam-tagline">Building a financially aware, smart and independent generation</p>
               <div class="exp-fam-mockup-wrap">
                 <img src="mockup and logos/Fam mockup.png" alt="FamApp product screens" class="exp-fam-mockup">
@@ -1981,9 +1991,8 @@
           <div class="exp-card-preview">
             <div class="exp-avaana-body">
               <div class="exp-avaana-text">
-                <img src="mockup and logos/Avaana Logo.svg" alt="Avaana" class="exp-avaana-logo">
+                <a href="https://avaana.com.au/" target="_blank" rel="noopener"><img src="mockup and logos/Avaana Logo.svg" alt="Avaana" class="exp-avaana-logo"></a>
                 <h3 class="exp-avaana-headline">Find and book local health and wellbeing practitioners</h3>
-                <p class="exp-avaana-byline">Wellbeing platform for individuals &amp; teams</p>
               </div>
               <div class="exp-avaana-visual">
                 <img src="mockup and logos/AVAANA MOCKUP.png" alt="Avaana product" class="exp-avaana-mockup">
@@ -2063,7 +2072,7 @@
     <section class="section" id="projects">
       <div class="section-header reveal">
         <span class="section-label">Tinkering Lately</span>
-        <h2 class="section-title">The builder never <em>stops</em></h2>
+        <h2 class="section-title">Weekend <em>rabbit holes</em></h2>
       </div>
       <div class="projects-grid">
 
@@ -2223,8 +2232,8 @@
     <!-- ACHIEVEMENTS -->
     <section class="section" id="wins">
       <div class="section-header reveal">
-        <span class="section-label">Wins</span>
-        <h2 class="section-title">Proof I <em>ship</em></h2>
+        <span class="section-label">Achievements</span>
+        <h2 class="section-title">Things that went <em>well</em></h2>
       </div>
       <div class="wins-list reveal">
         <div class="win-row">
@@ -2394,98 +2403,13 @@
       </div>
     </section>
 
-    <!-- PODCASTS -->
-    <section class="section" id="podcasts">
-      <div class="section-header reveal">
-        <span class="section-label">On Repeat</span>
-        <h2 class="section-title">Podcasts I <em>swear by</em></h2>
-      </div>
-      <div class="podcast-grid reveal">
-        <!-- Row 1 -->
-        <a class="yt-card" href="https://youtu.be/v1nkN0sM2wc" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/v1nkN0sM2wc/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">How Google Was Built</div>
-            <div class="yt-desc">The unlikely story of how two PhD dropouts built the most important company of the internet age — and the decisions that got them there.</div>
-          </div>
-        </a>
-        <a class="yt-card" href="https://youtu.be/oX7OduG1YmI" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/oX7OduG1YmI/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Imagine in the Future</div>
-            <div class="yt-desc">A wide-ranging conversation on compounding ambition, building conviction in uncertain markets, and why the best founders think in decades.</div>
-          </div>
-        </a>
-        <a class="yt-card" href="https://youtu.be/ZSM2uFnJ5bs" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/ZSM2uFnJ5bs/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Tobi Lütke on Building Shopify</div>
-            <div class="yt-desc">Shopify's CEO on staying obsessively founder-mode, making high-stakes bets, and designing a company that compounds over time.</div>
-          </div>
-        </a>
-        <!-- Row 2 — hidden until "View More" -->
-        <a class="yt-card yt-hidden" href="https://youtu.be/6OJRn44JlC4" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/6OJRn44JlC4/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Paul Graham's Essays</div>
-            <div class="yt-desc">The canonical reading list for anyone building something — Make things people want, Do things that don't scale, and why startups are the only way to get rich.</div>
-          </div>
-        </a>
-        <a class="yt-card yt-hidden" href="https://youtu.be/FFnTWSYQnyY" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/FFnTWSYQnyY/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Product Thinking &amp; Growth</div>
-            <div class="yt-desc">A masterclass in building products people actually want — covering discovery, iteration, and the art of shipping before you feel ready.</div>
-          </div>
-        </a>
-        <a class="yt-card yt-hidden" href="https://youtu.be/vZGfSlnUq-8" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/vZGfSlnUq-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Unfiltered by Samdish</div>
-            <div class="yt-desc">Sajad Lone sits down for an unfiltered conversation — refreshingly direct, covering ground most public figures wouldn't dare touch.</div>
-          </div>
-        </a>
-        <a class="yt-card yt-hidden" href="https://youtu.be/YP_QghPLG-8" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/YP_QghPLG-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Title — update me</div>
-            <div class="yt-desc">Description — let me know what this one's about and I'll write it properly.</div>
-          </div>
-        </a>
-      </div>
-      <div class="podcast-more-wrap">
-        <button class="podcast-more-btn" id="podcastMoreBtn" onclick="togglePodcasts(this)">See all podcasts</button>
-      </div>
-    </section>
-
     <!-- ABOUT -->
     <section class="section" id="about">
       <div class="about-layout reveal">
         <div class="about-text">
           <div class="section-header">
             <span class="section-label">About</span>
-            <h2 class="section-title">The person behind the <em>products</em></h2>
+            <h2 class="section-title">The <em>short version</em></h2>
           </div>
           <blockquote class="about-pull-quote">
             My goal is simple — walk into a coffee shop, look around, and quietly count at least 3 people using a product I built, without them ever knowing it was me.
@@ -2606,13 +2530,100 @@
         </div><!-- /about-photos -->
       </div><!-- /about-layout -->
     </section>
+
+    <!-- PODCASTS -->
+    <section class="section" id="podcasts">
+      <div class="section-header reveal">
+        <span class="section-label">Podcasts</span>
+        <h2 class="section-title">In my ears <em>lately</em></h2>
+      </div>
+      <div class="podcast-grid reveal">
+        <!-- Row 1 -->
+        <a class="yt-card" href="https://youtu.be/v1nkN0sM2wc" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/v1nkN0sM2wc/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">How Google Was Built</div>
+            <div class="yt-desc">The unlikely story of how two PhD dropouts built the most important company of the internet age — and the decisions that got them there.</div>
+          </div>
+        </a>
+        <a class="yt-card" href="https://youtu.be/oX7OduG1YmI" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/oX7OduG1YmI/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Imagine in the Future</div>
+            <div class="yt-desc">A wide-ranging conversation on compounding ambition, building conviction in uncertain markets, and why the best founders think in decades.</div>
+          </div>
+        </a>
+        <a class="yt-card" href="https://youtu.be/ZSM2uFnJ5bs" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/ZSM2uFnJ5bs/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Tobi Lütke on Building Shopify</div>
+            <div class="yt-desc">Shopify's CEO on staying obsessively founder-mode, making high-stakes bets, and designing a company that compounds over time.</div>
+          </div>
+        </a>
+        <!-- Row 2 — hidden until "View More" -->
+        <a class="yt-card yt-hidden" href="https://youtu.be/6OJRn44JlC4" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/6OJRn44JlC4/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Paul Graham's Essays</div>
+            <div class="yt-desc">The canonical reading list for anyone building something — Make things people want, Do things that don't scale, and why startups are the only way to get rich.</div>
+          </div>
+        </a>
+        <a class="yt-card yt-hidden" href="https://youtu.be/FFnTWSYQnyY" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/FFnTWSYQnyY/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Product Thinking &amp; Growth</div>
+            <div class="yt-desc">A masterclass in building products people actually want — covering discovery, iteration, and the art of shipping before you feel ready.</div>
+          </div>
+        </a>
+        <a class="yt-card yt-hidden" href="https://youtu.be/vZGfSlnUq-8" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/vZGfSlnUq-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Unfiltered by Samdish</div>
+            <div class="yt-desc">Sajad Lone sits down for an unfiltered conversation — refreshingly direct, covering ground most public figures wouldn't dare touch.</div>
+          </div>
+        </a>
+        <a class="yt-card yt-hidden" href="https://youtu.be/YP_QghPLG-8" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/YP_QghPLG-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Title — update me</div>
+            <div class="yt-desc">Description — let me know what this one's about and I'll write it properly.</div>
+          </div>
+        </a>
+      </div>
+      <div class="podcast-more-wrap">
+        <button class="podcast-more-btn" id="podcastMoreBtn" onclick="togglePodcasts(this)">See all podcasts</button>
+      </div>
+    </section>
+
+
   </main>
 
   <!-- FOOTER -->
   <footer class="footer-wrapper">
     <div class="footer-inner">
       <p class="footer-eyebrow">Open to conversations</p>
-      <h2 class="footer-headline">Let's build something<br><em>together.</em></h2>
+      <h2 class="footer-headline">If you've scrolled this far,<br>we should probably <em>talk</em></h2>
       <a href="mailto:zuberimuazz@gmail.com" class="footer-email">zuberimuazz@gmail.com</a>
       <div class="footer-pills">
         <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="footer-pill">Resume</a>
@@ -2620,7 +2631,6 @@
         <a href="#" target="_blank" rel="noopener noreferrer" class="footer-pill">GitHub</a><!-- Replace # -->
         <a href="#" target="_blank" rel="noopener noreferrer" class="footer-pill">Twitter/X</a><!-- Replace # -->
       </div>
-      <p class="footer-note">If you've scrolled this far, we should probably talk.</p>
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">&copy; 2026 Muazz</span>
@@ -2807,9 +2817,9 @@
         cardCursor.style.top = e.clientY + 'px';
       });
     });
-    document.querySelectorAll('.project-card[data-href]:not([data-href=""]) .project-visual').forEach(visual => {
-      visual.addEventListener('mouseenter', () => cardCursor.classList.add('visible'));
-      visual.addEventListener('mouseleave', () => cardCursor.classList.remove('visible'));
+    document.querySelectorAll('.project-card[data-href]:not([data-href=""]) .project-visual, .yt-card .yt-thumb').forEach(el => {
+      el.addEventListener('mouseenter', () => cardCursor.classList.add('visible'));
+      el.addEventListener('mouseleave', () => cardCursor.classList.remove('visible'));
     });
 
     /* Project card click-through */
