@@ -1010,6 +1010,29 @@
       overflow: hidden;
       transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
     }
+    .project-card[data-href]:not([data-href=""]) .project-visual { cursor: none; }
+    #card-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: var(--fg);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 8px 14px;
+      border-radius: 99px;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.7);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      white-space: nowrap;
+    }
+    #card-cursor.visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
     .project-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 16px 40px rgba(0,0,0,0.08);
@@ -1386,22 +1409,40 @@
     }
     .podcast-more-wrap {
       display: flex;
-      justify-content: center;
-      margin-top: 36px;
+      align-items: center;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .podcast-more-wrap::before,
+    .podcast-more-wrap::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
     .podcast-more-btn {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
       color: var(--muted);
-      background: none;
+      background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 999px;
-      padding: 10px 24px;
+      padding: 9px 20px;
       cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .podcast-more-btn:hover { color: var(--fg); border-color: var(--fg); }
+    .podcast-more-btn:hover {
+      color: var(--fg);
+      border-color: var(--fg);
+      background: var(--bg);
+      transform: translateY(-1px);
+    }
 
     /* ========== ABOUT ========== */
     .about-layout {
@@ -1442,24 +1483,24 @@
     .footer-inner {
       max-width: 1300px;
       margin: 0 auto;
-      padding: 100px 48px 0;
+      padding: 60px 48px 0;
       text-align: center;
     }
     .footer-eyebrow {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(240,236,228,0.3);
-      margin-bottom: 28px;
+      margin-bottom: 16px;
     }
     .footer-headline {
       font-family: var(--serif);
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
       letter-spacing: -0.03em;
       color: var(--footer-fg);
       line-height: 1.1;
-      margin-bottom: 36px;
+      margin-bottom: 24px;
     }
     .footer-headline em { font-style: italic; color: var(--accent); }
     .footer-email {
@@ -1493,14 +1534,14 @@
     .footer-note {
       font-family: var(--sans);
       font-style: italic;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: rgba(240,236,228,0.2);
-      margin-top: 48px;
+      margin-top: 28px;
     }
     .footer-bottom {
       max-width: 1300px;
-      margin: 48px auto 0;
-      padding: 20px 48px;
+      margin: 28px auto 0;
+      padding: 16px 48px;
       border-top: 1px solid rgba(255,255,255,0.06);
       display: flex;
       align-items: center;
@@ -1719,6 +1760,7 @@
   <div id="scrollProgress"></div>
 
   <!-- NAV -->
+  <div id="card-cursor">Open ↗</div>
   <nav class="nav" id="mainNav">
     <a href="#work">Work</a>
     <a href="#projects">Projects</a>
@@ -1953,9 +1995,9 @@
       <div class="projects-grid">
 
         <!-- 1. Mafia Game -->
-        <article class="project-card reveal">
+        <article class="project-card reveal" data-href="https://muazz4502.github.io/Mafia-Website/">
           <div class="project-visual pv-mafia">
-            <img src="Projects/Mafia.png" alt="Mafia Game" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+            <img src="Projects/Mafia.png" alt="Mafia Game" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
           <div class="project-body">
             <div class="project-type">Web Game &middot; Playable Online</div>
@@ -1971,8 +2013,26 @@
           </div>
         </article>
 
-        <!-- 2. Spend Analytics POC -->
-        <article class="project-card reveal reveal-delay-1">
+        <!-- 2. NPS Sorting Hat -->
+        <article class="project-card reveal reveal-delay-1" data-href="https://github.com/Muazz4502/nps-sorting-hat">
+          <div class="project-visual pv-nps">
+            <img src="Projects/NPS%20Sorting%20hat.png" alt="NPS Sorting Hat" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Internal Tool &middot; FamApp</div>
+            <h3>NPS Sorting Hat</h3>
+            <p>Auto-categorises raw NPS responses into buckets like Payments, KYC, and UX — turning messy user feedback into clean, actionable signal.</p>
+            <div class="project-tags">
+              <span class="tag">NLP</span><span class="tag">Automation</span><span class="tag">Feedback</span><span class="tag">Vibecoding</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://github.com/Muazz4502/nps-sorting-hat" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. Spend Analytics POC -->
+        <article class="project-card reveal reveal-delay-2" data-href="https://muazz4502.github.io/spend-analytics/screens-artifact.html">
           <div class="project-visual pv-spend">
             <img src="Projects/Spend%20analytics.png" alt="Spend Analytics" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
@@ -1991,26 +2051,8 @@
           </div>
         </article>
 
-        <!-- 3. NPS Sorting Hat -->
-        <article class="project-card reveal reveal-delay-2">
-          <div class="project-visual pv-nps">
-            <img src="Projects/NPS%20Sorting%20hat.png" alt="NPS Sorting Hat" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
-          </div>
-          <div class="project-body">
-            <div class="project-type">Internal Tool &middot; FamApp</div>
-            <h3>NPS Sorting Hat</h3>
-            <p>Auto-categorises raw NPS responses into buckets like Payments, KYC, and UX — turning messy user feedback into clean, actionable signal.</p>
-            <div class="project-tags">
-              <span class="tag">NLP</span><span class="tag">Automation</span><span class="tag">Feedback</span><span class="tag">Vibecoding</span>
-            </div>
-            <div style="margin-top:14px;">
-              <a class="project-link" href="https://github.com/Muazz4502/nps-sorting-hat" target="_blank" rel="noopener">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
         <!-- 4. Dunzo Case Study -->
-        <article class="project-card reveal reveal-delay-1">
+        <article class="project-card reveal reveal-delay-1" data-href="https://drive.google.com/file/d/12VeHjrzHM62DSdwIGlmjqLBF46D_DqWd/view?usp=sharing">
           <div class="project-visual pv-dunzo">
             <img src="Projects/Dunzo%20case%20study.png" alt="Dunzo Case Study" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
@@ -2029,7 +2071,7 @@
         </article>
 
         <!-- 5. Samarth -->
-        <article class="project-card reveal reveal-delay-2">
+        <article class="project-card reveal reveal-delay-2" data-href="https://app.pitch.com/app/presentation/2dc8c52c-8c6f-4fff-b741-277a9d564b0c/9cf274e8-bbee-4842-8d87-4970618b4ad0">
           <div class="project-visual pv-samarth">
             <img src="Projects/Samarth.png" alt="Samarth" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
@@ -2047,7 +2089,7 @@
         </article>
 
         <!-- 6. Krishi Bimb -->
-        <article class="project-card reveal reveal-delay-1">
+        <article class="project-card reveal reveal-delay-1" data-href="https://www.canva.com/design/DAEdND5Fj94/K2bz-GIaD5j_piVrMd7pNA/view">
           <div class="project-visual pv-krishi">
             <img src="Projects/Krishi%20Bimb.png" alt="Krishi Bimb" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
@@ -2059,13 +2101,13 @@
               <span class="tag">AgriTech</span><span class="tag">Marketplace</span><span class="tag">Design</span>
             </div>
             <div style="margin-top:14px;">
-              <a class="project-link" href="https://www.canva.com/design/DAEdND5Fj94/K2bz-GIaD5j_piVrMd7pNA/view" target="_blank" rel="noopener">View Design ↗</a>
+              <a class="project-link" href="https://www.canva.com/design/DAEdND5Fj94/K2bz-GIaD5j_piVrMd7pNA/view" target="_blank" rel="noopener">Pitch Deck ↗</a>
             </div>
           </div>
         </article>
 
         <!-- 7. Startup Hub -->
-        <article class="project-card project-card-hidden reveal reveal-delay-2">
+        <article class="project-card project-card-hidden reveal reveal-delay-2" data-href="">
           <div class="project-visual pv-startup">
             <img src="Projects/startuphub.jpg" alt="Startup Hub" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
@@ -2077,13 +2119,12 @@
               <span class="tag">Frontend</span><span class="tag">Community</span><span class="tag">Startups</span>
             </div>
             <div style="margin-top:14px;">
-              <a class="project-link" href="https://startuphub.ecellvit.com" target="_blank" rel="noopener">Live Site ↗</a>
             </div>
           </div>
         </article>
 
         <!-- 8. ₹eBazz -->
-        <article class="project-card project-card-hidden reveal reveal-delay-1">
+        <article class="project-card project-card-hidden reveal reveal-delay-1" data-href="https://pitch.com/public/ecb82c98-0748-46f6-b91b-6f8891164dd3">
           <div class="project-visual pv-rebazz">
             <img src="Projects/ReBazz.png" alt="₹eBazz" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
@@ -2102,7 +2143,7 @@
 
       </div>
       <div class="podcast-more-wrap" style="margin-top:32px;">
-        <button class="podcast-more-btn" id="projectMoreBtn" onclick="toggleProjects(this)">View More ↓</button>
+        <button class="podcast-more-btn" id="projectMoreBtn" onclick="toggleProjects(this)">See all projects</button>
       </div>
     </section>
 
@@ -2361,7 +2402,7 @@
         </a>
       </div>
       <div class="podcast-more-wrap">
-        <button class="podcast-more-btn" id="podcastMoreBtn" onclick="togglePodcasts(this)">View More ↓</button>
+        <button class="podcast-more-btn" id="podcastMoreBtn" onclick="togglePodcasts(this)">See all podcasts</button>
       </div>
     </section>
 
@@ -2499,7 +2540,7 @@
     <div class="footer-inner">
       <p class="footer-eyebrow">Open to conversations</p>
       <h2 class="footer-headline">Let's build something<br><em>together.</em></h2>
-      <a href="mailto:hello@muazz.com" class="footer-email">hello@muazz.com</a>
+      <a href="mailto:zuberimuazz@gmail.com" class="footer-email">zuberimuazz@gmail.com</a>
       <div class="footer-pills">
         <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="footer-pill">Resume</a>
         <a href="https://www.linkedin.com/in/muazz/" target="_blank" rel="noopener noreferrer" class="footer-pill">LinkedIn</a>
@@ -2583,10 +2624,10 @@
       if (isHidden) {
         extraCards.forEach(el => el.classList.remove('yt-hidden'));
         revealCards(extraCards);
-        btn.textContent = 'Show Less ↑';
+        btn.textContent = btn.id === 'projectMoreBtn' ? 'Show fewer projects' : 'Show fewer podcasts';
       } else {
         hideCards(extraCards, () => extraCards.forEach(el => el.classList.add('yt-hidden')));
-        btn.textContent = 'View More ↓';
+        btn.textContent = btn.id === 'projectMoreBtn' ? 'See all projects' : 'See all podcasts';
         document.getElementById('podcasts').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
@@ -2596,10 +2637,10 @@
       const isHidden = hidden[0] && hidden[0].style.display !== 'block';
       if (isHidden) {
         revealCards(hidden);
-        btn.textContent = 'Show Less ↑';
+        btn.textContent = btn.id === 'projectMoreBtn' ? 'Show fewer projects' : 'Show fewer podcasts';
       } else {
         hideCards(hidden);
-        btn.textContent = 'View More ↓';
+        btn.textContent = btn.id === 'projectMoreBtn' ? 'See all projects' : 'See all podcasts';
         document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
@@ -2665,6 +2706,31 @@
     const hb=document.getElementById('navHamburger'),mm=document.getElementById('mobileMenu');
     hb.addEventListener('click',()=>{hb.classList.toggle('active');mm.classList.toggle('active');});
     function closeMobileMenu(){hb.classList.remove('active');mm.classList.remove('active');}
+
+    /* Custom card cursor */
+    const cardCursor = document.getElementById('card-cursor');
+    let cursorRaf;
+    document.addEventListener('mousemove', e => {
+      if (cursorRaf) cancelAnimationFrame(cursorRaf);
+      cursorRaf = requestAnimationFrame(() => {
+        cardCursor.style.left = e.clientX + 'px';
+        cardCursor.style.top = e.clientY + 'px';
+      });
+    });
+    document.querySelectorAll('.project-card[data-href]:not([data-href=""]) .project-visual').forEach(visual => {
+      visual.addEventListener('mouseenter', () => cardCursor.classList.add('visible'));
+      visual.addEventListener('mouseleave', () => cardCursor.classList.remove('visible'));
+    });
+
+    /* Project card click-through */
+    document.querySelectorAll('.project-card[data-href]').forEach(card => {
+      const url = card.dataset.href;
+      if (!url) return;
+      card.addEventListener('click', e => {
+        if (e.target.closest('a, button')) return;
+        window.open(url, '_blank', 'noopener');
+      });
+    });
 
     /* Active nav highlight */
     const navLinks = document.querySelectorAll('.nav a[href^="#"]');
