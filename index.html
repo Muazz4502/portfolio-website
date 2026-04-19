@@ -119,12 +119,8 @@
       color: #fff;
       background: var(--fg);
       padding: 6px 16px;
-      transition: background 0.25s ease;
     }
-    .nav .nav-cta:hover {
-      background: var(--accent);
-      color: #fff;
-    }
+    .nav .nav-cta:hover { background: var(--accent); color: #fff; }
 
     /* Mobile nav */
     .nav-hamburger { display: none; }
@@ -300,14 +296,26 @@
       font-size: 0.875rem;
       font-weight: 500;
       color: #fff;
+      position: relative;
+      overflow: hidden;
       background: var(--fg);
       padding: 12px 26px;
       border-radius: 99px;
       text-decoration: none;
-      transition: background 0.25s ease, transform 0.25s ease;
+      transition: background 0.3s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease;
       display: inline-block;
     }
-    .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.12) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.55s ease;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(230,51,18,0.3); }
+    .btn-primary:hover::after { transform: translateX(100%); }
+    .btn-primary:active { transform: translateY(0); }
 
     .btn-ghost {
       font-family: var(--sans);
@@ -319,13 +327,17 @@
       border-radius: 99px;
       border: 1.5px solid #999490;
       text-decoration: none;
-      transition: border-color 0.25s ease, background 0.25s ease;
+      transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease;
       display: inline-block;
     }
     .btn-ghost:hover {
       border-color: var(--fg);
-      background: rgba(26,26,26,0.04);
+      background: var(--fg);
+      color: var(--bg);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(26,26,26,0.12);
     }
+    .btn-ghost:active { transform: translateY(0); }
 
     /* Right — photo */
     .hero-right {
@@ -409,7 +421,7 @@
     .section {
       max-width: 1300px;
       margin: 0 auto;
-      padding: 100px 48px;
+      padding: 72px 48px;
     }
     .section-header { margin-bottom: 56px; }
     .section-label {
@@ -524,7 +536,7 @@
       grid-template-columns: 2fr 3fr;
       gap: 32px;
       align-items: center;
-      padding: 40px 44px 72px;
+      padding: 40px 44px 100px;
     }
     .exp-avaana-logo {
       height: 22px;
@@ -557,21 +569,23 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 32px;
+      padding: 18px 24px;
     }
     /* Both preview containers are position:relative so absolute bars anchor to them */
     .exp-card-preview { position: relative; overflow: hidden; border-radius: 20px; }
     .exp-card-footer-float {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(0,0,0,0.72);
-      border-top: 1px solid rgba(255,255,255,0.08);
+      bottom: 16px; left: 16px; right: 16px;
+      background: rgba(30,30,30,0.92);
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.32);
     }
     .exp-card-footer-teal {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(26,58,42,0.95);
-      border-top: 1px solid rgba(255,255,255,0.07);
+      bottom: 16px; left: 16px; right: 16px;
+      background: rgba(26,58,42,0.97);
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(6,62,59,0.28);
     }
     .exp-card-footer-role {
       font-family: var(--sans);
@@ -588,65 +602,50 @@
     .exp-card-dark .exp-card-footer-sub { color: rgba(240,236,228,0.4); }
     .exp-card-footer-teal .exp-card-footer-sub { color: rgba(240,236,228,0.45); }
 
-    /* Know More buttons */
+    /* Know More buttons — unified pill style */
     .exp-know-more {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: var(--sans);
-      font-size: 0.88rem;
-      font-weight: 500;
-      white-space: nowrap;
-      transition: opacity 0.2s;
-      padding: 0;
-    }
-    .exp-know-more:hover { opacity: 1; }
-    .exp-know-more:hover .exp-know-more-arrow { transform: translate(2px, -2px); border-color: rgba(240,236,228,0.6); }
-    .exp-know-more-text { color: rgba(240,236,228,0.8); }
-    .exp-know-more-arrow {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: 1px solid rgba(240,236,228,0.3);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      position: relative;
-      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), border-color 0.3s;
-    }
-    /* Pulse ring on hover */
-    .exp-know-more-arrow::after {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 1px solid rgba(240,236,228,0.15);
-      transform: scale(0.7);
-      opacity: 0;
-      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
-    }
-    .exp-know-more:hover .exp-know-more-arrow::after {
-      transform: scale(1);
-      opacity: 1;
-    }
-    /* Pill button (Avaana) */
-    .exp-know-more-btn {
-      background: var(--accent);
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 99px;
-      font-size: 0.82rem;
-      border: none;
-      cursor: pointer;
-      font-family: var(--sans);
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
       gap: 8px;
-      transition: background 0.25s, transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s;
+      padding: 10px 18px;
+      border-radius: 99px;
+      border: 1px solid #F89926;
+      background: rgba(248,153,38,0.12);
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #F89926;
+      white-space: nowrap;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease;
+    }
+    .exp-know-more:hover {
+      background: #F89926;
+      border-color: #F89926;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(248,153,38,0.35);
+    }
+    .exp-know-more:active { transform: translateY(0); }
+    .exp-know-more-text { letter-spacing: 0.01em; }
+    .exp-know-more-arrow {
+      font-size: 0.85rem;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+      display: inline-block;
+    }
+    .exp-know-more:hover .exp-know-more-arrow { transform: translate(2px, -2px); }
+    /* Avaana teal card */
+    .exp-card-footer-teal .exp-know-more {
+      background: rgba(230,51,18,0.12);
+      border-color: #E63312;
+      color: #E63312;
+    }
+    .exp-card-footer-teal .exp-know-more:hover {
+      background: #E63312;
+      border-color: #E63312;
+      color: #fff;
+      box-shadow: 0 6px 24px rgba(230,51,18,0.35);
+      transform: translateY(-2px);
     }
     .exp-know-more-btn:hover {
       background: var(--accent-hover);
@@ -1013,7 +1012,7 @@
     }
 
     .project-visual {
-      height: 152px;
+      height: 200px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1021,6 +1020,10 @@
       overflow: hidden;
     }
     .project-visual svg { width: 54px; height: 54px; flex-shrink: 0; }
+    .project-visual img {
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at center, black 45%, transparent 100%);
+      mask-image: radial-gradient(ellipse 80% 80% at center, black 45%, transparent 100%);
+    }
     .pv-mafia   { background: linear-gradient(145deg, #1e0808, #3d1212); }
     .pv-spend   { background: linear-gradient(145deg, #071e10, #123d24); }
     .pv-nps     { background: linear-gradient(145deg, #071c1c, #123a3a); }
@@ -1029,6 +1032,9 @@
     .pv-samarth { background: linear-gradient(145deg, #08101e, #12243d); }
     .pv-rebazz  { background: linear-gradient(145deg, #10081e, #28123d); }
     .pv-port    { background: linear-gradient(145deg, #1a1008, #382210); }
+    .pv-dunzo   { background: linear-gradient(145deg, #0f0a1e, #1e1040); }
+
+    .project-card-hidden { display: none; }
 
     .project-link {
       display: inline-flex;
@@ -1674,6 +1680,24 @@
       .sq-photo-col { width: 100%; }
       .sq-main-photo { height: 220px; }
       .sq-body { border-left: none; border-top: 1px solid var(--border); padding: 28px 24px; }
+      .win-row { flex-wrap: wrap; gap: 6px 12px; }
+      .win-dots { display: none; }
+      .win-org { margin-left: auto; font-size: 0.72rem; }
+      .about-layout { grid-template-columns: 1fr; gap: 32px; }
+      .about-ctas { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .about-ctas a { width: 100%; text-align: center; }
+      .footer-headline { font-size: clamp(2rem, 8vw, 3rem); }
+    }
+
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .projects-grid > .project-card:last-child { grid-column: auto; }
+      .about-layout { grid-template-columns: 1fr 1fr; gap: 48px; }
+      .sq-photo-col { width: 280px; }
+      .podcast-grid { grid-template-columns: repeat(2, 1fr); }
+      .exp-avaana-body { padding: 32px 32px 80px; }
+      .win-row { gap: 8px 16px; }
+      .win-dots { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1915,6 +1939,168 @@
       </div>
     </section>
 
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="section-header reveal">
+        <span class="section-label">Tinkering Lately</span>
+        <h2 class="section-title">The builder never <em>stops</em></h2>
+      </div>
+      <div class="projects-grid">
+
+        <!-- 1. Mafia Game -->
+        <article class="project-card reveal">
+          <div class="project-visual pv-mafia">
+            <img src="Projects/Mafia.png" alt="Mafia Game" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Web Game &middot; Playable Online</div>
+            <h3>Mafia Game</h3>
+            <p>The classic social deduction game rebuilt for the browser. Deal roles, run day/night rounds, and find the mafia — no app, just share a link.</p>
+            <div class="project-tags">
+              <span class="tag">JavaScript</span><span class="tag">Game Dev</span><span class="tag">Frontend</span><span class="tag">Vibecoding</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://muazz4502.github.io/Mafia-Website/" target="_blank" rel="noopener">Live Site ↗</a>
+              <a class="project-link" href="https://github.com/Muazz4502/Mafia-Website" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. Spend Analytics POC -->
+        <article class="project-card reveal reveal-delay-1">
+          <div class="project-visual pv-spend">
+            <img src="Projects/Spend%20analytics.png" alt="Spend Analytics" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Internal Tool &middot; FamApp</div>
+            <h3>Spend Analytics POC</h3>
+            <p>A spend dashboard for FamApp teens — breaks down monthly transactions by category so users see exactly where their money goes.</p>
+            <div class="project-tags">
+              <span class="tag">Analytics</span><span class="tag">FamApp</span><span class="tag">POC</span><span class="tag">Vibecoding</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://muazz4502.github.io/spend-analytics/" target="_blank" rel="noopener">Live Site ↗</a>
+              <a class="project-link" href="https://muazz4502.github.io/spend-analytics/screens-artifact.html" target="_blank" rel="noopener">Screens ↗</a>
+              <a class="project-link" href="https://github.com/Muazz4502/spend-analytics" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. NPS Sorting Hat -->
+        <article class="project-card reveal reveal-delay-2">
+          <div class="project-visual pv-nps">
+            <img src="Projects/NPS%20Sorting%20hat.png" alt="NPS Sorting Hat" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Internal Tool &middot; FamApp</div>
+            <h3>NPS Sorting Hat</h3>
+            <p>Auto-categorises raw NPS responses into buckets like Payments, KYC, and UX — turning messy user feedback into clean, actionable signal.</p>
+            <div class="project-tags">
+              <span class="tag">NLP</span><span class="tag">Automation</span><span class="tag">Feedback</span><span class="tag">Vibecoding</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://github.com/Muazz4502/nps-sorting-hat" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. Dunzo Case Study -->
+        <article class="project-card reveal reveal-delay-1">
+          <div class="project-visual pv-dunzo">
+            <img src="Projects/Dunzo%20case%20study.png" alt="Dunzo Case Study" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Case Study &middot; Sustainability</div>
+            <h3>Dunzo Case Study</h3>
+            <p>Strategic case study on making Dunzo more environmentally sustainable — covering problem discovery, product launch, and a full GTM strategy.</p>
+            <div class="project-tags">
+              <span class="tag">Product Strategy</span><span class="tag">GTM</span><span class="tag">Sustainability</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://drive.google.com/file/d/12VeHjrzHM62DSdwIGlmjqLBF46D_DqWd/view?usp=sharing" target="_blank" rel="noopener">Final Presentation ↗</a>
+              <a class="project-link" href="https://drive.google.com/drive/u/1/folders/1wVcFAT1543dK1YkAiQUK7nzqzrV4-ucl" target="_blank" rel="noopener">Drive ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. Samarth -->
+        <article class="project-card reveal reveal-delay-2">
+          <div class="project-visual pv-samarth">
+            <img src="Projects/Samarth.png" alt="Samarth" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Hack Project &middot; Social Impact</div>
+            <h3>Samarth</h3>
+            <p>Employment platform connecting people with disabilities to meaningful jobs — bridging the accessibility gap with inclusive design and targeted matching.</p>
+            <div class="project-tags">
+              <span class="tag">Social Impact</span><span class="tag">UI Design</span><span class="tag">InclusiveTech</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://app.pitch.com/app/presentation/2dc8c52c-8c6f-4fff-b741-277a9d564b0c/9cf274e8-bbee-4842-8d87-4970618b4ad0" target="_blank" rel="noopener">View Pitch ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6. Krishi Bimb -->
+        <article class="project-card reveal reveal-delay-1">
+          <div class="project-visual pv-krishi">
+            <img src="Projects/Krishi%20Bimb.png" alt="Krishi Bimb" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;mask-image:none;-webkit-mask-image:none;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Hack Project &middot; AgriTech</div>
+            <h3>Krishi Bimb</h3>
+            <p>AgriTech marketplace connecting farmers directly to buyers — cuts out intermediaries, ensures produce quality, and puts fair pricing in farmers' hands.</p>
+            <div class="project-tags">
+              <span class="tag">AgriTech</span><span class="tag">Marketplace</span><span class="tag">Design</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://www.canva.com/design/DAEdND5Fj94/K2bz-GIaD5j_piVrMd7pNA/view" target="_blank" rel="noopener">View Design ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 7. Startup Hub -->
+        <article class="project-card project-card-hidden reveal reveal-delay-2">
+          <div class="project-visual pv-startup">
+            <img src="Projects/startuphub.jpg" alt="Startup Hub" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Web &middot; 2.5K+ views in 2 months</div>
+            <h3>Startup Hub</h3>
+            <p>Centralised hub for startup blogs, podcasts, and resources. Built with a team of 6 — 2.5K+ views in 2 months. Owned frontend, design, and marketing.</p>
+            <div class="project-tags">
+              <span class="tag">Frontend</span><span class="tag">Community</span><span class="tag">Startups</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://startuphub.ecellvit.com" target="_blank" rel="noopener">Live Site ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 8. ₹eBazz -->
+        <article class="project-card project-card-hidden reveal reveal-delay-1">
+          <div class="project-visual pv-rebazz">
+            <img src="Projects/ReBazz.png" alt="₹eBazz" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Hack Project &middot; Web3</div>
+            <h3>₹eBazz</h3>
+            <p>Blockchain-powered marketplace for local retail — find nearby stores by product and category, bridging online discovery with offline buying.</p>
+            <div class="project-tags">
+              <span class="tag">Blockchain</span><span class="tag">Marketplace</span><span class="tag">Web Dev</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="https://pitch.com/public/ecb82c98-0748-46f6-b91b-6f8891164dd3" target="_blank" rel="noopener">View Pitch Deck ↗</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <div class="podcast-more-wrap" style="margin-top:32px;">
+        <button class="podcast-more-btn" id="projectMoreBtn" onclick="toggleProjects(this)">View More ↓</button>
+      </div>
+    </section>
+
     <!-- ACHIEVEMENTS -->
     <section class="section" id="wins">
       <div class="section-header reveal">
@@ -1971,222 +2157,6 @@
           <span class="win-dots"></span>
           <span class="win-org">Microsoft Learn Student Ambassador Chapter</span>
         </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section class="section" id="projects">
-      <div class="section-header reveal">
-        <span class="section-label">Tinkering Lately</span>
-        <h2 class="section-title">The builder never <em>stops</em></h2>
-      </div>
-      <div class="projects-grid">
-
-        <article class="project-card reveal">
-          <div class="project-visual pv-mafia">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6C18 12 8 18 8 26a8 8 0 0 0 14 5.3L20 38h8l-2-6.7A8 8 0 0 0 40 26C40 18 30 12 24 6z" fill="rgba(255,255,255,0.22)"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-type">Web Game &middot; Playable Online</div>
-            <h3>Mafia Game</h3>
-            <p>The classic social deduction game, rebuilt for the browser. Deal roles, run day/night rounds, and find the mafia before the town is taken over — no app needed, just share a link.</p>
-            <div class="project-tags">
-              <span class="tag">JavaScript</span><span class="tag">Game Dev</span><span class="tag">Frontend</span><span class="tag">Vibecoding</span>
-            </div>
-            <div style="margin-top:14px;">
-              <a class="project-link" href="https://muazz4502.github.io/Mafia-Website/" target="_blank" rel="noopener">Live Site ↗</a>
-              <a class="project-link" href="https://github.com/Muazz4502/Mafia-Website" target="_blank" rel="noopener">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal reveal-delay-1">
-          <div class="project-visual pv-spend">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="28" width="8" height="14" rx="2" fill="rgba(255,255,255,0.22)"/><rect x="20" y="18" width="8" height="24" rx="2" fill="rgba(255,255,255,0.22)"/><rect x="33" y="10" width="8" height="32" rx="2" fill="rgba(255,255,255,0.22)"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-type">Internal Tool &middot; FamApp</div>
-            <h3>Spend Analytics POC</h3>
-            <p>A proof-of-concept spend dashboard built for FamApp — breaks down monthly transactions by category so teens get a clear picture of where their money actually goes.</p>
-            <div class="project-tags">
-              <span class="tag">Analytics</span><span class="tag">FamApp</span><span class="tag">POC</span><span class="tag">Vibecoding</span>
-            </div>
-            <div style="margin-top:14px;">
-              <a class="project-link" href="https://github.com/Muazz4502/spend-analytics" target="_blank" rel="noopener">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal reveal-delay-2">
-          <div class="project-visual pv-nps">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 10h32L28 26v12l-8-4V26L8 10z" fill="rgba(255,255,255,0.22)"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-type">Internal Tool &middot; FamApp</div>
-            <h3>NPS Sorting Hat</h3>
-            <p>Analyses raw NPS feedback and auto-categorises responses into buckets like Payments, KYC, and UX — turning user comments into actionable signal for the product team.</p>
-            <div class="project-tags">
-              <span class="tag">NLP</span><span class="tag">Automation</span><span class="tag">Feedback</span><span class="tag">Vibecoding</span>
-            </div>
-            <div style="margin-top:14px;">
-              <a class="project-link" href="https://github.com/Muazz4502/nps-sorting-hat" target="_blank" rel="noopener">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal reveal-delay-1">
-          <div class="project-visual pv-startup">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="10" r="5" fill="rgba(255,255,255,0.22)"/><circle cx="10" cy="36" r="5" fill="rgba(255,255,255,0.22)"/><circle cx="38" cy="36" r="5" fill="rgba(255,255,255,0.22)"/><line x1="24" y1="15" x2="10" y2="31" stroke="rgba(255,255,255,0.22)" stroke-width="2"/><line x1="24" y1="15" x2="38" y2="31" stroke="rgba(255,255,255,0.22)" stroke-width="2"/><line x1="15" y1="36" x2="33" y2="36" stroke="rgba(255,255,255,0.22)" stroke-width="2"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-type">Web &middot; 2.5K+ views in 2 months</div>
-            <h3>Startup Hub</h3>
-            <p>A centralised platform with entrepreneurial blogs, podcasts, and resources for the startup community. Built with a team of 6 — handled frontend, ideation, design, and marketing.</p>
-            <div class="project-tags">
-              <span class="tag">Frontend</span><span class="tag">Community</span><span class="tag">Startups</span>
-            </div>
-            <div style="margin-top:14px;">
-              <a class="project-link" href="https://startuphub.ecellvit.com" target="_blank" rel="noopener">Live Site ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal reveal-delay-2">
-          <div class="project-visual pv-krishi">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 42V22" stroke="rgba(255,255,255,0.22)" stroke-width="2.5" stroke-linecap="round"/><path d="M24 22c0 0-10-2-12-12 8 0 12 8 12 12z" fill="rgba(255,255,255,0.22)"/><path d="M24 22c0 0 10-2 12-12-8 0-12 8-12 12z" fill="rgba(255,255,255,0.22)"/><path d="M24 30c0 0-8-2-10-10 7 0 10 6 10 10z" fill="rgba(255,255,255,0.15)"/><path d="M24 30c0 0 8-2 10-10-7 0-10 6-10 10z" fill="rgba(255,255,255,0.15)"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-type">Hack Project &middot; AgriTech</div>
-            <h3>Krishi Bimb</h3>
-            <p>An agricultural marketplace connecting farmers directly with buyers — removing intermediaries and ensuring quality assurance for produce.</p>
-            <div class="project-tags">
-              <span class="tag">AgriTech</span><span class="tag">Marketplace</span><span class="tag">Design</span>
-            </div>
-            <div style="margin-top:14px;">
-              <a class="project-link" href="https://www.canva.com/design/DAEdND5Fj94/K2bz-GIaD5j_piVrMd7pNA/view" target="_blank" rel="noopener">View Design ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal reveal-delay-1">
-          <div class="project-visual pv-samarth">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="9" r="5" fill="rgba(255,255,255,0.22)"/><path d="M12 22l12-6 12 6" stroke="rgba(255,255,255,0.22)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 16v16" stroke="rgba(255,255,255,0.22)" stroke-width="2.5" stroke-linecap="round"/><path d="M16 42l8-9 8 9" stroke="rgba(255,255,255,0.22)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-type">Hack Project &middot; Social Impact</div>
-            <h3>Samarth</h3>
-            <p>Employment platform connecting people with disabilities to meaningful opportunities — built with a team of 4 focused on ideation, UI, and pitching.</p>
-            <div class="project-tags">
-              <span class="tag">Social Impact</span><span class="tag">UI Design</span><span class="tag">InclusiveTech</span>
-            </div>
-            <div style="margin-top:14px;">
-              <a class="project-link" href="https://app.pitch.com/app/presentation/2dc8c52c-8c6f-4fff-b741-277a9d564b0c/9cf274e8-bbee-4842-8d87-4970618b4ad0" target="_blank" rel="noopener">View Pitch ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal reveal-delay-2">
-          <div class="project-visual pv-rebazz">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="17" y="6" width="14" height="14" rx="3" fill="rgba(255,255,255,0.22)"/><rect x="5" y="28" width="14" height="14" rx="3" fill="rgba(255,255,255,0.22)"/><rect x="29" y="28" width="14" height="14" rx="3" fill="rgba(255,255,255,0.22)"/><line x1="24" y1="20" x2="12" y2="28" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/><line x1="24" y1="20" x2="36" y2="28" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/></svg>
-          </div>
-          <div class="project-body">
-            <div class="project-type">Hack Project &middot; Web3</div>
-            <h3>₹eBazz</h3>
-            <p>Blockchain-powered local marketplace letting customers find nearby retailers by product and category — bridging online discovery with offline retail.</p>
-            <div class="project-tags">
-              <span class="tag">Blockchain</span><span class="tag">Marketplace</span><span class="tag">Web Dev</span>
-            </div>
-            <div style="margin-top:14px;">
-              <a class="project-link" href="https://pitch.com/public/ecb82c98-0748-46f6-b91b-6f8891164dd3" target="_blank" rel="noopener">View Pitch Deck ↗</a>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- PODCASTS -->
-    <section class="section" id="podcasts">
-      <div class="section-header reveal">
-        <span class="section-label">On Repeat</span>
-        <h2 class="section-title">Podcasts I <em>swear by</em></h2>
-      </div>
-      <div class="podcast-grid reveal">
-        <!-- Row 1 -->
-        <a class="yt-card" href="https://youtu.be/v1nkN0sM2wc" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/v1nkN0sM2wc/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">How Google Was Built</div>
-            <div class="yt-desc">The unlikely story of how two PhD dropouts built the most important company of the internet age — and the decisions that got them there.</div>
-          </div>
-        </a>
-        <a class="yt-card" href="https://youtu.be/oX7OduG1YmI" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/oX7OduG1YmI/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Imagine in the Future</div>
-            <div class="yt-desc">A wide-ranging conversation on compounding ambition, building conviction in uncertain markets, and why the best founders think in decades.</div>
-          </div>
-        </a>
-        <a class="yt-card" href="https://youtu.be/ZSM2uFnJ5bs" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/ZSM2uFnJ5bs/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Tobi Lütke on Building Shopify</div>
-            <div class="yt-desc">Shopify's CEO on staying obsessively founder-mode, making high-stakes bets, and designing a company that compounds over time.</div>
-          </div>
-        </a>
-        <!-- Row 2 — hidden until "View More" -->
-        <a class="yt-card yt-hidden" href="https://youtu.be/6OJRn44JlC4" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/6OJRn44JlC4/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Paul Graham's Essays</div>
-            <div class="yt-desc">The canonical reading list for anyone building something — Make things people want, Do things that don't scale, and why startups are the only way to get rich.</div>
-          </div>
-        </a>
-        <a class="yt-card yt-hidden" href="https://youtu.be/FFnTWSYQnyY" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/FFnTWSYQnyY/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Product Thinking &amp; Growth</div>
-            <div class="yt-desc">A masterclass in building products people actually want — covering discovery, iteration, and the art of shipping before you feel ready.</div>
-          </div>
-        </a>
-        <a class="yt-card yt-hidden" href="https://youtu.be/vZGfSlnUq-8" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/vZGfSlnUq-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Unfiltered by Samdish</div>
-            <div class="yt-desc">Sajad Lone sits down for an unfiltered conversation — refreshingly direct, covering ground most public figures wouldn't dare touch.</div>
-          </div>
-        </a>
-        <a class="yt-card yt-hidden" href="https://youtu.be/YP_QghPLG-8" target="_blank" rel="noopener">
-          <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/YP_QghPLG-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
-            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
-          </div>
-          <div class="yt-info">
-            <div class="yt-title">Title — update me</div>
-            <div class="yt-desc">Description — let me know what this one's about and I'll write it properly.</div>
-          </div>
-        </a>
-      </div>
-      <div class="podcast-more-wrap">
-        <button class="podcast-more-btn" id="podcastMoreBtn" onclick="togglePodcasts(this)">View More ↓</button>
       </div>
     </section>
 
@@ -2302,6 +2272,91 @@
           </div>
         </article>
 
+      </div>
+    </section>
+
+    <!-- PODCASTS -->
+    <section class="section" id="podcasts">
+      <div class="section-header reveal">
+        <span class="section-label">On Repeat</span>
+        <h2 class="section-title">Podcasts I <em>swear by</em></h2>
+      </div>
+      <div class="podcast-grid reveal">
+        <!-- Row 1 -->
+        <a class="yt-card" href="https://youtu.be/v1nkN0sM2wc" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/v1nkN0sM2wc/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">How Google Was Built</div>
+            <div class="yt-desc">The unlikely story of how two PhD dropouts built the most important company of the internet age — and the decisions that got them there.</div>
+          </div>
+        </a>
+        <a class="yt-card" href="https://youtu.be/oX7OduG1YmI" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/oX7OduG1YmI/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Imagine in the Future</div>
+            <div class="yt-desc">A wide-ranging conversation on compounding ambition, building conviction in uncertain markets, and why the best founders think in decades.</div>
+          </div>
+        </a>
+        <a class="yt-card" href="https://youtu.be/ZSM2uFnJ5bs" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/ZSM2uFnJ5bs/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Tobi Lütke on Building Shopify</div>
+            <div class="yt-desc">Shopify's CEO on staying obsessively founder-mode, making high-stakes bets, and designing a company that compounds over time.</div>
+          </div>
+        </a>
+        <!-- Row 2 — hidden until "View More" -->
+        <a class="yt-card yt-hidden" href="https://youtu.be/6OJRn44JlC4" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/6OJRn44JlC4/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Paul Graham's Essays</div>
+            <div class="yt-desc">The canonical reading list for anyone building something — Make things people want, Do things that don't scale, and why startups are the only way to get rich.</div>
+          </div>
+        </a>
+        <a class="yt-card yt-hidden" href="https://youtu.be/FFnTWSYQnyY" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/FFnTWSYQnyY/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Product Thinking &amp; Growth</div>
+            <div class="yt-desc">A masterclass in building products people actually want — covering discovery, iteration, and the art of shipping before you feel ready.</div>
+          </div>
+        </a>
+        <a class="yt-card yt-hidden" href="https://youtu.be/vZGfSlnUq-8" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/vZGfSlnUq-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Unfiltered by Samdish</div>
+            <div class="yt-desc">Sajad Lone sits down for an unfiltered conversation — refreshingly direct, covering ground most public figures wouldn't dare touch.</div>
+          </div>
+        </a>
+        <a class="yt-card yt-hidden" href="https://youtu.be/YP_QghPLG-8" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/YP_QghPLG-8/maxresdefault.jpg" alt="YouTube video" loading="lazy">
+            <div class="yt-play"><div class="yt-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+          <div class="yt-info">
+            <div class="yt-title">Title — update me</div>
+            <div class="yt-desc">Description — let me know what this one's about and I'll write it properly.</div>
+          </div>
+        </a>
+      </div>
+      <div class="podcast-more-wrap">
+        <button class="podcast-more-btn" id="podcastMoreBtn" onclick="togglePodcasts(this)">View More ↓</button>
       </div>
     </section>
 
@@ -2487,6 +2542,33 @@
       });
     });
 
+    function revealCards(els, onDone) {
+      els.forEach((el, i) => {
+        el.style.display = 'block';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(28px) scale(0.98)';
+        el.style.transition = 'none';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          el.style.transition = `opacity 0.65s cubic-bezier(0.22,1,0.36,1) ${i * 0.11}s, transform 0.7s cubic-bezier(0.22,1,0.36,1) ${i * 0.11}s`;
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0) scale(1)';
+        }));
+      });
+    }
+
+    function hideCards(els, onDone) {
+      els.forEach((el, i) => {
+        const delay = (els.length - 1 - i) * 0.07;
+        el.style.transition = `opacity 0.4s cubic-bezier(0.4,0,1,1) ${delay}s, transform 0.45s cubic-bezier(0.4,0,1,1) ${delay}s`;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px) scale(0.98)';
+      });
+      setTimeout(() => {
+        els.forEach(el => { el.style.display = 'none'; el.style.opacity = ''; el.style.transform = ''; el.style.transition = ''; });
+        if (onDone) onDone();
+      }, 400 + (els.length - 1) * 70 + 60);
+    }
+
     function togglePodcasts(btn) {
       const allCards = Array.from(document.querySelectorAll('.yt-card'));
       const threshold = podcastThreshold();
@@ -2494,40 +2576,26 @@
       const isHidden = extraCards[0] && extraCards[0].classList.contains('yt-hidden');
 
       if (isHidden) {
-        // Show with staggered fade-up
-        extraCards.forEach((el, i) => {
-          el.classList.remove('yt-hidden');
-          el.style.opacity = '0';
-          el.style.transform = 'translateY(22px)';
-          el.style.transition = 'none';
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              el.style.transition = `opacity 0.5s ease ${i * 0.09}s, transform 0.55s cubic-bezier(0.16,1,0.3,1) ${i * 0.09}s`;
-              el.style.opacity = '1';
-              el.style.transform = 'translateY(0)';
-            });
-          });
-        });
+        extraCards.forEach(el => el.classList.remove('yt-hidden'));
+        revealCards(extraCards);
         btn.textContent = 'Show Less ↑';
       } else {
-        // Fade-out in reverse stagger then hide
-        extraCards.forEach((el, i) => {
-          const delay = (extraCards.length - 1 - i) * 0.06;
-          el.style.transition = `opacity 0.3s ease ${delay}s, transform 0.35s cubic-bezier(0.4,0,1,1) ${delay}s`;
-          el.style.opacity = '0';
-          el.style.transform = 'translateY(14px)';
-        });
-        const totalDuration = 300 + (extraCards.length - 1) * 60 + 50;
-        setTimeout(() => {
-          extraCards.forEach(el => {
-            el.classList.add('yt-hidden');
-            el.style.opacity = '';
-            el.style.transform = '';
-            el.style.transition = '';
-          });
-        }, totalDuration);
+        hideCards(extraCards, () => extraCards.forEach(el => el.classList.add('yt-hidden')));
         btn.textContent = 'View More ↓';
         document.getElementById('podcasts').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function toggleProjects(btn) {
+      const hidden = Array.from(document.querySelectorAll('.project-card-hidden'));
+      const isHidden = hidden[0] && hidden[0].style.display !== 'block';
+      if (isHidden) {
+        revealCards(hidden);
+        btn.textContent = 'Show Less ↑';
+      } else {
+        hideCards(hidden);
+        btn.textContent = 'View More ↓';
+        document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
