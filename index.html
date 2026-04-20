@@ -536,7 +536,7 @@
       opacity: 1;
       transform: translateY(0) scale(1);
     }
-    .exp-card-dark { background: #111110; }
+    .exp-card-dark { background: #1e1c1a; }
     .exp-card-light {
       background: #f0ede6;
       border: 1px solid var(--border);
@@ -548,8 +548,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 40px 44px 0;
-      padding-bottom: 0;
+      padding: 36px 24px 0;
     }
     .exp-fam-logo {
       height: 50px;
@@ -563,31 +562,79 @@
       font-style: normal;
       letter-spacing: 0em;
       color: rgba(240,236,228,0.6);
-      margin-bottom: 32px;
+      margin-bottom: 16px;
       max-width: 400px;
     }
-    .exp-fam-mockup {
-      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
-    }
-    .exp-card-preview:hover .exp-fam-mockup { transform: scale(1.04) translateY(-4px); }
+
+    /* ---- FamPay phone mockup ---- */
     .exp-fam-mockup-wrap {
       width: 100%;
-      max-width: 720px;
-      margin: 0 auto;
-      height: 380px;
-      overflow: hidden;
+      height: 324px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      display: block;
+      perspective: 700px;
+      perspective-origin: 50% 60%;
     }
-    .exp-fam-mockup {
-      width: 100%;
-      height: 100%;
+    /* iPhone 16 Pro — Black Titanium, landscape, front face */
+    .exp-phone-wrap {
+      position: relative;
+      width: 562px;
+      height: 261px;
+      /* Titanium frame — gradient to show material depth */
+      background: linear-gradient(160deg, #5c5c5e 0%, #3e3e40 25%, #2c2c2e 60%, #4a4a4c 100%);
+      border-radius: 52px;
+      box-shadow:
+        inset 0 1.5px 0 rgba(255,255,255,0.22),   /* top frame highlight */
+        inset 0 -1px 0 rgba(0,0,0,0.6),            /* bottom frame shadow */
+        0 0 0 1px rgba(0,0,0,0.95),                /* outer dark ring */
+        0 0 0 1.5px rgba(255,255,255,0.1),          /* outer subtle glow */
+        0 32px 90px rgba(0,0,0,0.9);
+      transform: rotateX(50deg);
+    }
+    /* Screen glass — inset from frame */
+    .exp-iphone-screen {
+      position: absolute;
+      inset: 11px;
+      border-radius: 42px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    /* Dynamic Island — portrait-top = landscape-left, pill shape */
+    .exp-iphone-island {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 50px;
+      background: #000;
+      border-radius: 10px;
+      z-index: 2;
+    }
+    @keyframes iosSlideIn {
+      from { opacity: 0; transform: translate(calc(-50% + 80px), -50%) rotate(-90deg); }
+      to   { opacity: 1; transform: translate(-50%, -50%) rotate(-90deg); }
+    }
+    @keyframes iosSlideOut {
+      from { opacity: 1; transform: translate(-50%, -50%) rotate(-90deg); }
+      to   { opacity: 0; transform: translate(calc(-50% - 80px), -50%) rotate(-90deg); }
+    }
+    .exp-iphone-slide {
+      position: absolute;
+      width: 240px;
+      height: 540px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
       object-fit: cover;
-      object-position: center 38%;
-      display: block;
+      object-position: top center;
+      opacity: 0;
     }
+    .exp-iphone-slide.active  { opacity: 1; }
+    .exp-iphone-slide.entering { animation: iosSlideIn  0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+    .exp-iphone-slide.leaving  { animation: iosSlideOut 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
     /* Avaana body */
     .exp-avaana-body {
@@ -634,11 +681,11 @@
       padding: 18px 24px;
     }
     /* Both preview containers are position:relative so absolute bars anchor to them */
-    .exp-card-preview { position: relative; overflow: hidden; border-radius: 20px; }
+    .exp-card-preview { position: relative; overflow: hidden; border-radius: 20px; height: 560px; }
     .exp-card-footer-float {
       position: absolute;
       bottom: 20px; left: 20px; right: 20px;
-      background: rgba(30,30,30,0.92);
+      background: #111110;
       border-radius: 14px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.32);
     }
@@ -1705,7 +1752,6 @@
       .exp-fam-body { padding: 28px 20px 0; }
       .exp-fam-logo { height: 40px; }
       .exp-fam-tagline { font-size: 0.75rem; margin-bottom: 20px; }
-      .exp-fam-mockup-wrap { height: 240px; }
       .exp-avaana-body { grid-template-columns: 1fr; gap: 16px; padding: 28px 20px 76px; }
       .exp-avaana-mockup { max-height: 200px; }
       .exp-avaana-headline { font-size: 1.2rem; }
@@ -1768,7 +1814,6 @@
       /* ---- Experience cards ---- */
       .exp-fam-body { padding: 20px 16px 0; }
       .exp-fam-logo { height: 26px; }
-      .exp-fam-mockup-wrap { height: 190px; }
       .exp-avaana-body { padding: 20px 16px 68px; }
       .exp-card-footer { padding: 13px 16px; }
       .exp-card-footer-role { font-size: 0.85rem; }
@@ -1912,10 +1957,19 @@
           <!-- Preview -->
           <div class="exp-card-preview">
             <div class="exp-fam-body">
-              <a href="https://www.famapp.in/" target="_blank" rel="noopener"><img src="mockup and logos/FamApp Logo Icon.svg" alt="FamApp" class="exp-fam-logo"></a>
+              <a href="https://www.famapp.in/" target="_blank" rel="noopener"><img src="Work/Fampay/FamApp Logo Icon.svg" alt="FamApp" class="exp-fam-logo"></a>
               <p class="exp-fam-tagline">Building a financially aware, smart and independent generation</p>
               <div class="exp-fam-mockup-wrap">
-                <img src="mockup and logos/Fam mockup.png" alt="FamApp product screens" class="exp-fam-mockup">
+                <div class="exp-phone-wrap">
+                  <div class="exp-iphone-screen">
+                    <div class="exp-iphone-island"></div>
+                    <img class="exp-iphone-slide active" src="Work/Fampay/Homepage.jpeg" alt="">
+                    <img class="exp-iphone-slide" src="Work/Fampay/Payment compose.jpeg" alt="">
+                    <img class="exp-iphone-slide" src="Work/Fampay/Card page.jpeg" alt="">
+                    <img class="exp-iphone-slide" src="Work/Fampay/DM.jpeg" alt="">
+                    <img class="exp-iphone-slide" src="Work/Fampay/spotlight.jpeg" alt="">
+                  </div>
+                </div>
               </div>
             </div>
             <div class="exp-card-footer exp-card-footer-float">
@@ -1991,11 +2045,11 @@
           <div class="exp-card-preview">
             <div class="exp-avaana-body">
               <div class="exp-avaana-text">
-                <a href="https://avaana.com.au/" target="_blank" rel="noopener"><img src="mockup and logos/Avaana Logo.svg" alt="Avaana" class="exp-avaana-logo"></a>
+                <a href="https://avaana.com.au/" target="_blank" rel="noopener"><img src="Work/Avaana/Avaana Logo.svg" alt="Avaana" class="exp-avaana-logo"></a>
                 <h3 class="exp-avaana-headline">Find and book local health and wellbeing practitioners</h3>
               </div>
               <div class="exp-avaana-visual">
-                <img src="mockup and logos/AVAANA MOCKUP.png" alt="Avaana product" class="exp-avaana-mockup">
+                <img src="Work/Avaana/AVAANA MOCKUP.png" alt="Avaana product" class="exp-avaana-mockup">
               </div>
             </div>
             <div class="exp-card-footer exp-card-footer-teal">
@@ -2821,6 +2875,23 @@
       el.addEventListener('mouseenter', () => cardCursor.classList.add('visible'));
       el.addEventListener('mouseleave', () => cardCursor.classList.remove('visible'));
     });
+
+
+    /* FamPay iPhone slideshow — iOS-style screen transitions */
+    (function() {
+      const slides = document.querySelectorAll('.exp-iphone-slide');
+      if (!slides.length) return;
+      let cur = 0;
+      setInterval(() => {
+        const prev = cur;
+        cur = (cur + 1) % slides.length;
+        slides[prev].classList.remove('active');
+        slides[prev].classList.add('leaving');
+        setTimeout(() => slides[prev].classList.remove('leaving'), 600);
+        slides[cur].classList.add('active', 'entering');
+        setTimeout(() => slides[cur].classList.remove('entering'), 600);
+      }, 3000);
+    })();
 
     /* Project card click-through */
     document.querySelectorAll('.project-card[data-href]').forEach(card => {
