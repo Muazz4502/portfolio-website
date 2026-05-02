@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lenskart × Simpl — Muazz</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23e63312'>M</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf9f6;
+      --fg: #1a1a1a;
+      --accent: #5b3af7;
+      --accent-lenskart: #00bcd4;
+      --muted: #8a8a8a;
+      --muted-light: #b5b2ac;
+      --card-bg: #ffffff;
+      --border: #e8e5df;
+      --border-light: #f0ede8;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.4;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* ---- Back link ---- */
+    .back {
+      position: fixed;
+      top: 28px;
+      left: 36px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: rgba(240,236,228,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back:hover { color: #fff; }
+    .back-arrow { font-size: 1rem; }
+
+    /* ---- Hero ---- */
+    .case-hero {
+      background: linear-gradient(135deg, #12082e 0%, #1a0f3d 45%, #0a2030 100%);
+      padding: 110px 44px 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .case-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 30% 50%, rgba(91,58,247,0.18) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 50% at 70% 50%, rgba(0,188,212,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-brand-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .hero-brand-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 99px;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .chip-simpl {
+      background: rgba(91,58,247,0.2);
+      border: 1px solid rgba(91,58,247,0.4);
+      color: #a78bfa;
+    }
+    .chip-lenskart {
+      background: rgba(0,188,212,0.15);
+      border: 1px solid rgba(0,188,212,0.35);
+      color: #67e8f9;
+    }
+    .hero-brand-x {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: rgba(240,236,228,0.3);
+    }
+
+    .case-hero-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: #f0ece4;
+      margin-bottom: 16px;
+      position: relative;
+      max-width: 640px;
+    }
+    .case-hero-title em { font-style: italic; color: #a78bfa; }
+
+    .case-hero-sub {
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(240,236,228,0.45);
+      max-width: 480px;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    /* Funnel visual */
+    .hero-funnel {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 52px;
+      position: relative;
+    }
+    .funnel-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+    .funnel-step + .funnel-step::before {
+      content: '→';
+      position: absolute;
+      left: -22px;
+      top: 17px;
+      font-size: 0.75rem;
+      color: rgba(240,236,228,0.2);
+    }
+    .funnel-node {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .funnel-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(240,236,228,0.4);
+    }
+    .funnel-step.active .funnel-label { color: rgba(240,236,228,0.8); }
+    .fn-awareness   { background: rgba(91,58,247,0.25); border: 1px solid rgba(91,58,247,0.4); }
+    .fn-consider    { background: rgba(139,92,246,0.2); border: 1px solid rgba(139,92,246,0.35); }
+    .fn-payment     { background: rgba(0,188,212,0.2); border: 1px solid rgba(0,188,212,0.35); }
+    .fn-post        { background: rgba(16,185,129,0.18); border: 1px solid rgba(16,185,129,0.3); }
+
+    .hero-funnel-gap { width: 44px; flex-shrink: 0; }
+
+    /* ---- Content ---- */
+    .case-content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 80px 24px 120px;
+    }
+
+    .case-role-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 64px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .case-role-title {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--fg);
+    }
+    .case-role-sub {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .case-role-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--muted-light);
+      flex-shrink: 0;
+    }
+
+    .case-section { margin-bottom: 64px; }
+    .case-section-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .case-section-title {
+      font-family: var(--serif);
+      font-size: 2rem;
+      line-height: 1.2;
+      color: var(--fg);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .case-section-body {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 300;
+      color: #4a4a4a;
+      line-height: 1.8;
+    }
+    .case-section-body p + p { margin-top: 16px; }
+
+    /* Cohort grid */
+    .cohort-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .cohort-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .cohort-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .cohort-title {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--fg);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+    .cohort-desc {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Phase headers */
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .phase-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .phase-icon.awareness { background: rgba(91,58,247,0.1); border: 1px solid rgba(91,58,247,0.2); }
+    .phase-icon.consider  { background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.2); }
+    .phase-icon.payment   { background: rgba(0,188,212,0.1); border: 1px solid rgba(0,188,212,0.2); }
+    .phase-icon.post      { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); }
+    .phase-title-wrap { display: flex; flex-direction: column; gap: 2px; }
+    .phase-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--fg);
+      letter-spacing: -0.015em;
+    }
+    .phase-sub {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* Bullets */
+    .case-bullets {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .case-bullets li {
+      display: flex;
+      gap: 12px;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #4a4a4a;
+      line-height: 1.65;
+    }
+    .case-bullets li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Insight callout */
+    .insight {
+      background: color-mix(in srgb, var(--accent) 6%, var(--bg));
+      border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 20px;
+    }
+    .insight-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .insight p {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--fg);
+      line-height: 1.65;
+    }
+
+    /* Flow diagram */
+    .flow-steps {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+    }
+    .flow-step + .flow-step { margin-left: 0; }
+    .flow-step + .flow-step::before {
+      content: '→';
+      position: absolute;
+      left: -18px;
+      top: 14px;
+      font-size: 0.8rem;
+      color: var(--muted-light);
+    }
+    .flow-node {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--fg);
+      white-space: nowrap;
+    }
+    .flow-node.highlight {
+      background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+      border-color: color-mix(in srgb, var(--accent) 25%, var(--border));
+      color: var(--accent);
+    }
+    .flow-node.new {
+      background: color-mix(in srgb, #00bcd4 8%, var(--bg));
+      border-color: color-mix(in srgb, #00bcd4 25%, var(--border));
+      color: #0891b2;
+    }
+    .flow-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.06em;
+      color: var(--muted-light);
+      text-align: center;
+    }
+
+    .flow-gap { width: 36px; flex-shrink: 0; }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 64px 0;
+    }
+
+    /* PDF CTA */
+    .pdf-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--fg);
+      color: var(--bg);
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 99px;
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background 0.25s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .pdf-cta:hover { background: var(--accent); transform: translateY(-2px); }
+
+    @media (max-width: 600px) {
+      .case-hero { padding: 100px 20px 56px; }
+      .case-content { padding: 48px 20px 80px; }
+      .cohort-grid { grid-template-columns: 1fr; }
+      .case-section-title { font-size: 1.5rem; }
+      .back { left: 20px; top: 20px; color: rgba(240,236,228,0.5); }
+      .hero-funnel { gap: 0; flex-wrap: wrap; justify-content: center; row-gap: 16px; }
+      .hero-funnel-gap { width: 28px; }
+      .funnel-step + .funnel-step::before { left: -18px; }
+      .flow-steps { gap: 8px; }
+      .flow-step + .flow-step::before { display: none; }
+    }
+
+    /* reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html#projects" class="back">
+    <span class="back-arrow">←</span> Back
+  </a>
+
+  <!-- Hero -->
+  <div class="case-hero">
+    <div class="hero-brand-row">
+      <div class="hero-brand-chip chip-simpl">Simpl</div>
+      <span class="hero-brand-x">×</span>
+      <div class="hero-brand-chip chip-lenskart">Lenskart</div>
+    </div>
+
+    <h1 class="case-hero-title">Increasing Simpl's payment share on Lenskart from <em>5%</em></h1>
+    <p class="case-hero-sub">A funnel-first strategy to grow Simpl's wallet share — targeting the right cohorts at every stage from discovery to post-payment.</p>
+
+    <div class="hero-funnel">
+      <div class="funnel-step active">
+        <div class="funnel-node fn-awareness">👁️</div>
+        <div class="funnel-label">Awareness</div>
+      </div>
+      <div class="hero-funnel-gap"></div>
+      <div class="funnel-step">
+        <div class="funnel-node fn-consider">🧠</div>
+        <div class="funnel-label">Consideration</div>
+      </div>
+      <div class="hero-funnel-gap"></div>
+      <div class="funnel-step">
+        <div class="funnel-node fn-payment">💳</div>
+        <div class="funnel-label">Payment</div>
+      </div>
+      <div class="hero-funnel-gap"></div>
+      <div class="funnel-step">
+        <div class="funnel-node fn-post">🔁</div>
+        <div class="funnel-label">Post-Payment</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="case-content">
+
+    <!-- Context bar -->
+    <div class="case-role-bar reveal">
+      <div>
+        <div class="case-role-title">Case Study</div>
+        <div class="case-role-sub">Growth Strategy</div>
+      </div>
+      <div class="case-role-dot"></div>
+      <div class="case-role-sub">Payments &amp; BNPL</div>
+      <div class="case-role-dot"></div>
+      <div class="case-role-sub">Simpl × Lenskart</div>
+    </div>
+
+    <!-- Problem Statement -->
+    <div class="case-section reveal">
+      <div class="case-section-label">The Problem</div>
+      <h2 class="case-section-title">5% payment share. Why so low?</h2>
+      <div class="case-section-body">
+        <p>Simpl's payment share on Lenskart stood at just 5% — meaning only 1 in 20 successful Lenskart transactions happened through Simpl. The goal was clear: increase that share. But the path wasn't.</p>
+        <p>Payment share isn't just about having a button on the checkout page. It's the result of a whole funnel — from a user not knowing Simpl exists on Lenskart, all the way to them actually completing the transaction. Every drop-off point is a lever.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Cohorts -->
+    <div class="case-section reveal">
+      <div class="case-section-label">The Framework</div>
+      <h2 class="case-section-title">Not all users are the same</h2>
+      <div class="case-section-body">
+        <p>Before recommending anything, I segmented the user base into four cohorts. The right intervention depends on who you're targeting — the same nudge won't work for someone who's never heard of Simpl versus someone who uses it weekly but has never paid on Lenskart.</p>
+      </div>
+      <div class="cohort-grid reveal reveal-delay-1">
+        <div class="cohort-card">
+          <div class="cohort-label">Cohort A</div>
+          <div class="cohort-title">Simpl + Lenskart users who've transacted with Simpl on Lenskart</div>
+          <div class="cohort-desc">Already converted. Focus on retention and repeat purchase nudges.</div>
+        </div>
+        <div class="cohort-card">
+          <div class="cohort-label">Cohort B</div>
+          <div class="cohort-title">Simpl users who are not Lenskart users</div>
+          <div class="cohort-desc">New to Lenskart. Use Simpl's own app to bring them in — scratchcards, brand promotions.</div>
+        </div>
+        <div class="cohort-card">
+          <div class="cohort-label">Cohort C</div>
+          <div class="cohort-title">Both Simpl and Lenskart users — but haven't used Simpl on Lenskart</div>
+          <div class="cohort-desc">Highest-potential cohort. They have both apps but something's blocking them at checkout.</div>
+        </div>
+        <div class="cohort-card">
+          <div class="cohort-label">Cohort D</div>
+          <div class="cohort-title">Lenskart users who don't have Simpl</div>
+          <div class="cohort-desc">Top-of-funnel acquisition play. Needs the most spend to convert.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Awareness -->
+    <div class="case-section reveal">
+      <div class="phase-header">
+        <div class="phase-icon awareness">👁️</div>
+        <div class="phase-title-wrap">
+          <div class="phase-title">Awareness</div>
+          <div class="phase-sub">Increase top-of-funnel visibility</div>
+        </div>
+      </div>
+
+      <div class="case-section-body">
+        <p>The first lever is simply: do people know Simpl is available on Lenskart? For Cohorts C and D, this is the primary blocker.</p>
+      </div>
+
+      <ul class="case-bullets">
+        <li><strong>Payment page placement:</strong> Simpl currently sits below UPI apps and cards. The goal is to get into the "Recommended" section. This requires improving success rate and wallet share — metrics Lenskart's algorithm uses to rank payment options.</li>
+        <li><strong>Widgets and ad cards:</strong> Beyond the payments page, Simpl can place banners and contextual widgets across Lenskart's other app surfaces — product pages, cart, homepage — to build brand recall before the user even gets to checkout.</li>
+        <li><strong>Post-transaction scratchcards on Simpl (for Cohort B):</strong> When Simpl users complete any payment on the app, show them a Lenskart scratchcard. Lenskart already pays GPay and CRED for similar post-transaction screens. This creates a barter lever — Simpl promotes Lenskart, Lenskart gives Simpl better checkout placement.</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Consideration -->
+    <div class="case-section reveal">
+      <div class="phase-header">
+        <div class="phase-icon consider">🧠</div>
+        <div class="phase-title-wrap">
+          <div class="phase-title">Consideration</div>
+          <div class="phase-sub">Make Simpl the obvious choice at checkout</div>
+        </div>
+      </div>
+
+      <div class="case-section-body">
+        <p>Awareness gets users to notice Simpl. Consideration converts that notice into intent. These levers are more targeted — each mapped to specific cohorts.</p>
+      </div>
+
+      <ul class="case-bullets">
+        <li><strong>Gamified cashback — Cohorts C & D:</strong> Pay with Simpl, spin a wheel, and get a chance to have your product for free. Gamification creates disproportionate perceived value without a disproportionate cost.</li>
+        <li><strong>Extended settlement — Cohort B:</strong> Pay in 20 days instead of 15 if you buy through Lenskart. A structural benefit that rewards loyalty without cash outflows. Requires guardrails: once per user per settlement cycle.</li>
+        <li><strong>Lenskart subscription free — Cohort B:</strong> A co-branded offer where using Simpl unlocks Lenskart's premium membership. High perceived value, leverages the partnership commercially.</li>
+        <li><strong>Direct cashback — Cohort D only, last resort:</strong> Expensive and conditions the user to wait for offers. Use only if other levers fail and the economics make sense for Cohort D acquisition.</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Payment -->
+    <div class="case-section reveal">
+      <div class="phase-header">
+        <div class="phase-icon payment">💳</div>
+        <div class="phase-title-wrap">
+          <div class="phase-title">Payment</div>
+          <div class="phase-sub">Reduce drop-off from intent to completion</div>
+        </div>
+      </div>
+
+      <div class="case-section-body">
+        <p>Even when a user selects Simpl, the transaction can fail — through eligibility checks, OTP drops, or payment gateway failures. Each is an opportunity.</p>
+      </div>
+
+      <div class="case-section-label" style="margin-top: 28px; margin-bottom: 16px;">Eligibility</div>
+      <ul class="case-bullets">
+        <li><strong>Flexible limits:</strong> Tested this personally — a ₹3,050 cart with a ₹3,000 Simpl limit doesn't offer Simpl as an option. A 10% flexibility buffer on the limit (risk-team permitting) could recover a meaningful volume of near-limit transactions at Lenskart's higher AOV.</li>
+        <li><strong>Flexible risk checks for Cohorts B & C:</strong> Users already on both platforms represent lower acquisition risk. The risk model should reflect that with slightly more permissive parameters for this segment.</li>
+      </ul>
+
+      <div class="case-section-label" style="margin-top: 32px; margin-bottom: 16px;">Payment Completion</div>
+
+      <p class="case-section-body" style="margin-bottom: 16px;">Current flow for non-Simpl-app users (Cohort C):</p>
+      <div class="flow-steps">
+        <div class="flow-step"><div class="flow-node">Select Simpl</div></div>
+        <div class="flow-gap"></div>
+        <div class="flow-step"><div class="flow-node">Juspay PG</div></div>
+        <div class="flow-gap"></div>
+        <div class="flow-step"><div class="flow-node">OTP via SMS</div></div>
+        <div class="flow-gap"></div>
+        <div class="flow-step"><div class="flow-node">Enter OTP</div></div>
+        <div class="flow-gap"></div>
+        <div class="flow-step"><div class="flow-node">Done</div></div>
+      </div>
+
+      <p class="case-section-body" style="margin-top: 24px; margin-bottom: 16px;">Proposed flow for Cohort C (app on phone):</p>
+      <div class="flow-steps">
+        <div class="flow-step"><div class="flow-node">Select Simpl</div></div>
+        <div class="flow-gap"></div>
+        <div class="flow-step"><div class="flow-node new">Redirect to Simpl app</div><div class="flow-label">intent (Android)</div></div>
+        <div class="flow-gap"></div>
+        <div class="flow-step"><div class="flow-node new">Swipe to pay</div></div>
+        <div class="flow-gap"></div>
+        <div class="flow-step"><div class="flow-node">Done ↩ Lenskart</div></div>
+      </div>
+
+      <div class="insight reveal reveal-delay-1">
+        <div class="insight-label">Why this matters</div>
+        <p>Removing the OTP step eliminates the most common failure point — SMS delivery issues. The app-to-app redirect is a flow users already trust from UPI, and it gives Simpl a branded touchpoint mid-transaction. On iOS, a push notification replaces the intent redirect due to platform restrictions.</p>
+      </div>
+
+      <ul class="case-bullets" style="margin-top: 28px;">
+        <li><strong>OTP via WhatsApp or email:</strong> SMS delivery fails in low-network zones. At FamPay, adding VMN coverage improved OTP success by ~5%. WhatsApp or email OTP as a fallback directly addresses this for Simpl too.</li>
+        <li><strong>Multiple payment gateway providers:</strong> All observed transactions routed through Juspay. Adding a PG orchestrator with fallback providers guards against downtime and optimises for success rate dynamically.</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Post-Payment -->
+    <div class="case-section reveal">
+      <div class="phase-header">
+        <div class="phase-icon post">🔁</div>
+        <div class="phase-title-wrap">
+          <div class="phase-title">Post-Payment</div>
+          <div class="phase-sub">Retain and grow</div>
+        </div>
+      </div>
+      <div class="case-section-body">
+        <p>A user who transacted once is the cheapest user to convert again. Post-payment is where retention compounds into share.</p>
+      </div>
+      <ul class="case-bullets">
+        <li><strong>Resurrect:</strong> Timely nudges to users who've used Simpl on Lenskart but haven't returned in a while. Targeted by purchase cycle data — glasses typically replace every 1–2 years.</li>
+        <li><strong>Refer:</strong> Satisfied users are the best acquisition channel. A referral mechanic tied to Simpl or Lenskart benefits can bring Cohort B users into the funnel at lower CAC.</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <!-- View full PDF -->
+    <div class="case-section reveal" style="text-align: center;">
+      <div class="case-section-label" style="justify-content: center; display: flex;">Full Document</div>
+      <h2 class="case-section-title" style="margin-bottom: 12px;">Read the original PDF</h2>
+      <p class="case-section-body" style="margin-bottom: 28px;">The complete document includes additional flow diagrams, cohort targeting specifics, and the full payment funnel breakdown.</p>
+      <a href="Projects/Lenskart%20market%20share%20on%20simpl.pdf" target="_blank" rel="noopener" class="pdf-cta">View PDF ↗</a>
+    </div>
+
+  </div>
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>

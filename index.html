@@ -16,17 +16,17 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #faf9f6;
-      --fg: #1a1a1a;
-      --accent: #e63312;
-      --accent-hover: #c42a0e;
-      --muted: #8a8a8a;
-      --muted-light: #b5b2ac;
-      --card-bg: #ffffff;
-      --border: #e8e5df;
-      --border-light: #f0ede8;
-      --footer-bg: #111110;
-      --footer-fg: #f0ece4;
+      --bg: oklch(97.8% 0.007 72);
+      --fg: oklch(14% 0.012 50);
+      --accent: oklch(52% 0.22 30);
+      --accent-hover: oklch(44% 0.20 28);
+      --muted: oklch(57% 0.008 55);
+      --muted-light: oklch(73% 0.008 65);
+      --card-bg: oklch(99.2% 0.006 70);
+      --border: oklch(91% 0.009 75);
+      --border-light: oklch(94.5% 0.008 72);
+      --footer-bg: oklch(10.5% 0.008 50);
+      --footer-fg: oklch(94% 0.010 75);
       --serif: 'Instrument Serif', Georgia, serif;
       --sans: 'DM Sans', system-ui, sans-serif;
       --mono: 'Montserrat', sans-serif;
@@ -327,14 +327,30 @@
 
     /* About pull-quote */
     .about-pull-quote {
-      font-family: var(--serif);
+      position: relative;
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      font-weight: 400;
       font-style: italic;
-      font-size: 1.15rem;
       line-height: 1.7;
       color: var(--fg);
-      border-left: 2px solid var(--accent);
-      padding-left: 20px;
       margin: 0 0 28px;
+      padding: 32px 28px 28px;
+      background: oklch(96.5% 0.012 55);
+      border-radius: 14px;
+    }
+    .about-pull-quote::before {
+      content: '\201C';
+      position: absolute;
+      top: 8px;
+      left: 22px;
+      font-family: var(--serif);
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.22;
+      pointer-events: none;
+      user-select: none;
     }
 
     .hero-ctas {
@@ -754,13 +770,15 @@
     .exp-know-more:hover .exp-know-more-arrow { transform: translate(2px, -2px); }
     /* Avaana teal card */
     .exp-card-footer-teal .exp-know-more {
-      background: rgba(230,51,18,0.12);
-      border-color: #E63312;
-      color: #E63312;
-    }
-    .exp-card-footer-teal .exp-know-more:hover {
       background: #E63312;
       border-color: #E63312;
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 8px 14px;
+    }
+    .exp-card-footer-teal .exp-know-more:hover {
+      background: #c42a0e;
+      border-color: #c42a0e;
       color: #fff;
       box-shadow: 0 6px 24px rgba(230,51,18,0.35);
       transform: translateY(-2px);
@@ -1029,83 +1047,138 @@
     }
 
     /* ========== ACHIEVEMENTS ========== */
-    .wins-list {
+    .wins-feed {
       display: flex;
       flex-direction: column;
-      gap: 8px;
     }
+    .wins-year {
+      display: flex;
+      align-items: flex-start;
+      gap: 40px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+    }
+    .wins-feed > .wins-year:last-child { border-bottom: 1px solid var(--border); }
+    .wins-year-label {
+      flex-shrink: 0;
+      width: 64px;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      padding-top: 6px;
+    }
+    .wins-year-row {
+      flex: 1;
+      display: flex;
+      gap: 0;
+    }
+    .win-tile {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-right: 28px;
+      margin-right: 28px;
+      border-right: 1px solid var(--border-light);
+      transition: opacity 0.2s ease;
+    }
+    .win-tile:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+    .win-tile-hero { flex: 2; }
+    .wins-year-row:hover .win-tile { opacity: 0.4; }
+    .wins-year-row .win-tile:hover { opacity: 1; }
+    .wins-year-row .win-tile:only-child { flex: none; max-width: 500px; }
+    .win-tile-result {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+    .win-tile-silver .win-tile-result { color: var(--muted); }
+    .win-tile-dark .win-tile-result { color: var(--fg); }
+    .win-tile-name {
+      font-family: var(--serif);
+      font-size: 1.08rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--fg);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .win-tile-org {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      line-height: 1.55;
+      margin-top: 2px;
+    }
+    .wins-list { display: flex; flex-direction: column; }
     .win-row {
       display: flex;
       align-items: center;
-      gap: 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 99px;
-      padding: 14px 22px;
-      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      gap: 16px 24px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
     }
-    .win-row:hover {
-      border-color: rgba(230,51,18,0.2);
-      box-shadow: 0 6px 24px rgba(0,0,0,0.06);
-    }
+    .win-row:first-child { border-top: 1px solid var(--border); }
     .win-result {
       font-family: var(--mono);
       font-size: 0.6rem;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.06em;
       text-transform: uppercase;
+      color: #fff;
+      background: var(--accent);
+      padding: 4px 12px;
+      border-radius: 99px;
       white-space: nowrap;
       flex-shrink: 0;
-      min-width: 94px;
-      padding: 4px 10px;
-      border-radius: 99px;
+      min-width: 90px;
       text-align: center;
-      background: var(--accent);
-      color: #fff;
     }
     .win-result.silver {
-      background: #e8e5df;
-      color: #6a6a6a;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
     }
     .win-result.dark {
       background: var(--fg);
-      color: #fff;
+      color: var(--bg);
     }
-    .win-divider {
-      width: 1px;
-      height: 14px;
-      background: var(--border);
-      flex-shrink: 0;
-    }
+    .win-body { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
     .win-name {
       font-family: var(--sans);
-      font-size: 0.88rem;
-      font-weight: 400;
+      font-size: 0.95rem;
+      font-weight: 500;
       color: var(--fg);
       white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .win-dots {
-      flex: 1;
-      border-bottom: 1px dotted var(--muted-light);
-      min-width: 16px;
-      align-self: center;
-      margin: 0 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .win-org {
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.62rem;
       color: var(--muted);
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-      flex-shrink: 0;
+      letter-spacing: 0.02em;
+    }
+    .win-divider, .win-dots { display: none; }
+    @media (max-width: 900px) {
+      .wins-year { gap: 24px; }
+      .win-tile { padding-right: 20px; margin-right: 20px; }
     }
     @media (max-width: 640px) {
-      .win-row { border-radius: 16px; padding: 12px 16px; flex-wrap: wrap; gap: 6px 10px; align-items: flex-start; }
-      .win-name { flex: 0 1 auto; font-size: 0.82rem; }
-      .win-dots { display: none; }
-      .win-org { width: 100%; padding-left: calc(94px + 10px + 16px); font-size: 0.56rem; white-space: normal; }
-      .win-divider { display: none; }
+      .wins-year { flex-direction: column; gap: 16px; padding: 20px 0; }
+      .wins-year-label { width: auto; padding-top: 0; }
+      .wins-year-row { flex-wrap: wrap; gap: 20px; }
+      .win-tile { flex-basis: calc(50% - 10px); border-right: none; padding-right: 0; margin-right: 0; }
+      .win-tile-hero { flex-basis: 100%; }
+      .wins-year-row .win-tile:only-child { max-width: 100%; }
     }
 
     /* ========== PROJECTS ========== */
@@ -1173,8 +1246,12 @@
     .pv-rebazz  { background: linear-gradient(145deg, #10081e, #28123d); }
     .pv-port    { background: linear-gradient(145deg, #1a1008, #382210); }
     .pv-dunzo   { background: linear-gradient(145deg, #0f0a1e, #1e1040); }
+    .pv-simpl   { background: #010042; }
 
     .project-card-hidden { display: none; }
+    @media (max-width: 480px) {
+      .project-card-mobile-hidden { display: none; }
+    }
 
     .project-link {
       display: inline-flex;
@@ -1221,7 +1298,7 @@
     }
     .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .project-card:hover .tag { border-color: rgba(230,51,18,0.18); color: var(--fg); }
-    .projects-grid > .project-card:last-child { grid-column: 2; }
+    .projects-grid > .project-card:last-child { grid-column: auto; }
 
     /* ========== SIDE QUESTS ========== */
     .sq-feed { display: flex; flex-direction: column; gap: 28px; padding-bottom: 8px; }
@@ -1560,7 +1637,7 @@
     /* ========== ABOUT ========== */
     .about-layout {
       display: grid;
-      grid-template-columns: 5fr 7fr;
+      grid-template-columns: 1fr 1fr;
       gap: 80px;
       align-items: start;
     }
@@ -1583,7 +1660,7 @@
     .about-photos .scroll-row:first-child { padding-bottom: 20px; }
     .lately-section { padding: 0; }
 
-    .about-bio { font-family: var(--sans); font-weight: 300; font-size: 1.05rem; color: var(--fg); line-height: 1.8; }
+    .about-bio { font-family: var(--sans); font-weight: 400; font-size: 0.92rem; color: var(--fg); line-height: 1.75; }
     .about-bio p { margin-bottom: 20px; }
     .about-bio p:last-child { margin-bottom: 0; }
     .about-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
@@ -1758,8 +1835,9 @@
       .exp-fam-static-mockup { display: block; max-height: 260px; }
       .exp-avaana-body { grid-template-columns: 1fr; gap: 16px; padding: 28px 20px 76px; }
       .exp-avaana-mockup { max-height: 200px; }
-      .exp-avaana-headline { font-size: 1.1rem; }
+      .exp-avaana-headline { font-size: 0.88rem; padding: 0 12px; }
       .exp-avaana-logo { height: 26px; }
+      .exp-avaana-visual { display: flex; align-items: flex-end; overflow: hidden; }
       .exp-card-footer { padding: 16px 20px; }
       .exp-card-footer-role { font-size: 0.95rem; }
       .exp-card-footer-sub { font-size: 0.75rem; }
@@ -1777,7 +1855,9 @@
       .exp-impact-num { font-size: 1.4rem; }
       .exp-impact-lbl { font-size: 0.62rem; }
       .exp-overlay-header { margin-bottom: 20px; }
-      .exp-overlay-role { font-size: 0.9rem; }
+      .exp-overlay-title-row { flex-wrap: wrap; gap: 4px 8px; }
+      .exp-overlay-role { font-size: 0.9rem; flex-basis: 100%; }
+      .exp-overlay-dot { display: none; }
       .exp-overlay-date { font-size: 0.62rem; }
       .exp-close-btn { font-size: 0.7rem; padding: 5px 10px; }
       .exp-expand-title { font-size: 0.92rem; }
@@ -1820,14 +1900,26 @@
       .lately-header { padding: 0 16px; }
 
       /* Experience cards */
-      .exp-card-preview { height: auto; min-height: 340px; }
-      .exp-fam-static-mockup { max-height: 200px; }
+      .exp-card-preview { height: auto; min-height: 500px; }
+      .exp-fam-static-mockup { max-height: none; height: 260px; object-fit: cover; object-position: center center; }
       .exp-fam-body { padding: 20px 16px 80px; }
       .exp-fam-logo { height: 26px; }
-      .exp-avaana-body { padding: 20px 16px 72px; }
-      .exp-avaana-mockup { max-height: 160px; }
-      .exp-card-footer { padding: 13px 16px; }
-      .exp-card-footer-role { font-size: 0.85rem; }
+      .exp-avaana-body { padding: 20px 20px 160px; grid-template-columns: 1fr; gap: 12px; text-align: center; }
+      .exp-avaana-logo { margin-left: auto; margin-right: auto; }
+      .exp-avaana-mockup { max-height: 320px; object-position: center center; }
+      .exp-avaana-visual { display: flex; justify-content: center; }
+      .exp-card-footer { padding: 16px 20px; }
+      .exp-card-footer-role { font-size: 1rem; }
+      .exp-card-footer-float { bottom: 16px; left: 16px; right: 16px; flex-direction: column; align-items: center; gap: 6px; padding: 20px 24px; text-align: center; }
+      .exp-card-footer-float .exp-card-footer-role { font-size: 1rem; }
+      .exp-card-footer-float .exp-card-footer-sub { font-size: 0.75rem; }
+      .exp-card-footer-float .exp-know-more { font-size: 0.75rem; padding: 8px 24px; margin-top: 6px; width: fit-content; align-self: center; }
+      .exp-card-footer-float .exp-know-more-arrow { width: auto; height: auto; font-size: 0.75rem; }
+      .exp-card-footer-teal { bottom: 16px; left: 16px; right: 16px; border-radius: 14px; flex-direction: column; align-items: center; gap: 6px; padding: 20px 24px; text-align: center; }
+      .exp-card-footer-teal .exp-card-footer-role { font-size: 1rem; }
+      .exp-card-footer-teal .exp-card-footer-sub { font-size: 0.75rem; }
+      .exp-card-footer-teal .exp-know-more { font-size: 0.75rem; padding: 8px 24px; margin-top: 6px; width: fit-content; align-self: center; }
+      .exp-card-footer-teal .exp-know-more-arrow { width: auto; height: auto; font-size: 0.75rem; }
       .exp-expand-dark, .exp-expand-light { padding: 28px 16px 20px; }
       .exp-impact-grid { gap: 6px; }
       .exp-impact-num { font-size: 1.2rem; }
@@ -1842,6 +1934,7 @@
       .sq-photo-col { width: 100%; }
       .sq-main-photo { height: 200px; }
       .sq-body { border-left: none; border-top: 1px solid var(--border); padding: 24px 20px; }
+      .sq-learnings ul li:nth-child(n+3) { display: none; }
 
       /* Wins */
       .win-row { border-radius: 14px; padding: 12px 14px; flex-wrap: wrap; gap: 6px 8px; align-items: flex-start; }
@@ -1853,6 +1946,7 @@
 
       /* Podcast */
       .podcast-grid { grid-template-columns: 1fr; gap: 14px; }
+      .podcast-grid .yt-card.yt-hidden { display: none !important; }
 
       /* About */
       .about-layout { grid-template-columns: 1fr; gap: 32px; }
@@ -1865,10 +1959,26 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.1ms !important;
+      }
       #cursorGlow { display: none; }
-      .reveal, .hero-greeting, .hero-headline, .hero-sub, .hero-ctas, .hero-stats, .hero-right { opacity: 1; transform: none; }
+      #page-loader { display: none !important; }
       .scroll-track-left, .scroll-track-right { animation: none !important; }
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .hero-greeting, .hero-headline, .hero-sub, .hero-ctas, .hero-stats, .hero-right {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .t-block { opacity: 1 !important; transform: none !important; }
+      .exp-card.reveal { opacity: 1 !important; transform: none !important; }
+      .pulse-dot { animation: none !important; box-shadow: none; }
     }
   </style>
 </head>
@@ -1936,7 +2046,7 @@
           <span class="hero-name">Muazz</span>
         </div>
         <h1 class="hero-headline">
-          I build products<br>that <em style="color:var(--accent)">move</em> the needle.
+          Building products<br>that <em style="color:var(--accent)">move</em> the needle.
         </h1>
         <div class="hero-photo-tag">
           <span class="pulse-dot" style="width:6px;height:6px;"></span>
@@ -2018,7 +2128,7 @@
                 <div class="exp-expand-col">
                   <div class="exp-expand-label">The Company</div>
                   <h3 class="exp-expand-title">What does FamPay do?</h3>
-                  <p class="exp-expand-body">India's first neobank for teenagers — giving teens a UPI-powered account and numberless FamCard to spend, split, and save independently before they turn 18.</p>
+                  <p class="exp-expand-body">India's first neobank for teenagers, giving teens a UPI-powered account and a numberless FamCard to spend, split, and save independently before they turn 18.</p>
                 </div>
                 <!-- Divider -->
                 <hr class="exp-col-divider">
@@ -2044,9 +2154,9 @@
                     </div>
                   </div>
                   <ul class="exp-overlay-bullets">
-                    <li>Rebuilt payment monitoring — cut detection-to-fix from 48h to 6h</li>
+                    <li>Rebuilt payment monitoring: cut detection-to-fix from 48h to 6h</li>
                     <li>Led NPCI integration for UPI Lite on sub-₹200 transactions</li>
-                    <li>A/B tested payment confirmation screen — moved conversion double digits</li>
+                    <li>A/B tested the payment confirmation screen and moved conversion double digits</li>
                   </ul>
                 </div>
               </div>
@@ -2094,39 +2204,50 @@
                 </button>
               </div>
               <div class="exp-expand-cols">
-                <!-- Left: Company -->
+                <!-- Left column -->
                 <div class="exp-expand-col">
                   <div class="exp-expand-label">The Company</div>
-                  <h3 class="exp-expand-title">What does Avaana do?</h3>
-                  <p class="exp-expand-body">Australia's leading health and wellbeing marketplace — connecting people to practitioners across physio, massage, counselling, and more. I worked on their B2B vertical: bringing wellbeing to enterprise teams.</p>
+                  <h3 class="exp-expand-title">What is Avaana?</h3>
+                  <p class="exp-expand-body">Australia's largest health and wellbeing booking platform with 5,000+ allied health practitioners. Avaana connects people to physio, massage, counselling and more with real-time 24/7 booking and results-based pricing.</p>
+
+                  <h3 class="exp-expand-title" style="margin-top:20px;">My Role</h3>
+                  <p class="exp-expand-body">Reported directly to the CEO for 6 months. Joined when Avaana was a pure B2C marketplace. Left having built the research and presentation that kicked off their pivot to B2B, bringing corporate wellness budgets into the picture.</p>
+
+                  <h3 class="exp-expand-title" style="margin-top:20px;">Tools &amp; Stack</h3>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
+                    <span class="tag">Figma</span><span class="tag">Balsamiq</span><span class="tag">Google Analytics</span><span class="tag">Miro</span><span class="tag">Notion</span><span class="tag">Jira</span>
+                  </div>
                 </div>
                 <!-- Divider -->
                 <hr class="exp-col-divider">
-                <!-- Right: Impact -->
+                <!-- Right column -->
                 <div class="exp-expand-col">
                   <div class="exp-expand-label">My Impact</div>
                   <div class="exp-impact-grid">
                     <div class="exp-impact-card">
-                      <div class="exp-impact-num"><em>↑</em> 18%</div>
-                      <div class="exp-impact-lbl">Onboarding completion</div>
+                      <div class="exp-impact-num"><em>↑</em> 20%</div>
+                      <div class="exp-impact-lbl">Onboarding completion rate</div>
                     </div>
                     <div class="exp-impact-card">
-                      <div class="exp-impact-num"><em>2</em></div>
-                      <div class="exp-impact-lbl">B2B concepts to exec review</div>
+                      <div class="exp-impact-num" style="font-size:1rem;"><em>B2C → B2B</em></div>
+                      <div class="exp-impact-lbl">Drove the company pivot</div>
                     </div>
                     <div class="exp-impact-card">
-                      <div class="exp-impact-num"><em>↓</em> 30%</div>
+                      <div class="exp-impact-num"><em>↓</em> 15%</div>
                       <div class="exp-impact-lbl">Search drop-off rate</div>
                     </div>
                     <div class="exp-impact-card">
                       <div class="exp-impact-num"><em>6</em></div>
-                      <div class="exp-impact-lbl">Sprints shipped</div>
+                      <div class="exp-impact-lbl">Cross-functional team</div>
                     </div>
                   </div>
+
+                  <div class="exp-expand-label" style="margin-top:20px;">What I Shipped</div>
                   <ul class="exp-overlay-bullets">
-                    <li>Redesigned onboarding — simplified steps, progressive disclosure</li>
-                    <li>Scoped two B2B venture PRDs targeting corporate wellness budgets</li>
-                    <li>Built practitioner-side retention analytics from scratch</li>
+                    <li>Ran user research with practitioners and corporate buyers, found the gaps, and put together the B2B roadmap from zero</li>
+                    <li>Built the pivot case and took it to the CEO and exec team. That presentation became the starting point for the company's new direction</li>
+                    <li>Reworked onboarding with progressive disclosure and journey mapping. Drop-offs fell 20%, confirmed through A/B tests across a 6-person team</li>
+                    <li>Worked on SEO and conversion across the site, mapping the full user journey from acquisition to retention on both the practitioner and end-user sides</li>
                   </ul>
                 </div>
               </div>
@@ -2153,7 +2274,7 @@
           <div class="project-body">
             <div class="project-type">Web Game &middot; Playable Online</div>
             <h3>Mafia Game</h3>
-            <p>The classic social deduction game rebuilt for the browser. Deal roles, run day/night rounds, and find the mafia — no app, just share a link.</p>
+            <p>The classic social deduction game, rebuilt for the browser. Deal roles, run day/night rounds, find the mafia. No app install, just share a link.</p>
             <div class="project-tags">
               <span class="tag">JavaScript</span><span class="tag">Game Dev</span><span class="tag">Frontend</span><span class="tag">Vibecoding</span>
             </div>
@@ -2172,7 +2293,7 @@
           <div class="project-body">
             <div class="project-type">Internal Tool &middot; FamApp</div>
             <h3>NPS Sorting Hat</h3>
-            <p>Auto-categorises raw NPS responses into buckets like Payments, KYC, and UX — turning messy user feedback into clean, actionable signal.</p>
+            <p>Auto-categorises raw NPS responses into buckets like Payments, KYC, and UX. Turns messy user feedback into something you can actually act on.</p>
             <div class="project-tags">
               <span class="tag">NLP</span><span class="tag">Automation</span><span class="tag">Feedback</span><span class="tag">Vibecoding</span>
             </div>
@@ -2190,7 +2311,7 @@
           <div class="project-body">
             <div class="project-type">Internal Tool &middot; FamApp</div>
             <h3>Spend Analytics POC</h3>
-            <p>A spend dashboard for FamApp teens — breaks down monthly transactions by category so users see exactly where their money goes.</p>
+            <p>A spend dashboard for FamApp teens. Breaks down monthly transactions by category so users can see exactly where their money goes.</p>
             <div class="project-tags">
               <span class="tag">Analytics</span><span class="tag">FamApp</span><span class="tag">POC</span><span class="tag">Vibecoding</span>
             </div>
@@ -2203,14 +2324,14 @@
         </article>
 
         <!-- 4. Dunzo Case Study -->
-        <article class="project-card reveal reveal-delay-1" data-href="https://drive.google.com/file/d/12VeHjrzHM62DSdwIGlmjqLBF46D_DqWd/view?usp=sharing">
+        <article class="project-card project-card-mobile-hidden reveal reveal-delay-1" data-href="https://drive.google.com/file/d/12VeHjrzHM62DSdwIGlmjqLBF46D_DqWd/view?usp=sharing">
           <div class="project-visual pv-dunzo">
             <img src="Projects/Dunzo%20case%20study.png" alt="Dunzo Case Study" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
           <div class="project-body">
             <div class="project-type">Case Study &middot; Sustainability</div>
             <h3>Dunzo Case Study</h3>
-            <p>Strategic case study on making Dunzo more environmentally sustainable — covering problem discovery, product launch, and a full GTM strategy.</p>
+            <p>Strategic case study on making Dunzo more environmentally sustainable, covering problem discovery, product launch, and a full GTM strategy.</p>
             <div class="project-tags">
               <span class="tag">Product Strategy</span><span class="tag">GTM</span><span class="tag">Sustainability</span>
             </div>
@@ -2222,14 +2343,14 @@
         </article>
 
         <!-- 5. Samarth -->
-        <article class="project-card reveal reveal-delay-2" data-href="https://app.pitch.com/app/presentation/2dc8c52c-8c6f-4fff-b741-277a9d564b0c/9cf274e8-bbee-4842-8d87-4970618b4ad0">
+        <article class="project-card project-card-mobile-hidden reveal reveal-delay-2" data-href="https://app.pitch.com/app/presentation/2dc8c52c-8c6f-4fff-b741-277a9d564b0c/9cf274e8-bbee-4842-8d87-4970618b4ad0">
           <div class="project-visual pv-samarth">
             <img src="Projects/Samarth.png" alt="Samarth" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
           <div class="project-body">
             <div class="project-type">Hack Project &middot; Social Impact</div>
             <h3>Samarth</h3>
-            <p>Employment platform connecting people with disabilities to meaningful jobs — bridging the accessibility gap with inclusive design and targeted matching.</p>
+            <p>Employment platform connecting people with disabilities to meaningful jobs. Bridging the accessibility gap through inclusive design and targeted matching.</p>
             <div class="project-tags">
               <span class="tag">Social Impact</span><span class="tag">UI Design</span><span class="tag">InclusiveTech</span>
             </div>
@@ -2240,14 +2361,14 @@
         </article>
 
         <!-- 6. Krishi Bimb -->
-        <article class="project-card reveal reveal-delay-1" data-href="https://www.canva.com/design/DAEdND5Fj94/K2bz-GIaD5j_piVrMd7pNA/view">
+        <article class="project-card project-card-mobile-hidden reveal reveal-delay-1" data-href="https://www.canva.com/design/DAEdND5Fj94/K2bz-GIaD5j_piVrMd7pNA/view">
           <div class="project-visual pv-krishi">
             <img src="Projects/Krishi%20Bimb.png" alt="Krishi Bimb" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;mask-image:none;-webkit-mask-image:none;">
           </div>
           <div class="project-body">
             <div class="project-type">Hack Project &middot; AgriTech</div>
             <h3>Krishi Bimb</h3>
-            <p>AgriTech marketplace connecting farmers directly to buyers — cuts out intermediaries, ensures produce quality, and puts fair pricing in farmers' hands.</p>
+            <p>AgriTech marketplace connecting farmers directly to buyers. Cuts out intermediaries, ensures produce quality, and puts fair pricing back in their hands.</p>
             <div class="project-tags">
               <span class="tag">AgriTech</span><span class="tag">Marketplace</span><span class="tag">Design</span>
             </div>
@@ -2282,12 +2403,31 @@
           <div class="project-body">
             <div class="project-type">Hack Project &middot; Web3</div>
             <h3>₹eBazz</h3>
-            <p>Blockchain-powered marketplace for local retail — find nearby stores by product and category, bridging online discovery with offline buying.</p>
+            <p>Blockchain-powered marketplace for local retail. Find nearby stores by product and category, bridging online discovery with offline buying.</p>
             <div class="project-tags">
               <span class="tag">Blockchain</span><span class="tag">Marketplace</span><span class="tag">Web Dev</span>
             </div>
             <div style="margin-top:14px;">
               <a class="project-link" href="https://pitch.com/public/ecb82c98-0748-46f6-b91b-6f8891164dd3" target="_blank" rel="noopener">View Pitch Deck ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 9. Lenskart × Simpl Case Study -->
+        <article class="project-card project-card-hidden reveal reveal-delay-2" data-href="lenskart-simpl.html">
+          <div class="project-visual pv-simpl">
+            <img src="Projects/Lenskart.jpeg" alt="Lenskart × Simpl" loading="lazy" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;padding:24px;mask-image:none;-webkit-mask-image:none;">
+          </div>
+          <div class="project-body">
+            <div class="project-type">Case Study &middot; Payments Strategy</div>
+            <h3>Lenskart × Simpl</h3>
+            <p>Strategy to grow Simpl's payment share on Lenskart from 5%, taking a funnel-first approach across awareness, consideration, payment completion, and post-purchase retention.</p>
+            <div class="project-tags">
+              <span class="tag">BNPL</span><span class="tag">Payments</span><span class="tag">Growth</span><span class="tag">Funnel</span>
+            </div>
+            <div style="margin-top:14px;">
+              <a class="project-link" href="lenskart-simpl.html">Case Study ↗</a>
+              <a class="project-link" href="Projects/Lenskart%20market%20share%20on%20simpl.pdf" target="_blank" rel="noopener">PDF ↗</a>
             </div>
           </div>
         </article>
@@ -2301,58 +2441,57 @@
     <!-- ACHIEVEMENTS -->
     <section class="section" id="wins">
       <div class="section-header reveal">
-        <span class="section-label">Achievements</span>
         <h2 class="section-title">Things that went <em>well</em></h2>
       </div>
       <div class="wins-list reveal">
         <div class="win-row">
           <span class="win-result dark">Recognition</span>
-          <div class="win-divider"></div>
-          <span class="win-name">FamStar of the Quarter</span>
-          <span class="win-dots"></span>
-          <span class="win-org">FamPay</span>
+          <div class="win-body">
+            <span class="win-name">FamStar of the Quarter</span>
+            <span class="win-org">FamPay &middot; 2026</span>
+          </div>
         </div>
         <div class="win-row">
           <span class="win-result">Winner</span>
-          <div class="win-divider"></div>
-          <span class="win-name">Smart India Hackathon 2022</span>
-          <span class="win-dots"></span>
-          <span class="win-org">Govt of India &middot; 200K+ participants</span>
+          <div class="win-body">
+            <span class="win-name">Smart India Hackathon 2022</span>
+            <span class="win-org">Govt of India &middot; 200,000 participants &middot; Built a mobile app for AICTE employees</span>
+          </div>
         </div>
         <div class="win-row">
           <span class="win-result silver">Finalist</span>
-          <div class="win-divider"></div>
-          <span class="win-name">PMx — India's Biggest PM Competition</span>
-          <span class="win-dots"></span>
-          <span class="win-org">Product Folks &amp; IIT Guwahati &middot; Jan 2023</span>
+          <div class="win-body">
+            <span class="win-name">PMx, India's Biggest PM Competition</span>
+            <span class="win-org">Product Folks &amp; IIT Guwahati &middot; 18,000 participants &middot; Jan 2023</span>
+          </div>
         </div>
         <div class="win-row">
           <span class="win-result silver">Runners Up</span>
-          <div class="win-divider"></div>
-          <span class="win-name">Execute 2.0</span>
-          <span class="win-dots"></span>
-          <span class="win-org">E Cell DTU &middot; May 2022</span>
+          <div class="win-body">
+            <span class="win-name">Execute 2.0 Hackathon</span>
+            <span class="win-org">E Cell DTU &middot; May 2022</span>
+          </div>
         </div>
         <div class="win-row">
           <span class="win-result">Winner</span>
-          <div class="win-divider"></div>
-          <span class="win-name">OSD Hack'22</span>
-          <span class="win-dots"></span>
-          <span class="win-org">JIIT Noida &middot; 120+ teams</span>
+          <div class="win-body">
+            <span class="win-name">OSD Hack'22</span>
+            <span class="win-org">JIIT Noida &middot; 36hr hackathon &middot; 120+ teams, 500+ participants</span>
+          </div>
         </div>
         <div class="win-row">
           <span class="win-result">Winner</span>
-          <div class="win-divider"></div>
-          <span class="win-name">Psyc Insight</span>
-          <span class="win-dots"></span>
-          <span class="win-org">Jai Hind College, Mumbai</span>
+          <div class="win-body">
+            <span class="win-name">Psyc Insight</span>
+            <span class="win-org">Jai Hind College, Mumbai &middot; PsycOnSale &middot; Ideation &amp; pitching</span>
+          </div>
         </div>
         <div class="win-row">
           <span class="win-result">Winner</span>
-          <div class="win-divider"></div>
-          <span class="win-name">Shark's Capital</span>
-          <span class="win-dots"></span>
-          <span class="win-org">Microsoft Learn Student Ambassador Chapter</span>
+          <div class="win-body">
+            <span class="win-name">Shark's Capital</span>
+            <span class="win-org">Microsoft Learn Student Ambassador Chapter &middot; Bharti Vidhyapeeth College of Engineering &middot; Aug 2021</span>
+          </div>
         </div>
       </div>
     </section>
@@ -2387,14 +2526,14 @@
               <span class="sq-date">April 2026 &middot; Bangalore</span>
             </div>
             <h3 class="sq-title">YC Startup School India</h3>
-            <p class="sq-desc">Y Combinator's first physical Startup School in India — 2,000 founders in one room, six speakers who actually built it, and the recurring feeling that the best advice doesn't change.</p>
+            <p class="sq-desc">Y Combinator's first physical Startup School in India. 2,000 founders in one room, six speakers who actually built it, and the recurring feeling that the best advice doesn't change.</p>
             <p class="sq-learnings-lbl">Takeaways</p>
             <div class="sq-learnings">
               <ul>
-                <li>Customer obsession isn't a value on a slide. It's a daily practice — every founder on stage kept coming back to it.</li>
+                <li>Customer obsession isn't a value on a slide. It's a daily practice. Every founder on stage kept coming back to it.</li>
                 <li>Lived experience with the problem is the real moat. Trust is the one thing AI won't replace for a while.</li>
                 <li>Almost every speaker quoted a Paul Graham essay. Different essays. Same instinct.</li>
-                <li>Charge early, bet early — attack the ceiling, not the floor.</li>
+                <li>90% of the name tags in the room had "AI" on them. 100% of the speakers said they were tinkering with AI and building on top of it. Founders, investors, aspirants, everyone has the same euphoric FOMO.</li>
               </ul>
             </div>
           </div>
@@ -2422,14 +2561,14 @@
               <span class="sq-date">March 2026 &middot; Bangalore</span>
             </div>
             <h3 class="sq-title">Razorpay FTX'26</h3>
-            <p class="sq-desc">India's most exclusive FinTech conference — founders and operators pressure-testing AI, payments infrastructure, and what the next layer of financial tech actually looks like.</p>
+            <p class="sq-desc">India's most exclusive FinTech conference. Founders and operators pressure-testing AI, payments infrastructure, and what the next layer of financial tech actually looks like.</p>
             <p class="sq-learnings-lbl">Takeaways</p>
             <div class="sq-learnings">
               <ul>
-                <li>Post-transaction screens should explain <em>why</em> a transaction happened, not just confirm that it did — context beats confirmation.</li>
                 <li>AI optimises execution, not product-market fit. The core thesis still has to come from you.</li>
                 <li>Authentication is the biggest blocker for agentic payments. Trust is the unlock nobody has cracked yet.</li>
-                <li>We're 8–10 months behind on AI-native products. Still catchable — but the window is closing.</li>
+                <li>AI adoption is still very surface level across most companies, companies are still trying to figure what AI native features to build.</li>
+                <li>Optimisation has evolved from SEO to GEO and now agentic influence will emerge.</li>
               </ul>
             </div>
           </div>
@@ -2457,13 +2596,13 @@
               <span class="sq-date">2026 &middot; Bangalore</span>
             </div>
             <h3 class="sq-title">Builders Dinner</h3>
-            <p class="sq-desc">An evening I organised with FamPay and Mixpanel — bringing product builders into the room with Prasanna, CPO of Meesho, for an off-the-record conversation about what building at scale actually feels like.</p>
+            <p class="sq-desc">An evening I organised with FamPay and Mixpanel, bringing product builders into the room with Prasanna, CPO of Meesho, for an off-the-record conversation about what building at scale actually feels like.</p>
             <p class="sq-learnings-lbl">Takeaways</p>
             <div class="sq-learnings">
               <ul>
-                <li>Add your takeaways from the dinner here.</li>
-                <li>Something Prasanna said that shifted your thinking.</li>
-                <li>What you'd do differently after this conversation.</li>
+                <li>Customer obsession isn't a value, it's a survival instinct. The PMs who stayed closest to their users were the ones who made it.</li>
+                <li>Meesho pivoted across business models in the early days. The pivot wasn't a failure, it was the strategy.</li>
+                <li>Prasanna's take on AI: the core skill is still problem solving. Tools change, that doesn't.</li>
               </ul>
             </div>
           </div>
@@ -2481,12 +2620,12 @@
             <h2 class="section-title">The <em>short version</em></h2>
           </div>
           <blockquote class="about-pull-quote">
-            My goal is simple — walk into a coffee shop, look around, and quietly count at least 3 people using a product I built, without them ever knowing it was me.
+            My goal is simple. Walk into a coffee shop, look around, and quietly count at least 3 people using a product I built, without them knowing it was me.
           </blockquote>
           <div class="about-bio">
-            <p>I'm Muazz &mdash; PM at FamPay, where I own payments health for India's first teen neobank. Before this, I ran growth experiments at Avaana Capital.</p>
-            <p>The 9-to-6 is half the story. I'm building an XR infrastructure startup and exploring what a unified gig worker platform could look like for India.</p>
-            <p>I believe a startup doesn't need a perfect product at launch &mdash; it needs an insanely great experience, starting with how attentive you are to every early user.</p>
+            <p>I'm Muazz, PM at FamPay, where I own payments health for millions of teenagers making their first digital transactions. I obsess over basis-point improvements most people would never notice.</p>
+            <p>Currently, I am exploring the XR space, building random things like mafia games at 1 AM, and occasionally running quiz nights with product-launch intensity. If there's a gap, I want to fill it.</p>
+            <p>Outside of work, I trek, surf poorly, cook ambitious meals nobody asked for, and try to do one new thing every month. Show up, figure it out, make it memorable.</p>
           </div>
           <div class="about-ctas">
             <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-primary">View Resume</a>
@@ -2615,7 +2754,7 @@
           </div>
           <div class="yt-info">
             <div class="yt-title">How Google Was Built</div>
-            <div class="yt-desc">The unlikely story of how two PhD dropouts built the most important company of the internet age — and the decisions that got them there.</div>
+            <div class="yt-desc">The unlikely story of how two PhD dropouts built the most important company of the internet age, and the decisions that got them there.</div>
           </div>
         </a>
         <a class="yt-card" href="https://youtu.be/oX7OduG1YmI" target="_blank" rel="noopener">
@@ -2646,7 +2785,7 @@
           </div>
           <div class="yt-info">
             <div class="yt-title">Paul Graham's Essays</div>
-            <div class="yt-desc">The canonical reading list for anyone building something — Make things people want, Do things that don't scale, and why startups are the only way to get rich.</div>
+            <div class="yt-desc">The canonical reading list for anyone building something. Make things people want, do things that don't scale, and everything else that hasn't aged a day.</div>
           </div>
         </a>
         <a class="yt-card yt-hidden" href="https://youtu.be/FFnTWSYQnyY" target="_blank" rel="noopener">
@@ -2656,7 +2795,7 @@
           </div>
           <div class="yt-info">
             <div class="yt-title">Product Thinking &amp; Growth</div>
-            <div class="yt-desc">A masterclass in building products people actually want — covering discovery, iteration, and the art of shipping before you feel ready.</div>
+            <div class="yt-desc">A masterclass in building products people actually want, covering discovery, iteration, and the art of shipping before you feel ready.</div>
           </div>
         </a>
         <a class="yt-card yt-hidden" href="https://youtu.be/vZGfSlnUq-8" target="_blank" rel="noopener">
@@ -2744,7 +2883,7 @@
     new IntersectionObserver(e=>e.forEach(x=>nav.classList.toggle('visible',!x.isIntersecting)),{threshold:0.15}).observe(document.getElementById('hero'));
 
     /* Podcast view more */
-    function podcastThreshold() { return window.innerWidth <= 768 ? 4 : 3; }
+    function podcastThreshold() { return window.innerWidth <= 480 ? 3 : window.innerWidth <= 768 ? 4 : 3; }
 
     /* Side Quests gallery */
     function sqSet(thumb, idx) {
@@ -2805,7 +2944,10 @@
     }
 
     function toggleProjects(btn) {
-      const hidden = Array.from(document.querySelectorAll('.project-card-hidden'));
+      const isMobile = window.innerWidth <= 480;
+      const hidden = Array.from(document.querySelectorAll(
+        isMobile ? '.project-card-hidden, .project-card-mobile-hidden' : '.project-card-hidden'
+      ));
       const isHidden = hidden[0] && hidden[0].style.display !== 'block';
       if (isHidden) {
         revealCards(hidden);
