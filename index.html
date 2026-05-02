@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Muazz — Product Manager & Builder</title>
-  <meta name="description" content="Product Manager at FamPay. Building payments infrastructure, XR platforms, and products that move the needle. Based in Bengaluru, India.">
+  <meta name="description" content="Product Manager at FamApp. Building payments infrastructure, XR platforms, and products that move the needle. Based in Bengaluru, India.">
   <meta property="og:title" content="Muazz — Product Manager & Builder">
-  <meta property="og:description" content="Product Manager at FamPay. Building payments infrastructure, XR platforms, and products that move the needle. Based in Bengaluru, India.">
+  <meta property="og:description" content="Product Manager at FamApp. Building payments infrastructure, XR platforms, and products that move the needle. Based in Bengaluru, India.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23e63312'>M</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,9 +30,21 @@
       --serif: 'Instrument Serif', Georgia, serif;
       --sans: 'DM Sans', system-ui, sans-serif;
       --mono: 'Montserrat', sans-serif;
+      --z-base: 1;
+      --z-overlay: 100;
+      --z-modal: 500;
+      --z-nav: 1000;
+      --z-toast: 9000;
+      --z-loader: 99999;
     }
 
     ::selection { background: var(--accent); color: #fff; }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
 
     html { scroll-behavior: smooth; scrollbar-color: #d4d1cb var(--bg); }
     ::-webkit-scrollbar { width: 5px; }
@@ -266,7 +278,7 @@
       background: var(--accent);
       border-radius: 50%;
       flex-shrink: 0;
-      animation: pulseDot 2.4s ease-in-out infinite;
+      animation: pulseDot 2.4s ease-in-out 3;
     }
     @keyframes pulseDot {
       0%, 100% { box-shadow: 0 0 0 0 rgba(230,51,18,0.35); }
@@ -537,6 +549,7 @@
       border-radius: 20px;
       overflow: hidden;
       transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+      will-change: transform;
     }
     .exp-card:hover {
       transform: translateY(-5px);
@@ -597,6 +610,7 @@
       height: 324px;
       display: flex;
       align-items: flex-start;
+      will-change: transform;
       justify-content: center;
       perspective: 700px;
       perspective-origin: 50% 60%;
@@ -610,12 +624,14 @@
       background: linear-gradient(160deg, #5c5c5e 0%, #3e3e40 25%, #2c2c2e 60%, #4a4a4c 100%);
       border-radius: 52px;
       box-shadow:
-        inset 0 1.5px 0 rgba(255,255,255,0.22),   /* top frame highlight */
-        inset 0 -1px 0 rgba(0,0,0,0.6),            /* bottom frame shadow */
-        0 0 0 1px rgba(0,0,0,0.95),                /* outer dark ring */
-        0 0 0 1.5px rgba(255,255,255,0.1),          /* outer subtle glow */
+        inset 0 1.5px 0 rgba(255,255,255,0.22),
+        inset 0 -1px 0 rgba(0,0,0,0.6),
+        0 0 0 1px rgba(0,0,0,0.95),
+        0 0 0 1.5px rgba(255,255,255,0.1),
         0 32px 90px rgba(0,0,0,0.9);
       transform: rotateX(50deg);
+      will-change: transform;
+      backface-visibility: hidden;
     }
     /* Screen glass — inset from frame */
     .exp-iphone-screen {
@@ -743,6 +759,7 @@
       gap: 8px;
       padding: 10px 18px;
       border-radius: 99px;
+      text-decoration: none;
       border: 1px solid #F89926;
       background: rgba(248,153,38,0.12);
       cursor: pointer;
@@ -1365,6 +1382,7 @@
       transition: opacity 0.2s ease;
       position: relative;
     }
+    .sq-thumb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .sq-thumb img {
       width: 100%;
       height: 100%;
@@ -1660,7 +1678,7 @@
     .about-photos .scroll-row:first-child { padding-bottom: 20px; }
     .lately-section { padding: 0; }
 
-    .about-bio { font-family: var(--sans); font-weight: 400; font-size: 0.92rem; color: var(--fg); line-height: 1.75; }
+    .about-bio { font-family: var(--sans); font-weight: 400; font-size: 1rem; color: var(--fg); line-height: 1.75; max-width: 68ch; }
     .about-bio p { margin-bottom: 20px; }
     .about-bio p:last-child { margin-bottom: 0; }
     .about-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
@@ -2050,7 +2068,7 @@
         </h1>
         <div class="hero-photo-tag">
           <span class="pulse-dot" style="width:6px;height:6px;"></span>
-          <span>Product Manager @ FamPay · Payments and Fintech · Bangalore</span>
+          <span>Product Manager @ FamApp · Payments and Fintech · Bangalore</span>
         </div>
         <div class="hero-ctas">
           <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-primary">View Resume</a>
@@ -2087,11 +2105,11 @@
                 <div class="exp-phone-wrap">
                   <div class="exp-iphone-screen">
                     <div class="exp-iphone-island"></div>
-                    <img class="exp-iphone-slide active" src="Work/Fampay/Homepage.jpeg" alt="">
-                    <img class="exp-iphone-slide" src="Work/Fampay/Payment compose.jpeg" alt="">
-                    <img class="exp-iphone-slide" src="Work/Fampay/Card page.jpeg" alt="">
-                    <img class="exp-iphone-slide" src="Work/Fampay/DM.jpeg" alt="">
-                    <img class="exp-iphone-slide" src="Work/Fampay/spotlight.jpeg" alt="">
+                    <img class="exp-iphone-slide active" src="Work/Fampay/Homepage.jpeg" alt="FamPay app homepage screen">
+                    <img class="exp-iphone-slide" src="Work/Fampay/Payment compose.jpeg" alt="FamPay payment compose screen">
+                    <img class="exp-iphone-slide" src="Work/Fampay/Card page.jpeg" alt="FamPay card page screen">
+                    <img class="exp-iphone-slide" src="Work/Fampay/DM.jpeg" alt="FamPay DM screen">
+                    <img class="exp-iphone-slide" src="Work/Fampay/spotlight.jpeg" alt="FamPay Spotlight screen">
                   </div>
                 </div>
               </div>
@@ -2102,64 +2120,10 @@
                 <div class="exp-card-footer-role">Product Manager</div>
                 <div class="exp-card-footer-sub">Payments and Revenue</div>
               </div>
-              <button class="exp-know-more exp-know-more-text" data-target="exp-fampay-expand">
+              <a href="fampay.html" class="exp-know-more exp-know-more-text" aria-label="View FamPay work history">
                 <span class="exp-km-label">Know More</span>
                 <span class="exp-know-more-arrow">↗</span>
-              </button>
-            </div>
-          </div>
-          <!-- Curtain overlay — slides up over the card -->
-          <div class="exp-expand-wrap" id="exp-fampay-expand">
-            <div class="exp-expand-dark">
-              <div class="exp-overlay-header">
-                <div class="exp-overlay-meta">
-                  <div class="exp-overlay-title-row">
-                    <span class="exp-overlay-role">Product Manager — Payments &amp; Revenue</span>
-                    <span class="exp-overlay-dot"></span>
-                    <span class="exp-overlay-date">2024 — Present</span>
-                  </div>
-                </div>
-                <button class="exp-close-btn exp-close-dark" data-target="exp-fampay-expand">
-                  Close <span class="exp-close-x">↓</span>
-                </button>
-              </div>
-              <div class="exp-expand-cols">
-                <!-- Left: Company -->
-                <div class="exp-expand-col">
-                  <div class="exp-expand-label">The Company</div>
-                  <h3 class="exp-expand-title">What does FamPay do?</h3>
-                  <p class="exp-expand-body">India's first neobank for teenagers, giving teens a UPI-powered account and a numberless FamCard to spend, split, and save independently before they turn 18.</p>
-                </div>
-                <!-- Divider -->
-                <hr class="exp-col-divider">
-                <!-- Right: Impact -->
-                <div class="exp-expand-col">
-                  <div class="exp-expand-label">My Impact</div>
-                  <div class="exp-impact-grid">
-                    <div class="exp-impact-card">
-                      <div class="exp-impact-num"><em>↑</em> 23%</div>
-                      <div class="exp-impact-lbl">UPI success rate</div>
-                    </div>
-                    <div class="exp-impact-card">
-                      <div class="exp-impact-num"><em>3×</em></div>
-                      <div class="exp-impact-lbl">FamCard revenue growth</div>
-                    </div>
-                    <div class="exp-impact-card">
-                      <div class="exp-impact-num"><em>↓</em> 40%</div>
-                      <div class="exp-impact-lbl">Payment failure complaints</div>
-                    </div>
-                    <div class="exp-impact-card">
-                      <div class="exp-impact-num"><em>2</em></div>
-                      <div class="exp-impact-lbl">Core features launched</div>
-                    </div>
-                  </div>
-                  <ul class="exp-overlay-bullets">
-                    <li>Rebuilt payment monitoring: cut detection-to-fix from 48h to 6h</li>
-                    <li>Led NPCI integration for UPI Lite on sub-₹200 transactions</li>
-                    <li>A/B tested the payment confirmation screen and moved conversion double digits</li>
-                  </ul>
-                </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -2182,7 +2146,7 @@
                 <div class="exp-card-footer-role">Product Management Intern</div>
                 <div class="exp-card-footer-sub">App experience and new ventures</div>
               </div>
-              <button class="exp-know-more exp-know-more-text" data-target="exp-avaana-expand">
+              <button class="exp-know-more exp-know-more-text" data-target="exp-avaana-expand" aria-label="Know more about Avaana" aria-expanded="false">
                 <span class="exp-km-label">Know More</span>
                 <span class="exp-know-more-arrow">↗</span>
               </button>
@@ -2199,7 +2163,7 @@
                     <span class="exp-overlay-date">2023 — 2024</span>
                   </div>
                 </div>
-                <button class="exp-close-btn exp-close-light" data-target="exp-avaana-expand">
+                <button class="exp-close-btn exp-close-light" data-target="exp-avaana-expand" aria-label="Close Avaana details">
                   Close <span class="exp-close-x">↓</span>
                 </button>
               </div>
@@ -2448,7 +2412,7 @@
           <span class="win-result dark">Recognition</span>
           <div class="win-body">
             <span class="win-name">FamStar of the Quarter</span>
-            <span class="win-org">FamPay &middot; 2026</span>
+            <span class="win-org">FamApp &middot; 2026</span>
           </div>
         </div>
         <div class="win-row">
@@ -2509,15 +2473,15 @@
           <div class="sq-photo-col">
             <div class="sq-main-photo">
               <img class="sq-slide active" src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6562%201.png" alt="YC Startup School India" loading="eager">
-              <img class="sq-slide" src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6567%201.png" alt="" loading="lazy">
-              <img class="sq-slide" src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6571%201.png" alt="" loading="lazy">
-              <img class="sq-slide" src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6573%201.png" alt="" loading="lazy">
+              <img class="sq-slide" src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6567%201.png" alt="YC Startup School India — crowd of founders" loading="lazy">
+              <img class="sq-slide" src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6571%201.png" alt="YC Startup School India — event stage" loading="lazy">
+              <img class="sq-slide" src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6573%201.png" alt="YC Startup School India — networking session" loading="lazy">
             </div>
             <div class="sq-strip">
-              <div class="sq-thumb active" onmouseenter="sqSet(this,0)"><img src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6562%201.png" loading="eager"></div>
-              <div class="sq-thumb" onmouseenter="sqSet(this,1)"><img src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6567%201.png" loading="lazy"></div>
-              <div class="sq-thumb" onmouseenter="sqSet(this,2)"><img src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6571%201.png" loading="lazy"></div>
-              <div class="sq-thumb" onmouseenter="sqSet(this,3)"><img src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6573%201.png" loading="lazy"></div>
+              <div class="sq-thumb active" role="button" tabindex="0" aria-label="Photo 1" onmouseenter="sqSet(this,0)" onclick="sqSet(this,0)"><img src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6562%201.png" alt="" loading="eager"></div>
+              <div class="sq-thumb" role="button" tabindex="0" aria-label="Photo 2" onmouseenter="sqSet(this,1)" onclick="sqSet(this,1)"><img src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6567%201.png" alt="" loading="lazy"></div>
+              <div class="sq-thumb" role="button" tabindex="0" aria-label="Photo 3" onmouseenter="sqSet(this,2)" onclick="sqSet(this,2)"><img src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6571%201.png" alt="" loading="lazy"></div>
+              <div class="sq-thumb" role="button" tabindex="0" aria-label="Photo 4" onmouseenter="sqSet(this,3)" onclick="sqSet(this,3)"><img src="Side%20Quests/Y%20Combinator%20startup%20school/IMG_6573%201.png" alt="" loading="lazy"></div>
             </div>
           </div>
           <div class="sq-body">
@@ -2544,15 +2508,15 @@
           <div class="sq-photo-col">
             <div class="sq-main-photo">
               <img class="sq-slide active" src="Side%20Quests/Razorpay%20FTX/IMG_6064.jpg" alt="Razorpay FTX 2026" loading="eager">
-              <img class="sq-slide" src="Side%20Quests/Razorpay%20FTX/IMG_6069.jpg" alt="" loading="lazy">
-              <img class="sq-slide" src="Side%20Quests/Razorpay%20FTX/IMG_6070.jpg" alt="" loading="lazy">
-              <img class="sq-slide" src="Side%20Quests/Razorpay%20FTX/IMG_6071.jpg" alt="" loading="lazy">
+              <img class="sq-slide" src="Side%20Quests/Razorpay%20FTX/IMG_6069.jpg" alt="Razorpay FTX 2026 — conference session" loading="lazy">
+              <img class="sq-slide" src="Side%20Quests/Razorpay%20FTX/IMG_6070.jpg" alt="Razorpay FTX 2026 — panel discussion" loading="lazy">
+              <img class="sq-slide" src="Side%20Quests/Razorpay%20FTX/IMG_6071.jpg" alt="Razorpay FTX 2026 — networking" loading="lazy">
             </div>
             <div class="sq-strip">
-              <div class="sq-thumb active" onmouseenter="sqSet(this,0)"><img src="Side%20Quests/Razorpay%20FTX/IMG_6064.jpg" loading="eager"></div>
-              <div class="sq-thumb" onmouseenter="sqSet(this,1)"><img src="Side%20Quests/Razorpay%20FTX/IMG_6069.jpg" loading="lazy"></div>
-              <div class="sq-thumb" onmouseenter="sqSet(this,2)"><img src="Side%20Quests/Razorpay%20FTX/IMG_6070.jpg" loading="lazy"></div>
-              <div class="sq-thumb" onmouseenter="sqSet(this,3)"><img src="Side%20Quests/Razorpay%20FTX/IMG_6071.jpg" loading="lazy"></div>
+              <div class="sq-thumb active" role="button" tabindex="0" aria-label="Photo 1" onmouseenter="sqSet(this,0)" onclick="sqSet(this,0)"><img src="Side%20Quests/Razorpay%20FTX/IMG_6064.jpg" alt="" loading="eager"></div>
+              <div class="sq-thumb" role="button" tabindex="0" aria-label="Photo 2" onmouseenter="sqSet(this,1)" onclick="sqSet(this,1)"><img src="Side%20Quests/Razorpay%20FTX/IMG_6069.jpg" alt="" loading="lazy"></div>
+              <div class="sq-thumb" role="button" tabindex="0" aria-label="Photo 3" onmouseenter="sqSet(this,2)" onclick="sqSet(this,2)"><img src="Side%20Quests/Razorpay%20FTX/IMG_6070.jpg" alt="" loading="lazy"></div>
+              <div class="sq-thumb" role="button" tabindex="0" aria-label="Photo 4" onmouseenter="sqSet(this,3)" onclick="sqSet(this,3)"><img src="Side%20Quests/Razorpay%20FTX/IMG_6071.jpg" alt="" loading="lazy"></div>
             </div>
           </div>
           <div class="sq-body">
@@ -2579,15 +2543,15 @@
           <div class="sq-photo-col">
             <div class="sq-main-photo">
               <img class="sq-slide active" src="Side%20Quests/Builder's%20dinner/IMG_6075.jpg" alt="Builders Dinner" loading="eager">
-              <img class="sq-slide" src="Side%20Quests/Builder's%20dinner/IMG_6627.PNG" alt="" loading="lazy">
-              <img class="sq-slide" src="Side%20Quests/Builder's%20dinner/IMG_6629.PNG" alt="" loading="lazy">
-              <img class="sq-slide" src="Side%20Quests/Builder's%20dinner/IMG_6630.PNG" alt="" loading="lazy">
+              <img class="sq-slide" src="Side%20Quests/Builder's%20dinner/IMG_6627.PNG" alt="Builders Dinner — guests at the table" loading="lazy">
+              <img class="sq-slide" src="Side%20Quests/Builder's%20dinner/IMG_6629.PNG" alt="Builders Dinner — conversation in progress" loading="lazy">
+              <img class="sq-slide" src="Side%20Quests/Builder's%20dinner/IMG_6630.PNG" alt="Builders Dinner — group photo" loading="lazy">
             </div>
             <div class="sq-strip">
-              <div class="sq-thumb active" onmouseenter="sqSet(this,0)"><img src="Side%20Quests/Builder's%20dinner/IMG_6075.jpg" loading="eager"></div>
-              <div class="sq-thumb" onmouseenter="sqSet(this,1)"><img src="Side%20Quests/Builder's%20dinner/IMG_6627.PNG" loading="lazy"></div>
-              <div class="sq-thumb" onmouseenter="sqSet(this,2)"><img src="Side%20Quests/Builder's%20dinner/IMG_6629.PNG" loading="lazy"></div>
-              <div class="sq-thumb" onmouseenter="sqSet(this,3)"><img src="Side%20Quests/Builder's%20dinner/IMG_6630.PNG" loading="lazy"></div>
+              <div class="sq-thumb active" role="button" tabindex="0" aria-label="Photo 1" onmouseenter="sqSet(this,0)" onclick="sqSet(this,0)"><img src="Side%20Quests/Builder's%20dinner/IMG_6075.jpg" alt="" loading="eager"></div>
+              <div class="sq-thumb" role="button" tabindex="0" aria-label="Photo 2" onmouseenter="sqSet(this,1)" onclick="sqSet(this,1)"><img src="Side%20Quests/Builder's%20dinner/IMG_6627.PNG" alt="" loading="lazy"></div>
+              <div class="sq-thumb" role="button" tabindex="0" aria-label="Photo 3" onmouseenter="sqSet(this,2)" onclick="sqSet(this,2)"><img src="Side%20Quests/Builder's%20dinner/IMG_6629.PNG" alt="" loading="lazy"></div>
+              <div class="sq-thumb" role="button" tabindex="0" aria-label="Photo 4" onmouseenter="sqSet(this,3)" onclick="sqSet(this,3)"><img src="Side%20Quests/Builder's%20dinner/IMG_6630.PNG" alt="" loading="lazy"></div>
             </div>
           </div>
           <div class="sq-body">
@@ -2596,7 +2560,7 @@
               <span class="sq-date">2026 &middot; Bangalore</span>
             </div>
             <h3 class="sq-title">Builders Dinner</h3>
-            <p class="sq-desc">An evening I organised with FamPay and Mixpanel, bringing product builders into the room with Prasanna, CPO of Meesho, for an off-the-record conversation about what building at scale actually feels like.</p>
+            <p class="sq-desc">An evening I organised with FamApp and Mixpanel, bringing product builders into the room with Prasanna, CPO of Meesho, for an off-the-record conversation about what building at scale actually feels like.</p>
             <p class="sq-learnings-lbl">Takeaways</p>
             <div class="sq-learnings">
               <ul>
@@ -2623,7 +2587,7 @@
             My goal is simple. Walk into a coffee shop, look around, and quietly count at least 3 people using a product I built, without them knowing it was me.
           </blockquote>
           <div class="about-bio">
-            <p>I'm Muazz, PM at FamPay, where I own payments health for millions of teenagers making their first digital transactions. I obsess over basis-point improvements most people would never notice.</p>
+            <p>I'm Muazz, PM at FamApp, where I own payments health for millions of teenagers making their first digital transactions. I obsess over basis-point improvements most people would never notice.</p>
             <p>Currently, I am exploring the XR space, building random things like mafia games at 1 AM, and occasionally running quiz nights with product-launch intensity. If there's a gap, I want to fill it.</p>
             <p>Outside of work, I trek, surf poorly, cook ambitious meals nobody asked for, and try to do one new thing every month. Show up, figure it out, make it memorable.</p>
           </div>
@@ -3010,10 +2974,29 @@
     }
 
     document.querySelectorAll('.exp-know-more[data-target]').forEach(btn => {
-      btn.addEventListener('click', () => expandExpCard(btn.closest('.exp-card')));
+      btn.addEventListener('click', () => {
+        expandExpCard(btn.closest('.exp-card'));
+        btn.setAttribute('aria-expanded', 'true');
+      });
     });
     document.querySelectorAll('.exp-close-btn[data-target]').forEach(btn => {
-      btn.addEventListener('click', () => collapseExpCard(btn.closest('.exp-card')));
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.exp-card');
+        collapseExpCard(card);
+        const openBtn = card.querySelector('.exp-know-more[aria-expanded]');
+        if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* Keyboard support for gallery thumbnails */
+    document.querySelectorAll('.sq-thumb').forEach(thumb => {
+      thumb.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const idx = Array.from(thumb.parentElement.children).indexOf(thumb);
+          sqSet(thumb, idx);
+        }
+      });
     });
 
     /* Mobile menu */

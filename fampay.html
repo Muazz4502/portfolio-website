@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FamPay — Muazz</title>
+  <title>FamApp — Muazz Zuberi</title>
+  <meta name="description" content="How I built and scaled payments and revenue at FamApp — India's first neobank for teenagers.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23F89925'>M</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,120 +16,231 @@
       --bg: #faf9f6;
       --fg: #1a1a1a;
       --accent: #F89925;
-      --muted: #8a8a8a;
+      --accent-dim: rgba(248,153,37,0.12);
+      --muted: #787672;
       --muted-light: #b5b2ac;
       --card-bg: #ffffff;
       --border: #e8e5df;
       --border-light: #f0ede8;
       --serif: 'Instrument Serif', Georgia, serif;
       --sans: 'DM Sans', system-ui, sans-serif;
-      --mono: 'JetBrains Mono', monospace;
+      --mono: 'Montserrat', sans-serif;
+      --hero-bg: #0e0d0b;
+      --hero-card: #1a1917;
+      --hero-border: rgba(255,255,255,0.07);
     }
 
     html { scroll-behavior: smooth; }
+
     body {
       font-family: var(--sans);
       background: var(--bg);
       color: var(--fg);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* grain */
+    /* Paper grain */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: -1;
-      opacity: 0.4;
+      opacity: 0.35;
+      will-change: transform;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 256px 256px;
     }
 
-    /* ---- Back link ---- */
-    .back {
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* ---- Back nav ---- */
+    .back-nav {
       position: fixed;
-      top: 28px;
-      left: 36px;
+      top: 24px;
+      left: 28px;
       z-index: 100;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .back:hover { color: var(--fg); }
-    .back-arrow { font-size: 1rem; }
+    .back-nav:hover { color: rgba(255,255,255,0.85); }
+    .back-nav-arrow { font-size: 0.9rem; }
+    .back-nav.light { color: var(--muted); }
+    .back-nav.light:hover { color: var(--fg); }
 
-    /* ---- Hero ---- */
-    .case-hero {
-      background: #111110;
-      padding: 120px 44px 60px;
+    /* ---- Scroll progress ---- */
+    #scrollProgress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: var(--accent);
+      z-index: 999;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      background: var(--hero-bg);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      position: relative;
       overflow: hidden;
     }
-    .case-hero-logo {
-      height: 44px;
-      width: auto;
-      margin-bottom: 20px;
-    }
-    .case-hero-tagline {
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: rgba(240,236,228,0.45);
-      margin-bottom: 56px;
+
+    /* Subtle radial glow behind phone */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(248,153,37,0.06) 0%, transparent 70%);
+      pointer-events: none;
     }
 
-    /* ---- Phone mockup ---- */
-    .phone-stage {
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 120px 44px 80px;
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 60px;
+      align-items: center;
+      flex: 1;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-left { display: flex; flex-direction: column; gap: 24px; }
+
+    .hero-company-badge {
+      display: block;
+      width: fit-content;
+    }
+    .hero-company-logo { height: 43px; width: auto; }
+    .hero-company-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: rgba(240,236,228,0.5);
+      text-transform: uppercase;
+    }
+
+    .hero-role {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .hero-headline {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      line-height: 1.08;
+      color: #f0ece4;
+      font-weight: 400;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(240,236,228,0.5);
+      line-height: 1.7;
+      max-width: 400px;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .hero-meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--hero-border);
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      letter-spacing: 0.06em;
+      color: rgba(240,236,228,0.45);
+      text-transform: uppercase;
+    }
+    .hero-meta-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.7;
+    }
+
+    /* Phone mockup */
+    .hero-right {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 24px;
-    }
-    .phone-frame {
+      gap: 20px;
       position: relative;
-      width: 232px;
-      height: 500px;
+      z-index: 1;
+    }
+
+    .phone-wrap {
+      position: relative;
+      width: 230px;
+      height: 496px;
       background: #1c1c1e;
       border-radius: 44px;
-      border: 2px solid rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.1);
       box-shadow:
-        0 0 0 1px rgba(0,0,0,0.6),
-        0 32px 80px rgba(0,0,0,0.7),
-        inset 0 1px 0 rgba(255,255,255,0.08);
-      flex-shrink: 0;
+        0 0 0 1px rgba(0,0,0,0.5),
+        0 40px 100px rgba(0,0,0,0.8),
+        inset 0 1px 0 rgba(255,255,255,0.07);
     }
-    /* Volume buttons */
-    .phone-frame::before {
+    .phone-wrap::before {
       content: '';
       position: absolute;
-      top: 100px;
-      left: -3px;
-      width: 3px;
-      height: 60px;
-      background: rgba(255,255,255,0.1);
+      top: 96px; left: -3px;
+      width: 3px; height: 60px;
+      background: rgba(255,255,255,0.08);
       border-radius: 2px 0 0 2px;
-      box-shadow: 0 28px 0 rgba(255,255,255,0.1);
+      box-shadow: 0 28px 0 rgba(255,255,255,0.08);
     }
-    /* Power button */
-    .phone-frame::after {
+    .phone-wrap::after {
       content: '';
       position: absolute;
-      top: 130px;
-      right: -3px;
-      width: 3px;
-      height: 44px;
-      background: rgba(255,255,255,0.1);
+      top: 126px; right: -3px;
+      width: 3px; height: 44px;
+      background: rgba(255,255,255,0.08);
       border-radius: 0 2px 2px 0;
     }
     .phone-screen {
@@ -138,297 +250,1049 @@
       overflow: hidden;
       background: #000;
     }
-    /* Dynamic island */
     .phone-island {
       position: absolute;
-      top: 14px;
-      left: 50%;
+      top: 14px; left: 50%;
       transform: translateX(-50%);
-      width: 80px;
-      height: 26px;
+      width: 78px; height: 24px;
       background: #000;
       border-radius: 20px;
-      z-index: 10;
+      z-index: 2;
     }
     .phone-slide {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       object-position: top center;
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.55s ease;
     }
     .phone-slide.active { opacity: 1; }
 
-    /* Dot indicators */
     .phone-dots {
       display: flex;
-      gap: 8px;
+      gap: 7px;
       justify-content: center;
     }
     .phone-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
+      width: 6px; height: 6px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.18);
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
+      transition: background 0.3s ease, width 0.3s ease;
+      border: none;
+      padding: 0;
     }
     .phone-dot.active {
       background: var(--accent);
-      transform: scale(1.3);
+      width: 20px;
     }
 
-    /* ---- Content ---- */
-    .case-content {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 80px 24px 120px;
-    }
-
-    .case-role-bar {
+    /* ---- Hero bottom stats strip ---- */
+    .hero-stats-strip {
+      border-top: 1px solid var(--hero-border);
+      padding: 28px 44px;
       display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 64px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
+      justify-content: center;
+      gap: 0;
+      position: relative;
+      z-index: 1;
     }
-    .case-role-title {
-      font-family: var(--sans);
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--fg);
+    .hero-stat {
+      flex: 1;
+      max-width: 220px;
+      text-align: center;
+      padding: 0 28px;
     }
-    .case-role-sub {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
+    .hero-stat + .hero-stat {
+      border-left: 1px solid var(--hero-border);
     }
-    .case-role-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--muted-light);
-    }
-
-    .case-section {
-      margin-bottom: 64px;
-    }
-    .case-section-label {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .case-section-title {
+    .hero-stat-num {
       font-family: var(--serif);
       font-size: 2rem;
-      line-height: 1.2;
-      color: var(--fg);
-      margin-bottom: 20px;
-    }
-    .case-section-body {
-      font-family: var(--sans);
-      font-size: 1rem;
-      font-weight: 300;
-      color: #4a4a4a;
-      line-height: 1.8;
-    }
-    .case-section-body p + p { margin-top: 16px; }
-
-    /* Impact cards */
-    .impact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 32px;
-    }
-    .impact-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-    }
-    .impact-number {
-      font-family: var(--serif);
-      font-size: 2.4rem;
-      color: var(--fg);
+      color: #f0ece4;
       line-height: 1;
       margin-bottom: 6px;
     }
-    .impact-number em { color: var(--accent); font-style: normal; }
-    .impact-label {
-      font-family: var(--sans);
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.4;
+    .hero-stat-num em { color: var(--accent); font-style: normal; }
+    .hero-stat-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(240,236,228,0.35);
     }
 
-    /* Bullets */
-    .case-bullets {
-      list-style: none;
-      margin-top: 20px;
+    /* ============================================================
+       CONTENT WRAPPER
+    ============================================================ */
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============================================================
+       ROLE BAR
+    ============================================================ */
+    .role-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 40px 0 40px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      row-gap: 8px;
+    }
+    .role-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 0 32px;
+    }
+    .role-bar-item:first-child { padding-left: 0; }
+    .role-bar-item + .role-bar-item { border-left: 1px solid var(--border); }
+    .role-bar-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+    }
+    .role-bar-value {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--fg);
+    }
+
+    /* ============================================================
+       SECTIONS
+    ============================================================ */
+    .section { padding: 44px 0; border-bottom: 1px solid var(--border-light); }
+    .section:last-of-type { border-bottom: none; }
+
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      line-height: 1.15;
+      color: var(--fg);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .section-body {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 300;
+      color: #4a4845;
+      line-height: 1.8;
+      max-width: 64ch;
+    }
+    .section-body p + p { margin-top: 16px; }
+
+    /* ============================================================
+       CONTEXT / SITUATION CARD
+    ============================================================ */
+    .context-card {
+      background: var(--hero-bg);
+      border-radius: 20px;
+      padding: 36px 40px;
+      margin-top: 36px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .context-card-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      opacity: 0.85;
+    }
+    .context-card-text {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(240,236,228,0.55);
+      line-height: 1.75;
+    }
+    .context-card-text strong {
+      color: rgba(240,236,228,0.85);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       OWNERSHIP PILLARS
+    ============================================================ */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+      align-items: start;
+    }
+    .pillar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: border-color 0.25s, box-shadow 0.25s;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-    .case-bullets li {
+    .pillar:hover {
+      border-color: rgba(248,153,37,0.3);
+      box-shadow: 0 4px 24px rgba(248,153,37,0.06);
+    }
+    .pillar-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--accent-dim);
       display: flex;
-      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pillar-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .pillar-title {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--fg);
+    }
+    .pillar-desc {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       INITIATIVE TIMELINE
+    ============================================================ */
+    .timeline { margin-top: 48px; display: flex; flex-direction: column; gap: 0; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 160px 1px 1fr;
+      gap: 0 32px;
+      padding-bottom: 48px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-date-col {
+      padding-top: 4px;
+      text-align: right;
+    }
+    .timeline-date {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+    }
+    .timeline-type {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+
+    .timeline-line {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .timeline-line::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      bottom: -48px;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item:last-child .timeline-line::before { display: none; }
+    .timeline-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .timeline-item:hover .timeline-dot {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .timeline-body { padding-top: 0; }
+    .timeline-initiative {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 4px;
+      letter-spacing: 0.01em;
+    }
+    .timeline-title {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      color: var(--fg);
+      font-weight: 400;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .timeline-desc {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: #4a4845;
+      line-height: 1.75;
+      max-width: 56ch;
+    }
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--border-light);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 4px 10px;
+    }
+
+    .timeline-group { display: contents; }
+    .timeline-group .timeline-item:last-child .timeline-line::before { display: none; }
+    .timeline-category-header {
+      padding-left: 225px;
+      padding-top: 44px;
+      padding-bottom: 18px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .timeline-group:first-child .timeline-category-header { padding-top: 0; }
+
+    /* ============================================================
+       IMPACT METRICS
+    ============================================================ */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .impact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .impact-num {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      color: var(--accent);
+      line-height: 1;
+      font-weight: 400;
+    }
+    .impact-lbl {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.45;
+      font-weight: 400;
+    }
+    .impact-sub {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      color: var(--muted-light);
+      margin-top: 2px;
+    }
+
+    /* ============================================================
+       BULLETS / WHAT I SHIPPED
+    ============================================================ */
+    .bullets {
+      list-style: none;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .bullets li {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 14px;
       font-family: var(--sans);
       font-size: 0.95rem;
       font-weight: 300;
-      color: #4a4a4a;
-      line-height: 1.6;
+      color: #4a4845;
+      line-height: 1.7;
     }
-    .case-bullets li::before {
+    .bullets li::before {
       content: '→';
       color: var(--accent);
-      flex-shrink: 0;
-      margin-top: 1px;
+      font-size: 0.85rem;
+      margin-top: 3px;
     }
 
-    .divider {
+    /* ============================================================
+       APPROACH SECTION
+    ============================================================ */
+    .approach-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .approach-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .approach-step {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .approach-title {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: 8px;
+    }
+    .approach-text {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       TOOLS STACK
+    ============================================================ */
+    .tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .tool-chip {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--fg);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 8px 18px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tool-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ============================================================
+       PULL QUOTE
+    ============================================================ */
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      padding: 4px 0 4px 28px;
+      margin: 48px 0;
+    }
+    .pull-quote-text {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--fg);
+      line-height: 1.4;
+    }
+    .pull-quote-attr {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      margin-top: 12px;
+    }
+
+    /* ============================================================
+       FOOTER / NEXT
+    ============================================================ */
+    .page-footer {
+      background: var(--hero-bg);
+      padding: 80px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-footer::before {
+      content: '';
+      position: absolute;
+      bottom: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(248,153,37,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .footer-inner { position: relative; z-index: 1; }
+    .footer-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(240,236,228,0.3);
+      margin-bottom: 20px;
+    }
+    .footer-cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #0e0d0b;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .footer-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .footer-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: rgba(240,236,228,0.5);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 400;
+      padding: 14px 28px;
+      border-radius: 99px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .footer-btn-ghost:hover { color: rgba(240,236,228,0.85); border-color: rgba(255,255,255,0.25); }
+    .footer-divider {
       border: none;
-      border-top: 1px solid var(--border);
-      margin: 64px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 60px auto 40px;
+      max-width: 400px;
+    }
+    .footer-copyright {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(240,236,228,0.2);
     }
 
-    @media (max-width: 600px) {
-      .case-hero { padding: 100px 20px 0; }
-      .case-hero-mockup { height: 220px; }
-      .case-content { padding: 48px 20px 80px; }
-      .impact-grid { grid-template-columns: 1fr; }
-      .case-section-title { font-size: 1.5rem; }
-      .back { left: 20px; top: 20px; }
-      .phone-frame { width: 180px; height: 390px; border-radius: 36px; }
-      .phone-screen { border-radius: 26px; }
-      .phone-island { width: 64px; height: 20px; top: 10px; }
+    /* ============================================================
+       REVEAL
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
     }
-
-    /* reveal */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1); }
     .reveal.visible { opacity: 1; transform: none; }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .phone-slide { transition: none; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 100px 28px 60px;
+        gap: 48px;
+      }
+      .hero-right { order: -1; }
+      .hero-stats-strip { gap: 0; padding: 24px 20px; }
+      .pillars { grid-template-columns: 1fr 1fr; }
+      .impact-grid { grid-template-columns: 1fr 1fr; }
+      .approach-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .back-nav { top: 16px; left: 16px; }
+      .hero-inner { padding: 88px 20px 48px; }
+      .hero-stats-strip { flex-direction: column; align-items: center; gap: 20px; padding: 32px 20px; }
+      .hero-stat + .hero-stat { border-left: none; border-top: 1px solid var(--hero-border); padding-top: 20px; }
+      .content { padding: 0 20px; }
+      .section { padding: 36px 0; }
+      .role-bar { flex-direction: column; gap: 16px; }
+      .role-bar-item { padding: 0; }
+      .role-bar-item + .role-bar-item { border-left: none; }
+      .pillars { grid-template-columns: 1fr; }
+      .impact-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+      .timeline-date-col { text-align: left; }
+      .timeline-line { display: none; }
+      .timeline-category-header { padding-left: 0; padding-top: 32px; }
+      .timeline-group:first-child .timeline-category-header { padding-top: 0; }
+      .context-card { padding: 24px 20px; }
+      .pull-quote { padding-left: 20px; }
+      .pull-quote-text { font-size: 1.2rem; }
+      .phone-wrap { width: 180px; height: 390px; border-radius: 36px; }
+      .phone-screen { border-radius: 28px; }
+      .phone-island { width: 62px; height: 20px; top: 10px; }
+      .page-footer { padding: 60px 20px; }
+    }
   </style>
 </head>
 <body>
 
-  <a href="index.html#work" class="back">
-    <span class="back-arrow">←</span> Back
+  <div id="scrollProgress"></div>
+
+  <a href="index.html#work" class="back-nav" id="backNav">
+    <span class="back-nav-arrow">←</span> Back to portfolio
   </a>
 
-  <!-- Hero -->
-  <div class="case-hero">
-    <img src="Work/Fampay/FamApp Logo Icon.svg" alt="FamApp" class="case-hero-logo">
-    <p class="case-hero-tagline">Building a financially aware, smart and independent generation</p>
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero">
+    <div class="hero-inner">
 
-    <div class="phone-stage">
-      <div class="phone-frame">
-        <div class="phone-screen">
-          <div class="phone-island"></div>
-          <img class="phone-slide active" src="Work/Fampay/Homepage.jpeg" alt="FamApp Home">
-          <img class="phone-slide" src="Work/Fampay/Payment compose.jpeg" alt="FamApp Payments">
-          <img class="phone-slide" src="Work/Fampay/Card page.jpeg" alt="FamApp Card">
-          <img class="phone-slide" src="Work/Fampay/DM.jpeg" alt="FamApp DM">
-          <img class="phone-slide" src="Work/Fampay/spotlight.jpeg" alt="FamApp Spotlight">
+      <div class="hero-left">
+        <div class="hero-company-badge">
+          <img src="Work/Fampay/FamApp Logo Icon.svg" alt="FamApp" class="hero-company-logo">
+        </div>
+
+        <div class="hero-role">Product Manager, Payments &amp; Core Banking</div>
+
+        <h1 class="hero-headline">
+          Building the <em>financial<br>layer</em> for India's GenZ
+        </h1>
+
+        <p class="hero-sub">
+          As PM for Payments &amp; Core Banking, I owned the core UPI rails, FamCard transactions, and the revenue stack sitting on top of them, from monitoring to shipping.
+        </p>
+
+        <div class="hero-meta-row">
+          <span class="hero-meta-pill"><span class="hero-meta-dot"></span>2023 — Present</span>
+          <span class="hero-meta-pill"><span class="hero-meta-dot"></span>Bengaluru, India</span>
+          <span class="hero-meta-pill"><span class="hero-meta-dot"></span>FinTech · Neobank</span>
         </div>
       </div>
+
+      <div class="hero-right">
+        <div class="phone-wrap">
+          <div class="phone-screen">
+            <div class="phone-island"></div>
+            <img class="phone-slide active" src="Work/Fampay/Homepage.jpeg" alt="FamApp home screen">
+            <img class="phone-slide" src="Work/Fampay/Payment compose.jpeg" alt="FamApp payment compose">
+            <img class="phone-slide" src="Work/Fampay/Card page.jpeg" alt="FamApp card page">
+            <img class="phone-slide" src="Work/Fampay/DM.jpeg" alt="FamApp DM screen">
+            <img class="phone-slide" src="Work/Fampay/spotlight.jpeg" alt="FamApp spotlight">
+          </div>
+        </div>
+        <div class="phone-dots">
+          <button class="phone-dot active" aria-label="Slide 1" onclick="goToSlide(0)"></button>
+          <button class="phone-dot" aria-label="Slide 2" onclick="goToSlide(1)"></button>
+          <button class="phone-dot" aria-label="Slide 3" onclick="goToSlide(2)"></button>
+          <button class="phone-dot" aria-label="Slide 4" onclick="goToSlide(3)"></button>
+          <button class="phone-dot" aria-label="Slide 5" onclick="goToSlide(4)"></button>
+        </div>
+      </div>
+
     </div>
 
-    <div class="phone-dots">
-      <div class="phone-dot active" onclick="goToSlide(0)"></div>
-      <div class="phone-dot" onclick="goToSlide(1)"></div>
-      <div class="phone-dot" onclick="goToSlide(2)"></div>
-      <div class="phone-dot" onclick="goToSlide(3)"></div>
-      <div class="phone-dot" onclick="goToSlide(4)"></div>
+    <!-- Stats strip -->
+    <div class="hero-stats-strip">
+      <div class="hero-stat">
+        <div class="hero-stat-num"><em>250M+</em></div>
+        <div class="hero-stat-label">Monthly payments</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num"><em>15M+</em></div>
+        <div class="hero-stat-label">Users</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num"><em>↑</em> 6%</div>
+        <div class="hero-stat-label">Success rate to 99%</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num"><em>↑</em> 38%</div>
+        <div class="hero-stat-label">NPS improvement</div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Content -->
-  <div class="case-content">
+  <!-- ============================================================
+       BODY CONTENT
+  ============================================================ -->
+  <main class="content">
 
     <!-- Role bar -->
-    <div class="case-role-bar reveal">
-      <div>
-        <div class="case-role-title">Product Manager</div>
-        <div class="case-role-sub">Payments &amp; Revenue</div>
+
+    <!-- ABOUT THE COMPANY -->
+    <div class="section reveal">
+      <div class="section-eyebrow">The Company</div>
+      <h2 class="section-title">India's first neobank <em>for teenagers</em></h2>
+      <div class="section-body">
+        <p>FamApp (by Trio) is building the financial infrastructure for a generation that's been overlooked by every bank in the country. We give teenagers a spending account, UPI, and a numberless FamCard, the kind of product that didn't exist when most of us were 14.</p>
+        <p>The mission is to build a generation that is financially aware, smart, and independent. FamApp does this through frictionless payments, parental controls, and financial literacy features embedded directly into the product.</p>
       </div>
-      <div class="case-role-dot"></div>
-      <div class="case-role-sub">2024 — Present</div>
-      <div class="case-role-dot"></div>
-      <div class="case-role-sub">Bengaluru, India</div>
+
     </div>
 
-    <!-- What does the company do -->
-    <div class="case-section reveal">
-      <div class="case-section-label">The Company</div>
-      <h2 class="case-section-title">What does FamPay do?</h2>
-      <div class="case-section-body">
-        <p>FamPay (by Trio) is India's first neobank built for teenagers — a category that has historically been ignored by traditional financial institutions. It gives teens their own UPI-powered payment account and a numberless FamCard, letting them spend, split, and save independently.</p>
-        <p>The mission is simple: build a generation that is financially aware, smart, and independent — before they turn 18. FamPay does this through a combination of frictionless payments, parental controls, and financial literacy features embedded directly into the product experience.</p>
+    <!-- OWNERSHIP PILLARS -->
+    <div class="section reveal">
+      <div class="section-eyebrow">What I Owned</div>
+      <h2 class="section-title">Three areas, <em>one question</em></h2>
+      <div class="section-body">
+        <p>Everything I worked on came back to the same thing: what does the user actually need, and are we building that?</p>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar reveal reveal-delay-1">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="pillar-title">Payment Health</div>
+          <div class="pillar-desc">Keeping Payment success rates up, catching failures before users felt them, and fixing things fast.</div>
+        </div>
+        <div class="pillar reveal reveal-delay-2">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div class="pillar-title">User First</div>
+          <div class="pillar-desc">Starting from what users actually need, not what looked good on a roadmap or sounded good.</div>
+        </div>
+        <div class="pillar reveal reveal-delay-3">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div class="pillar-title">Shipping</div>
+          <div class="pillar-desc">VPA Caching, Spend Analytics, Stuck Payment Resolution and more, from idea to live.</div>
+        </div>
       </div>
     </div>
 
-    <hr class="divider">
-
-    <!-- Impact -->
-    <div class="case-section reveal">
-      <div class="case-section-label">My Impact</div>
-      <h2 class="case-section-title">What I built and moved</h2>
-      <div class="case-section-body">
-        <p>As PM for Payments &amp; Revenue, I owned the end-to-end health and growth of FamPay's core payment rails — UPI, FamCard transactions, and the revenue layer sitting on top of them.</p>
+    <!-- THE WORK — TIMELINE -->
+    <div class="section reveal">
+      <div class="section-eyebrow">The Work</div>
+      <h2 class="section-title">What I actually <em>did</em></h2>
+      <div class="section-body">
+        <p>Five things I worked on. Some were foundational, some were features. All of them shipped.</p>
       </div>
 
-      <div class="impact-grid reveal reveal-delay-1">
+      <div class="timeline">
+
+        <div class="timeline-group">
+          <div class="timeline-category-header">Payment &amp; Core Banking</div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Infrastructure</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Payment Health Dashboard</div>
+              <div class="timeline-title">We were learning about failures from support tickets</div>
+              <div class="timeline-desc">No one had built proper monitoring. I wrote SQL dashboards across UPI and FamCard rails, wired up alerts at the thresholds that actually mattered, and gave engineering and leadership a live view for the first time. Time from detecting a failure to fixing it went from 48 hours to under 6.</div>
+              <div class="timeline-tags">
+                <span class="tag">SQL</span>
+                <span class="tag">Mixpanel</span>
+                <span class="tag">Data Engineering</span>
+                <span class="tag">NPCI APIs</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal reveal-delay-1">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Compliance</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">UPI Lite Integration</div>
+              <div class="timeline-title">Faster payments for small transactions</div>
+              <div class="timeline-desc">UPI Lite cuts out the bank server round-trip for sub-₹200 payments. I worked the integration from requirements through to launch, coordinating between NPCI, our banking partner, and engineering. Success rates on small transactions went up after we shipped.</div>
+              <div class="timeline-tags">
+                <span class="tag">NPCI</span>
+                <span class="tag">Banking Partners</span>
+                <span class="tag">Compliance</span>
+                <span class="tag">UPI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-group">
+          <div class="timeline-category-header">Revenue &amp; Engagement</div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Revenue</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">FamCard Revenue</div>
+              <div class="timeline-title">Teens spend on food, gaming, accessories. We built around that.</div>
+              <div class="timeline-desc">I mapped where teens were actually spending and used that to build a pipeline of merchant category deals. Reworked the cashback mechanics on top. FamCard revenue went up 3x within two quarters.</div>
+              <div class="timeline-tags">
+                <span class="tag">Revenue Modelling</span>
+                <span class="tag">Merchant Partnerships</span>
+                <span class="tag">Incentive Design</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal reveal-delay-1">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Conversion</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Payment Confirmation Screen</div>
+              <div class="timeline-title">The screen after a payment was a dead end</div>
+              <div class="timeline-desc">Users paid, landed on a confirmation screen, and left. Nothing useful there. I ran a series of A/B tests on copy, CTAs, and what context to show after a payment. Conversion moved double digits in aggregate across the tests.</div>
+              <div class="timeline-tags">
+                <span class="tag">Experimentation</span>
+                <span class="tag">Copywriting</span>
+                <span class="tag">Funnel Optimisation</span>
+                <span class="tag">Analytics</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-group">
+          <div class="timeline-category-header">Growth</div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Feature</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Scan &amp; Pay + Recommended Contacts</div>
+              <div class="timeline-title">Two features, same quarter, both in daily active use</div>
+              <div class="timeline-desc">Scan &amp; Pay fixed a drop-off problem at the QR step. Recommended Contacts used transaction history to show you who you actually pay, cutting the steps to send money to a friend. Both shipped Q3 and both show up in daily active usage now.</div>
+              <div class="timeline-tags">
+                <span class="tag">Product Design</span>
+                <span class="tag">A/B Testing</span>
+                <span class="tag">ML Features</span>
+                <span class="tag">Figma</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- IMPACT METRICS -->
+    <div class="section reveal">
+      <div class="section-eyebrow">My Impact</div>
+      <h2 class="section-title">What <em>moved</em></h2>
+
+      <div class="impact-grid">
         <div class="impact-card">
-          <div class="impact-number"><em>↑</em> 23%</div>
-          <div class="impact-label">Increase in UPI transaction success rate after payment health improvements</div>
+          <div class="impact-num">250M+</div>
+          <div class="impact-lbl">Monthly payments processed</div>
         </div>
         <div class="impact-card">
-          <div class="impact-number"><em>3×</em></div>
-          <div class="impact-label">Revenue growth on FamCard through new merchant category partnerships</div>
+          <div class="impact-num">15M+</div>
+          <div class="impact-lbl">Users on the platform</div>
         </div>
         <div class="impact-card">
-          <div class="impact-number"><em>↓</em> 40%</div>
-          <div class="impact-label">Drop in payment failure complaints via proactive error detection</div>
+          <div class="impact-num">99%</div>
+          <div class="impact-lbl">Payment success rate</div>
+          <div class="impact-sub">↑ 6% improvement</div>
         </div>
         <div class="impact-card">
-          <div class="impact-number">2 <em>features</em></div>
-          <div class="impact-label">Launched Scan &amp; Pay and Recommended Contacts — both now core to daily active usage</div>
+          <div class="impact-num">↑38%</div>
+          <div class="impact-lbl">NPS improvement</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-num">↓36%</div>
+          <div class="impact-lbl">Payment detractors</div>
+          <div class="impact-sub">from 36% to 23%</div>
         </div>
       </div>
 
-      <ul class="case-bullets reveal reveal-delay-2" style="margin-top:36px;">
-        <li>Rebuilt the payment success monitoring stack with SQL-based dashboards, cutting detection-to-fix time from 48h to under 6h.</li>
-        <li>Led NPCI integration work for UPI Lite, reducing friction for sub-₹200 transactions and improving completion rates.</li>
-        <li>Ran A/B tests on the payment confirmation screen — small copy and CTA changes that moved conversion by double digits.</li>
-        <li>Collaborated with the data team to build a real-time revenue tracker, giving leadership live visibility for the first time.</li>
-        <li>Drove cross-functional alignment across engineering, design, compliance, and banking partners to ship on time.</li>
+      <ul class="bullets reveal reveal-delay-1" style="margin-top: 36px;">
+        <li>Built the payment monitoring stack from scratch. Leadership had a live dashboard for the first time.</li>
+        <li>Took UPI Lite from spec to launch, working across NPCI, our banking partner, and engineering simultaneously.</li>
+        <li>Ran A/B tests on the payment confirmation screen. Conversion moved double digits.</li>
+        <li>Shipped Scan &amp; Pay and Recommended Contacts in the same quarter. Both are now in daily active use.</li>
+        <li>FamCard revenue went up 3x. Built on the back of actual teen spending data, not guesses.</li>
       </ul>
     </div>
 
-  </div>
+    <!-- PULL QUOTE -->
+    <div class="pull-quote reveal">
+      <div class="pull-quote-text">"The best PM work is invisible. Users don't notice you fixed something. They just notice it works."</div>
+      <div class="pull-quote-attr">Muazz Zuberi</div>
+    </div>
+
+    <!-- HOW I WORKED -->
+    <div class="section reveal">
+      <div class="section-eyebrow">How I Worked</div>
+      <h2 class="section-title">A few things I <em>actually believe</em></h2>
+      <div class="section-body">
+        <p>Payments is brutal to get wrong. A failed transaction is real money, real friction, and a real reason to leave. Most of how I worked came from taking that seriously.</p>
+      </div>
+
+      <div class="approach-grid">
+        <div class="approach-card reveal reveal-delay-1">
+          <div class="approach-step">01</div>
+          <div class="approach-title">Measure it before you touch it</div>
+          <div class="approach-text">I never started a project without first understanding the baseline. In payments you really cannot afford to find out things are broken from a support ticket.</div>
+        </div>
+        <div class="approach-card reveal reveal-delay-2">
+          <div class="approach-step">02</div>
+          <div class="approach-title">Get into the technical detail</div>
+          <div class="approach-text">I spent real time learning NPCI flows, banking partner constraints, and where UPI actually fails. You make better calls when you understand what you're building on top of.</div>
+        </div>
+        <div class="approach-card reveal reveal-delay-1">
+          <div class="approach-step">03</div>
+          <div class="approach-title">Don't wait for things to be clean</div>
+          <div class="approach-text">Monitoring and features ran at the same time. Waiting for infrastructure to be "ready" before shipping product is how you fall behind. You figure it out in parallel.</div>
+        </div>
+        <div class="approach-card reveal reveal-delay-2">
+          <div class="approach-step">04</div>
+          <div class="approach-title">Test things you think you already know</div>
+          <div class="approach-text">The confirmation screen experiments moved double digits because nobody had actually tested that surface before. Strong intuitions make good hypotheses. They don't replace experiments.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="section reveal">
+      <div class="section-eyebrow">Tools &amp; Stack</div>
+      <h2 class="section-title">What I worked <em>with</em></h2>
+
+      <div class="tools-row">
+        <span class="tool-chip">Figma</span>
+        <span class="tool-chip">SQL</span>
+        <span class="tool-chip">Mixpanel</span>
+        <span class="tool-chip">Amplitude</span>
+        <span class="tool-chip">Jira</span>
+        <span class="tool-chip">Notion</span>
+        <span class="tool-chip">Miro</span>
+        <span class="tool-chip">NPCI APIs</span>
+        <span class="tool-chip">Postman</span>
+        <span class="tool-chip">Google Sheets</span>
+        <span class="tool-chip">Looker</span>
+        <span class="tool-chip">Linear</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="page-footer">
+    <div class="footer-inner">
+      <div class="footer-label">What's next</div>
+      <div class="footer-cta-row">
+        <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="footer-btn-primary">
+          View Resume ↗
+        </a>
+        <a href="index.html" class="footer-btn-ghost">
+          ← Back to portfolio
+        </a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-copyright">© 2025 Mohammed Muazz Zuberi</div>
+    </div>
+  </footer>
 
   <script>
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    /* Scroll progress */
+    const prog = document.getElementById('scrollProgress');
+    let scrollRaf;
+    window.addEventListener('scroll', () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+        prog.style.width = Math.min(pct, 100) + '%';
+        scrollRaf = null;
+      });
+    }, { passive: true });
+
+    /* Back nav colour toggle */
+    const backNav = document.getElementById('backNav');
+    const heroEl = document.querySelector('.hero');
+    const heroObs = new IntersectionObserver(entries => {
+      backNav.classList.toggle('light', !entries[0].isIntersecting);
+    }, { threshold: 0 });
+    heroObs.observe(heroEl);
+
+    /* Reveal */
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
+    }, { threshold: 0.06, rootMargin: '0px 0px -28px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
     /* Phone slideshow */
     const slides = document.querySelectorAll('.phone-slide');
     const dots = document.querySelectorAll('.phone-dot');
-    let current = 0;
-    let timer;
+    let current = 0, timer;
 
     function goToSlide(n) {
       slides[current].classList.remove('active');
@@ -437,14 +1301,12 @@
       slides[current].classList.add('active');
       dots[current].classList.add('active');
       clearInterval(timer);
-      timer = setInterval(advance, 2800);
+      timer = setInterval(advance, 3000);
     }
 
-    function advance() {
-      goToSlide((current + 1) % slides.length);
-    }
+    function advance() { goToSlide((current + 1) % slides.length); }
+    timer = setInterval(advance, 3000);
 
-    timer = setInterval(advance, 2800);
   </script>
 
 </body>
