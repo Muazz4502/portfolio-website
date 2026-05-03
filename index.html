@@ -1488,12 +1488,16 @@
       width: max-content;
       animation: scrollLeft 100s linear infinite;
       will-change: transform;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
     .scroll-track-right {
       display: flex;
       width: max-content;
       animation: scrollRight 100s linear infinite;
       will-change: transform;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
 
     @keyframes scrollLeft {
@@ -1669,6 +1673,8 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
     /* photo heights inside the about column */
     .about-photos .scroll-track-left .photo-item  { height: 240px; }
@@ -1678,7 +1684,7 @@
     .about-photos .scroll-row:first-child { padding-bottom: 20px; }
     .lately-section { padding: 0; }
 
-    .about-bio { font-family: var(--sans); font-weight: 400; font-size: 1rem; color: var(--fg); line-height: 1.75; max-width: 68ch; }
+    .about-bio { font-family: var(--sans); font-weight: 300; font-size: 1rem; color: var(--fg); line-height: 1.75; max-width: 68ch; }
     .about-bio p { margin-bottom: 20px; }
     .about-bio p:last-child { margin-bottom: 0; }
     .about-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
@@ -1904,11 +1910,14 @@
     @media (max-width: 480px) {
       /* Hero */
       .hero { padding: 88px 16px 48px; gap: 28px; }
-      .hero-right { max-width: 160px; }
+      .hero-right { display: none; }
+      .hero-greeting { gap: 6px; }
       .hero-greeting-label, .hero-name { font-size: clamp(1.4rem, 6vw, 2rem); }
       .hero-headline { font-size: clamp(2rem, 8.5vw, 3rem); }
       .hero-ctas { flex-direction: column; align-items: stretch; gap: 10px; }
       .hero-ctas a { text-align: center; }
+      .hero-photo-tag .pulse-dot { display: none; }
+      .about-ctas { display: none; }
       .hero-stats { gap: 16px 24px; }
       .hero-stat-num { font-size: 1.5rem; }
       .hero-photo-tag { flex-wrap: wrap; justify-content: center; }
@@ -1920,9 +1929,9 @@
       /* Experience cards */
       .exp-card-preview { height: auto; min-height: 500px; }
       .exp-fam-static-mockup { max-height: none; height: 260px; object-fit: cover; object-position: center center; }
-      .exp-fam-body { padding: 20px 16px 80px; }
+      .exp-fam-body { padding: 30px 16px 80px; }
       .exp-fam-logo { height: 26px; }
-      .exp-avaana-body { padding: 20px 20px 160px; grid-template-columns: 1fr; gap: 12px; text-align: center; }
+      .exp-avaana-body { padding: 30px 20px 160px; grid-template-columns: 1fr; gap: 12px; text-align: center; }
       .exp-avaana-logo { margin-left: auto; margin-right: auto; }
       .exp-avaana-mockup { max-height: 320px; object-position: center center; }
       .exp-avaana-visual { display: flex; justify-content: center; }
@@ -2037,7 +2046,7 @@
     <a href="#sidequests">Side Quests</a>
     <a href="#about">About</a>
     <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
-    <a href="mailto:hello@muazz.com" class="nav-cta">Let's Talk</a>
+    <a href="mailto:zuberimuazz@gmail.com" class="nav-cta">Let's Talk</a>
   </nav>
   <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
     <div class="nav-hamburger-icon">
@@ -2052,7 +2061,7 @@
     <a href="#sidequests" onclick="closeMobileMenu()">Side Quests <span>→</span></a>
     <a href="#about" onclick="closeMobileMenu()">About <span>→</span></a>
     <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()">Resume <span>↗</span></a>
-    <a href="mailto:hello@muazz.com" onclick="closeMobileMenu()" class="mobile-cta">Let's Talk</a>
+    <a href="mailto:zuberimuazz@gmail.com" onclick="closeMobileMenu()" class="mobile-cta">Let's Talk</a>
   </div>
 
   <main>
@@ -2084,6 +2093,133 @@
       </div>
     </section>
 
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="about-layout reveal">
+        <div class="about-text">
+          <div class="section-header">
+            <span class="section-label">About</span>
+            <h2 class="section-title">The <em>short version</em></h2>
+          </div>
+          <blockquote class="about-pull-quote">
+            My goal is simple. Walk into a coffee shop, look around, and quietly count at least 3 people using a product I built, without them knowing it was me.
+          </blockquote>
+          <div class="about-bio">
+            <p>I'm Muazz, PM at FamApp, where I own payments health for millions of teenagers making their first digital transactions. I obsess over basis-point improvements most people would never notice.</p>
+            <p>Currently, I am exploring the XR space, building random things like mafia games at 1 AM, and occasionally running quiz nights with product-launch intensity. If there's a gap, I want to fill it.</p>
+            <p>Outside of work, I trek, surf poorly, cook ambitious meals nobody asked for, and try to do one new thing every month. Show up, figure it out, make it memorable.</p>
+          </div>
+          <div class="about-ctas">
+            <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-primary">View Resume</a>
+            <a href="https://www.linkedin.com/in/muazz/" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn &rarr;</a>
+          </div>
+        </div>
+        <div class="about-photos">
+          <!-- PHOTO WALL — LATELY -->
+          <div class="lately-section" id="lately">
+
+      <!-- ROW 1 — scrolls left, 70s -->
+      <div class="scroll-row">
+        <div class="scroll-track-left">
+          <div class="photo-item"><img src="Lately/IMG_3696.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_1028.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_5239.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2343.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_9188.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3349.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_0574.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3887.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><video src="Lately/IMG_5685.MOV" autoplay muted loop playsinline></video></div>
+          <div class="photo-item"><img src="Lately/IMG_2860.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6041.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_4270.PNG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_1663.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3978.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_9719.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_5551.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><video src="Lately/IMG_3464.MOV" autoplay muted loop playsinline></video></div>
+          <div class="photo-item"><img src="Lately/IMG_4012.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6104.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2117.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/59e15f09-40e7-4b12-9b7e-80c3c9e8d954.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3241.jpg" alt="" loading="lazy"></div>
+          <!-- duplicate for seamless loop -->
+          <div class="photo-item"><img src="Lately/IMG_3696.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_1028.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_5239.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2343.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_9188.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3349.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_0574.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3887.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><video src="Lately/IMG_5685.MOV" autoplay muted loop playsinline></video></div>
+          <div class="photo-item"><img src="Lately/IMG_2860.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6041.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_4270.PNG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_1663.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3978.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_9719.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_5551.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><video src="Lately/IMG_3464.MOV" autoplay muted loop playsinline></video></div>
+          <div class="photo-item"><img src="Lately/IMG_4012.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6104.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2117.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/59e15f09-40e7-4b12-9b7e-80c3c9e8d954.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3241.jpg" alt="" loading="lazy"></div>
+        </div>
+      </div>
+
+      <!-- ROW 2 — scrolls right, 90s -->
+      <div class="scroll-row">
+        <div class="scroll-track-right">
+          <div class="photo-item"><img src="Lately/IMG_3804.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6041.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2015.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/f1219e24-f107-41d8-a33f-603f44aeca49.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3246.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3804.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_1855.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3068.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_4541.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><video src="Lately/IMG_3800.mov" autoplay muted loop playsinline></video></div>
+          <div class="photo-item"><img src="Lately/IMG_2738.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6076.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/f1219e24-f107-41d8-a33f-603f44aeca49.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3509.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/8DAC1DD8-F712-4D61-BB14-4C3888595291.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2977.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6098.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2341.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_5551.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3599.jpg" alt="" loading="lazy"></div>
+          <!-- duplicate for seamless loop -->
+          <div class="photo-item"><img src="Lately/IMG_3804.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6041.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2015.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/f1219e24-f107-41d8-a33f-603f44aeca49.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3246.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3804.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_1855.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3068.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_4541.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><video src="Lately/IMG_3800.mov" autoplay muted loop playsinline></video></div>
+          <div class="photo-item"><img src="Lately/IMG_2738.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6076.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/f1219e24-f107-41d8-a33f-603f44aeca49.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3509.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/8DAC1DD8-F712-4D61-BB14-4C3888595291.JPG" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2977.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_6098.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_2341.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_5551.jpg" alt="" loading="lazy"></div>
+          <div class="photo-item"><img src="Lately/IMG_3599.jpg" alt="" loading="lazy"></div>
+        </div>
+      </div>
+
+          </div><!-- /lately-section -->
+        </div><!-- /about-photos -->
+      </div><!-- /about-layout -->
+    </section>
 
     <!-- EXPERIENCE -->
     <section class="section" id="work">
@@ -2573,134 +2709,6 @@
         </article>
 
       </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="section" id="about">
-      <div class="about-layout reveal">
-        <div class="about-text">
-          <div class="section-header">
-            <span class="section-label">About</span>
-            <h2 class="section-title">The <em>short version</em></h2>
-          </div>
-          <blockquote class="about-pull-quote">
-            My goal is simple. Walk into a coffee shop, look around, and quietly count at least 3 people using a product I built, without them knowing it was me.
-          </blockquote>
-          <div class="about-bio">
-            <p>I'm Muazz, PM at FamApp, where I own payments health for millions of teenagers making their first digital transactions. I obsess over basis-point improvements most people would never notice.</p>
-            <p>Currently, I am exploring the XR space, building random things like mafia games at 1 AM, and occasionally running quiz nights with product-launch intensity. If there's a gap, I want to fill it.</p>
-            <p>Outside of work, I trek, surf poorly, cook ambitious meals nobody asked for, and try to do one new thing every month. Show up, figure it out, make it memorable.</p>
-          </div>
-          <div class="about-ctas">
-            <a href="https://drive.google.com/file/d/1mcWTzYMWZnG4Fo3k4MIJ1NnF1izbRo13/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-primary">View Resume</a>
-            <a href="https://www.linkedin.com/in/muazz/" target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn &rarr;</a>
-          </div>
-        </div>
-        <div class="about-photos">
-          <!-- PHOTO WALL — LATELY -->
-          <div class="lately-section" id="lately">
-
-      <!-- ROW 1 — scrolls left, 70s -->
-      <div class="scroll-row">
-        <div class="scroll-track-left">
-          <div class="photo-item"><img src="Lately/IMG_3696.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_1028.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_5239.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2343.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_9188.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3349.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_0574.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3887.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><video src="Lately/IMG_5685.MOV" autoplay muted loop playsinline></video></div>
-          <div class="photo-item"><img src="Lately/IMG_2860.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6041.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_4270.PNG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_1663.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3978.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_9719.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_5551.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><video src="Lately/IMG_3464.MOV" autoplay muted loop playsinline></video></div>
-          <div class="photo-item"><img src="Lately/IMG_4012.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6104.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2117.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/59e15f09-40e7-4b12-9b7e-80c3c9e8d954.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3241.jpg" alt="" loading="lazy"></div>
-          <!-- duplicate for seamless loop -->
-          <div class="photo-item"><img src="Lately/IMG_3696.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_1028.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_5239.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2343.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_9188.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3349.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_0574.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3887.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><video src="Lately/IMG_5685.MOV" autoplay muted loop playsinline></video></div>
-          <div class="photo-item"><img src="Lately/IMG_2860.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6041.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_4270.PNG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_1663.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3978.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_9719.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_5551.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><video src="Lately/IMG_3464.MOV" autoplay muted loop playsinline></video></div>
-          <div class="photo-item"><img src="Lately/IMG_4012.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6104.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2117.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/59e15f09-40e7-4b12-9b7e-80c3c9e8d954.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3241.jpg" alt="" loading="lazy"></div>
-        </div>
-      </div>
-
-      <!-- ROW 2 — scrolls right, 90s -->
-      <div class="scroll-row">
-        <div class="scroll-track-right">
-          <div class="photo-item"><img src="Lately/IMG_3804.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6041.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2015.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/f1219e24-f107-41d8-a33f-603f44aeca49.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3246.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3804.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_1855.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3068.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_4541.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><video src="Lately/IMG_3800.mov" autoplay muted loop playsinline></video></div>
-          <div class="photo-item"><img src="Lately/IMG_2738.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6076.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/f1219e24-f107-41d8-a33f-603f44aeca49.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3509.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/8DAC1DD8-F712-4D61-BB14-4C3888595291.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2977.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6098.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2341.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_5551.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3599.jpg" alt="" loading="lazy"></div>
-          <!-- duplicate for seamless loop -->
-          <div class="photo-item"><img src="Lately/IMG_3804.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6041.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2015.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/f1219e24-f107-41d8-a33f-603f44aeca49.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3246.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3804.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_1855.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3068.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_4541.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><video src="Lately/IMG_3800.mov" autoplay muted loop playsinline></video></div>
-          <div class="photo-item"><img src="Lately/IMG_2738.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6076.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/f1219e24-f107-41d8-a33f-603f44aeca49.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3509.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/8DAC1DD8-F712-4D61-BB14-4C3888595291.JPG" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2977.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_6098.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_2341.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_5551.jpg" alt="" loading="lazy"></div>
-          <div class="photo-item"><img src="Lately/IMG_3599.jpg" alt="" loading="lazy"></div>
-        </div>
-      </div>
-
-          </div><!-- /lately-section -->
-        </div><!-- /about-photos -->
-      </div><!-- /about-layout -->
     </section>
 
     <!-- PODCASTS -->

@@ -81,6 +81,7 @@
     .back-nav-arrow { font-size: 0.9rem; }
     .back-nav.light { color: var(--muted); }
     .back-nav.light:hover { color: var(--fg); }
+    .back-nav { transition: color 0.35s, background 0.35s, border-color 0.35s; }
 
     /* ---- Scroll progress ---- */
     #scrollProgress {
@@ -873,7 +874,24 @@
     }
 
     @media (max-width: 640px) {
-      .back-nav { top: 16px; left: 16px; }
+      .back-nav {
+        top: 12px;
+        left: 12px;
+        background: rgba(18, 16, 12, 0.72);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 99px;
+        padding: 10px 18px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: rgba(255,255,255,0.7);
+        font-size: 0.65rem;
+        min-height: 44px;
+      }
+      .back-nav.light {
+        background: rgba(255,255,255,0.9);
+        border-color: rgba(0,0,0,0.08);
+        color: var(--muted);
+      }
       .hero-inner { padding: 88px 20px 48px; }
       .hero-stats-strip { flex-direction: column; align-items: center; gap: 20px; padding: 32px 20px; }
       .hero-stat + .hero-stat { border-left: none; border-top: 1px solid var(--hero-border); padding-top: 20px; }
@@ -1033,122 +1051,8 @@
     <div class="section reveal">
       <div class="section-eyebrow">The Work</div>
       <h2 class="section-title">What I actually <em>did</em></h2>
-      <div class="section-body">
-        <p>Five things I worked on. Some were foundational, some were features. All of them shipped.</p>
-      </div>
 
-      <div class="timeline">
-
-        <div class="timeline-group">
-          <div class="timeline-category-header">Payment &amp; Core Banking</div>
-
-          <div class="timeline-item reveal">
-            <div class="timeline-date-col">
-              <div class="timeline-type">Infrastructure</div>
-            </div>
-            <div class="timeline-line"><div class="timeline-dot"></div></div>
-            <div class="timeline-body">
-              <div class="timeline-initiative">Payment Health Dashboard</div>
-              <div class="timeline-title">We were learning about failures from support tickets</div>
-              <div class="timeline-desc">No one had built proper monitoring. I wrote SQL dashboards across UPI and FamCard rails, wired up alerts at the thresholds that actually mattered, and gave engineering and leadership a live view for the first time. Time from detecting a failure to fixing it went from 48 hours to under 6.</div>
-              <div class="timeline-tags">
-                <span class="tag">SQL</span>
-                <span class="tag">Mixpanel</span>
-                <span class="tag">Data Engineering</span>
-                <span class="tag">NPCI APIs</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item reveal reveal-delay-1">
-            <div class="timeline-date-col">
-              <div class="timeline-type">Compliance</div>
-            </div>
-            <div class="timeline-line"><div class="timeline-dot"></div></div>
-            <div class="timeline-body">
-              <div class="timeline-initiative">UPI Lite Integration</div>
-              <div class="timeline-title">Faster payments for small transactions</div>
-              <div class="timeline-desc">UPI Lite cuts out the bank server round-trip for sub-₹200 payments. I worked the integration from requirements through to launch, coordinating between NPCI, our banking partner, and engineering. Success rates on small transactions went up after we shipped.</div>
-              <div class="timeline-tags">
-                <span class="tag">NPCI</span>
-                <span class="tag">Banking Partners</span>
-                <span class="tag">Compliance</span>
-                <span class="tag">UPI</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-group">
-          <div class="timeline-category-header">Revenue &amp; Engagement</div>
-
-          <div class="timeline-item reveal">
-            <div class="timeline-date-col">
-              <div class="timeline-type">Revenue</div>
-            </div>
-            <div class="timeline-line"><div class="timeline-dot"></div></div>
-            <div class="timeline-body">
-              <div class="timeline-initiative">FamCard Revenue</div>
-              <div class="timeline-title">Teens spend on food, gaming, accessories. We built around that.</div>
-              <div class="timeline-desc">I mapped where teens were actually spending and used that to build a pipeline of merchant category deals. Reworked the cashback mechanics on top. FamCard revenue went up 3x within two quarters.</div>
-              <div class="timeline-tags">
-                <span class="tag">Revenue Modelling</span>
-                <span class="tag">Merchant Partnerships</span>
-                <span class="tag">Incentive Design</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item reveal reveal-delay-1">
-            <div class="timeline-date-col">
-              <div class="timeline-type">Conversion</div>
-            </div>
-            <div class="timeline-line"><div class="timeline-dot"></div></div>
-            <div class="timeline-body">
-              <div class="timeline-initiative">Payment Confirmation Screen</div>
-              <div class="timeline-title">The screen after a payment was a dead end</div>
-              <div class="timeline-desc">Users paid, landed on a confirmation screen, and left. Nothing useful there. I ran a series of A/B tests on copy, CTAs, and what context to show after a payment. Conversion moved double digits in aggregate across the tests.</div>
-              <div class="timeline-tags">
-                <span class="tag">Experimentation</span>
-                <span class="tag">Copywriting</span>
-                <span class="tag">Funnel Optimisation</span>
-                <span class="tag">Analytics</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-group">
-          <div class="timeline-category-header">Growth</div>
-
-          <div class="timeline-item reveal">
-            <div class="timeline-date-col">
-              <div class="timeline-type">Feature</div>
-            </div>
-            <div class="timeline-line"><div class="timeline-dot"></div></div>
-            <div class="timeline-body">
-              <div class="timeline-initiative">Scan &amp; Pay + Recommended Contacts</div>
-              <div class="timeline-title">Two features, same quarter, both in daily active use</div>
-              <div class="timeline-desc">Scan &amp; Pay fixed a drop-off problem at the QR step. Recommended Contacts used transaction history to show you who you actually pay, cutting the steps to send money to a friend. Both shipped Q3 and both show up in daily active usage now.</div>
-              <div class="timeline-tags">
-                <span class="tag">Product Design</span>
-                <span class="tag">A/B Testing</span>
-                <span class="tag">ML Features</span>
-                <span class="tag">Figma</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- IMPACT METRICS -->
-    <div class="section reveal">
-      <div class="section-eyebrow">My Impact</div>
-      <h2 class="section-title">What <em>moved</em></h2>
-
-      <div class="impact-grid">
+      <div class="impact-grid" style="margin-top: 32px; margin-bottom: 0;">
         <div class="impact-card">
           <div class="impact-num">250M+</div>
           <div class="impact-lbl">Monthly payments processed</div>
@@ -1173,52 +1077,171 @@
         </div>
       </div>
 
-      <ul class="bullets reveal reveal-delay-1" style="margin-top: 36px;">
-        <li>Built the payment monitoring stack from scratch. Leadership had a live dashboard for the first time.</li>
-        <li>Took UPI Lite from spec to launch, working across NPCI, our banking partner, and engineering simultaneously.</li>
-        <li>Ran A/B tests on the payment confirmation screen. Conversion moved double digits.</li>
-        <li>Shipped Scan &amp; Pay and Recommended Contacts in the same quarter. Both are now in daily active use.</li>
-        <li>FamCard revenue went up 3x. Built on the back of actual teen spending data, not guesses.</li>
-      </ul>
-    </div>
+      <div class="timeline">
 
-    <!-- PULL QUOTE -->
-    <div class="pull-quote reveal">
-      <div class="pull-quote-text">"The best PM work is invisible. Users don't notice you fixed something. They just notice it works."</div>
-      <div class="pull-quote-attr">Muazz Zuberi</div>
-    </div>
+        <div class="timeline-group">
+          <div class="timeline-category-header">Payment &amp; Core Banking</div>
 
-    <!-- HOW I WORKED -->
-    <div class="section reveal">
-      <div class="section-eyebrow">How I Worked</div>
-      <h2 class="section-title">A few things I <em>actually believe</em></h2>
-      <div class="section-body">
-        <p>Payments is brutal to get wrong. A failed transaction is real money, real friction, and a real reason to leave. Most of how I worked came from taking that seriously.</p>
+          <div class="timeline-item reveal">
+            <div class="timeline-date-col">
+              <div class="timeline-type">UX</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Payment Experience Revamp</div>
+              <div class="timeline-title">Unifying two payment rails into a single experience</div>
+              <div class="timeline-desc">Redesigned the entire payment flow from the ground up, simplifying the UX while stitching TPAP (bank-linked) and PPI (wallet) payments into a single coherent experience. Users stopped noticing which rail they were on. That was the point.</div>
+              <div class="timeline-tags">
+                <span class="tag">Product Design</span>
+                <span class="tag">Figma</span>
+                <span class="tag">TPAP</span>
+                <span class="tag">PPI</span>
+                <span class="tag">UPI</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal reveal-delay-1">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Regulatory</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Success Rate Improvement</div>
+              <div class="timeline-title">Improving acceptance across the UPI wallet ecosystem</div>
+              <div class="timeline-desc">Deep data analysis on where and why payments were failing, then took it upstream, working directly with NPCI, RBI, payment aggregators, and merchants to fix acceptance at the ecosystem level. The result: FamApp captured over 75% of wallet UPI market share and was formally recognised by the Reserve Bank of India as systemic in the wallet space.</div>
+              <div class="timeline-tags">
+                <span class="tag">NPCI</span>
+                <span class="tag">RBI</span>
+                <span class="tag">Data Analysis</span>
+                <span class="tag">Aggregators</span>
+                <span class="tag">Merchants</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal reveal-delay-2">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Infrastructure</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Payment UX Improvement</div>
+              <div class="timeline-title">Reducing failures before users ever encountered them</div>
+              <div class="timeline-desc">Led three systems designed to stop problems before users ever hit them: Killswitch, a circuit breaker that cuts bad traffic in real time; Business Decline Engine, which routes declines intelligently; and Fraud Management System. All three running quietly in the background every time someone pays.</div>
+              <div class="timeline-tags">
+                <span class="tag">Killswitch</span>
+                <span class="tag">Decline Engine</span>
+                <span class="tag">Fraud</span>
+                <span class="tag">Risk</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal reveal-delay-3">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Performance</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Payment Speed</div>
+              <div class="timeline-title">Reducing payment latency across the stack</div>
+              <div class="timeline-desc">Pulled multiple levers across the stack: migrated critical payment paths to GoLang, shipped UX changes optimised for perceived speed, and introduced caching for high-frequency flows. Each initiative small on its own. Together, payments got 35% faster.</div>
+              <div class="timeline-tags">
+                <span class="tag">GoLang</span>
+                <span class="tag">Caching</span>
+                <span class="tag">Performance</span>
+                <span class="tag">Engineering</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-group">
+          <div class="timeline-category-header">Revenue &amp; Engagement</div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Revenue</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Virtual Assets Campaign</div>
+              <div class="timeline-title">A customisation marketplace built on a user insight</div>
+              <div class="timeline-desc">Started from a user insight: GenZ personalises anything they can touch. Built a customisation marketplace for app icons, payment scanners, and QR themes. Gave users something to own.</div>
+              <div class="timeline-tags">
+                <span class="tag">Revenue</span>
+                <span class="tag">Marketplace</span>
+                <span class="tag">User Research</span>
+                <span class="tag">Monetisation</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal reveal-delay-1">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Platform</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Recharge &amp; Giftcard Revamp</div>
+              <div class="timeline-title">Rebuilding the recharge and giftcard distribution layer</div>
+              <div class="timeline-desc">Identified systemic issues in the recharge and giftcard distribution layer, with reliability failures generating a long tail of customer complaints. Built a robust replacement system from scratch. Reduced queries, gave users something dependable, and turned it into a stable income stream for the company.</div>
+              <div class="timeline-tags">
+                <span class="tag">Platform</span>
+                <span class="tag">Distribution</span>
+                <span class="tag">Customer Support</span>
+                <span class="tag">Revenue</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-group">
+          <div class="timeline-category-header">Growth</div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Metrics</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">NPS Formalisation</div>
+              <div class="timeline-title">Establishing NPS as a core metric across the org</div>
+              <div class="timeline-desc">Introduced NPS as a core metric for the pod, then pushed it into how the broader org made decisions. Gave the team a concrete way to measure whether we were actually building something better for users, not just shipping features.</div>
+              <div class="timeline-tags">
+                <span class="tag">NPS</span>
+                <span class="tag">User Research</span>
+                <span class="tag">Strategy</span>
+                <span class="tag">Org Design</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal reveal-delay-1">
+            <div class="timeline-date-col">
+              <div class="timeline-type">Analytics</div>
+            </div>
+            <div class="timeline-line"><div class="timeline-dot"></div></div>
+            <div class="timeline-body">
+              <div class="timeline-initiative">Mixpanel &amp; CleverTap</div>
+              <div class="timeline-title">Migrating analytics infrastructure and owning product marketing</div>
+              <div class="timeline-desc">Led the full migration from CleverTap to Mixpanel and became the single point of contact for analytics across the org. Also ran product marketing: campaigns, push notification journeys, and segmentation. Took average PN CTR from 3–4% to 12%, which is genuinely unheard of in the industry.</div>
+              <div class="timeline-tags">
+                <span class="tag">Mixpanel</span>
+                <span class="tag">CleverTap</span>
+                <span class="tag">Analytics</span>
+                <span class="tag">Push Notifications</span>
+                <span class="tag">CRM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-
-      <div class="approach-grid">
-        <div class="approach-card reveal reveal-delay-1">
-          <div class="approach-step">01</div>
-          <div class="approach-title">Measure it before you touch it</div>
-          <div class="approach-text">I never started a project without first understanding the baseline. In payments you really cannot afford to find out things are broken from a support ticket.</div>
-        </div>
-        <div class="approach-card reveal reveal-delay-2">
-          <div class="approach-step">02</div>
-          <div class="approach-title">Get into the technical detail</div>
-          <div class="approach-text">I spent real time learning NPCI flows, banking partner constraints, and where UPI actually fails. You make better calls when you understand what you're building on top of.</div>
-        </div>
-        <div class="approach-card reveal reveal-delay-1">
-          <div class="approach-step">03</div>
-          <div class="approach-title">Don't wait for things to be clean</div>
-          <div class="approach-text">Monitoring and features ran at the same time. Waiting for infrastructure to be "ready" before shipping product is how you fall behind. You figure it out in parallel.</div>
-        </div>
-        <div class="approach-card reveal reveal-delay-2">
-          <div class="approach-step">04</div>
-          <div class="approach-title">Test things you think you already know</div>
-          <div class="approach-text">The confirmation screen experiments moved double digits because nobody had actually tested that surface before. Strong intuitions make good hypotheses. They don't replace experiments.</div>
-        </div>
-      </div>
     </div>
+
+
 
     <!-- TOOLS -->
     <div class="section reveal">
@@ -1227,17 +1250,23 @@
 
       <div class="tools-row">
         <span class="tool-chip">Figma</span>
+        <span class="tool-chip">Balsamiq</span>
+        <span class="tool-chip">Claude</span>
+        <span class="tool-chip">Miro</span>
+        <span class="tool-chip">Linear</span>
         <span class="tool-chip">SQL</span>
         <span class="tool-chip">Mixpanel</span>
-        <span class="tool-chip">Amplitude</span>
-        <span class="tool-chip">Jira</span>
+        <span class="tool-chip">CleverTap</span>
+        <span class="tool-chip">Google Suite</span>
         <span class="tool-chip">Notion</span>
-        <span class="tool-chip">Miro</span>
         <span class="tool-chip">NPCI APIs</span>
+        <span class="tool-chip">Juspay APIs</span>
         <span class="tool-chip">Postman</span>
-        <span class="tool-chip">Google Sheets</span>
-        <span class="tool-chip">Looker</span>
-        <span class="tool-chip">Linear</span>
+        <span class="tool-chip">Clickhouse</span>
+        <span class="tool-chip">Google Analytics</span>
+        <span class="tool-chip">Firebase</span>
+        <span class="tool-chip">Grafana</span>
+        <span class="tool-chip">Sentry</span>
       </div>
     </div>
 
@@ -1280,7 +1309,7 @@
     const heroEl = document.querySelector('.hero');
     const heroObs = new IntersectionObserver(entries => {
       backNav.classList.toggle('light', !entries[0].isIntersecting);
-    }, { threshold: 0 });
+    }, { threshold: 0, rootMargin: '-120px 0px 0px 0px' });
     heroObs.observe(heroEl);
 
     /* Reveal */
